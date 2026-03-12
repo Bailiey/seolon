@@ -99,10 +99,22 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .status-box.female-room { border-left: 4px solid var(--color-female); }
 .status-box.male-room { border-left: 4px solid var(--color-male); }
 
-/* LP 디자인 (턴테이블) */
-.event-container { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; background: var(--bg-light); padding: 50px; border-radius: 8px; border: 1px solid var(--border-color); }
-.vinyl-record { width: 220px; height: 220px; background: #111; border-radius: 50%; border: 8px solid #222; position: relative; animation: spin 4s linear infinite; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-.vinyl-record::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; background: url('사진/logo.jpg') center/cover; border-radius: 50%; border: 2px solid #333; }
+
+/* =========================================
+   LP 디자인 (턴테이블)
+   ========================================= */
+.event-container { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; 
+                  background: var(--bg-light); padding: 50px; border-radius: 8px; border: 1px solid var(--border-color); }
+
+/* LP판 본체 */
+.vinyl-record { width: 250px; height: 250px; background: #111; border-radius: 50%;
+               border: 8px solid #222; position: relative; animation: spin 4s linear infinite; /* 빙글빙글 돌아가는 효과 */box-shadow: 0 0 30px rgba(0,0,0,0.5); /* 깊이감 있는 그림자 */}
+
+/* LP판 중앙 로고 (사진/logo.jpg) */
+.vinyl-record::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; 
+    height: 90px; background: url('사진/logo.jpg') center/cover; border-radius: 50%; border: 2px solid #333; }
+
+/* 회전 애니메이션 설정 */
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* 중앙 정렬 */
