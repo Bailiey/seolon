@@ -89,22 +89,29 @@
         </section>
 
         <section id="events" class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Today's LP</h2>
-                <div class="event-container">
-                    <div class="event-vinyl"><div class="vinyl-record"></div></div>
-                    <div class="event-details">
-                        <div class="lp-schedule">
-                            <p>아침: <span id="lp-morning-text">-</span></p>
-                            <p>저녁: <span id="lp-evening-text">-</span></p>
-                            <div class="lp-admin-inputs">
-                                <input type="text" id="input-lp-morning" placeholder="아침 LP"><input type="text" id="input-lp-evening" placeholder="저녁 LP"><button class="btn-secondary" onclick="saveLP()">저장</button>
-                            </div>
-                        </div>
+    <div class="container">
+        <h2 class="section-title">Today's LP</h2>
+        <div class="event-container">
+            <div class="event-vinyl"><div class="vinyl-record"></div></div>
+            <div class="event-details">
+                <h3>아날로그 LP 감성 청음</h3>
+                <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">
+                    서론에서는 매주 특별한 음악으로 공간을 채웁니다.<br>
+                    자유롭게 돌아가는 턴테이블과 함께 휴식을 취하세요.
+                </p>
+                <div class="lp-schedule">
+                    <p>아침의 LP : <span id="lp-morning-text">-</span></p>
+                    <p>저녁의 LP : <span id="lp-evening-text">-</span></p>
+                    <div class="lp-admin-inputs">
+                        <input type="text" id="input-lp-morning" placeholder="아침 LP">
+                        <input type="text" id="input-lp-evening" placeholder="저녁 LP">
+                        <button class="btn-secondary" onclick="saveLP()">저장</button>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
         <section id="guide" class="section-padding bg-light">
             <div class="container">
