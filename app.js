@@ -138,3 +138,75 @@ async function saveGuideParams() { if(!isAdmin) return; await database.ref('guid
 
 document.getElementById('prev-month').onclick = () => { currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} renderCalendar(); };
 document.getElementById('next-month').onclick = () => { currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} renderCalendar(); };
+
+// [수정된 부분] 달력 업데이트 로직에 '마감 배지' 추가
+function updateCalendarWithData(roomsData) {
+    const body = document.getElementById('calendar-body');
+    if (!body) return;
+    body.innerHTML = '';
+    document.getElementById('current-month-display').innerText = `${currentYear}. ${String(currentMonth + 1).padStart(2, '0')}`;
+    
+    // 요일 헤더 생략 (기존과 동일)
+    ['일','월','화','수','목','금','토'].forEach(d => {
+        const h = document.createElement('div'); h.className = 'cal-day head'; h.innerText = d;
+        body.appendChild(h);
+    });
+
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    for(let i=0; i<firstDay; i++) body.appendChild(Object.assign(document.createElement('div'), {className:'cal-day empty'}));
+    
+    for (let i = 1; i <= daysInMonth; i++) {
+        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        const div = document.createElement('div');
+        div.className = 'cal-day'; div.innerText = i;
+        if(selectedDate === dateStr) div.classList.add('selected');
+        
+        const dayData = roomsData[dateStr] || {};
+        
+        // [핵심] 만실 체크 로직 (3개 방이 모두 꽉 찼을 때)
+        const isFull = (dayData.room3?.count >= 3) && (dayData.room4?.count >= 4) && (dayData.room6?.count >= 6);
+        if(isFull) {
+            const badge = document.createElement('span');
+            badge.className = 'full-text-badge';
+            badge.innerText = '마감';
+            div.appendChild(badge);
+        }
+
+        const ind = document.createElement('div'); ind.className = 'room-indicators';
+        ['room3', 'room4', 'room6'].forEach(r => {
+            const dot = document.createElement('div');
+            dot.className = `indicator ${(dayData[r] || {}).gender || 'none'}`;
+            ind.appendChild(dot);
+        });
+        div.appendChild(ind);
+        
+        div.onclick = () => {
+            selectedDate = dateStr;
+            document.querySelectorAll('.cal-day').forEach(el => el.classList.remove('selected'));
+            div.classList.add('selected');
+            refreshRoomStatus(dayData);
+        };
+        body.appendChild(div);
+    }
+}
+
+// [수정된 부분] 관리자 저장 시 인원수 제한 체크
+async function saveRoomGender(r) { 
+    if(!isAdmin) return; 
+    const count = parseInt(document.getElementById(`admin-capa-${r}`).value);
+    const max = roomCapacities[r];
+
+    // 방 인원 이상 입력 방지
+    if (count > max) {
+        alert(`${max}명을 초과할 수 없습니다.`);
+        return;
+    }
+
+    await database.ref(`rooms/${selectedDate}/${r}`).set({ 
+        gender: document.getElementById(`admin-select-${r}`).value, 
+        count: count 
+    }); 
+    alert('저장되었습니다.'); 
+}
