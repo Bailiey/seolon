@@ -1,5 +1,5 @@
 /* =========================================
-   기본 변수 및 디자인 (골드 & 다크)
+   CSS Variables & Reset (골드 다크 디자인)
    ========================================= */
 :root {
     --primary-color: #121212;
@@ -11,42 +11,57 @@
     --border-color: #333333;
     --color-female: rgba(255, 182, 193, 0.85); /* 핑크 점 */
     --color-male: rgba(135, 206, 235, 0.85);   /* 블루 점 */
-    --color-none: #333333;                      /* 미지정 점 */
+    --color-none: #333333; 
     --color-full: rgba(255, 69, 58, 0.9);       /* 마감 배지 */
 }
 
-/* [중요] 관리자 창 평소에 숨기기 */
-.admin-editable, .lp-admin-inputs { 
-    display: none !important; 
-}
-
-/* 관리자 로그인 시에만 보이기 */
-body.admin-mode .admin-editable, 
-body.admin-mode .lp-admin-inputs { 
-    display: block !important; 
-}
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background-color: var(--primary-color); color: var(--text-color); }
+body { font-family: 'Inter', sans-serif; background-color: var(--primary-color); color: var(--text-color); line-height: 1.6; }
 
-/* Navigation & Hero... (생략 없이 통으로 적용하세요) */
+/* 관리자 모드 제어 (평소엔 숨김) */
+.admin-editable, .lp-admin-inputs { display: none !important; }
+body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: block !important; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.section-padding { padding: 100px 0; }
+.bg-light { background-color: var(--bg-light); }
+.section-title { font-size: 2.5rem; text-align: center; margin-bottom: 3.5rem; color: var(--white); text-transform: uppercase; letter-spacing: 4px; }
+.section-title::after { content: ''; display: block; width: 60px; height: 2px; background-color: var(--accent-color); margin: 20px auto 0; }
+
+/* Navbar & Buttons */
 .navbar { background-color: rgba(18, 18, 18, 0.9); height: 80px; position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-.nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
 .logo { display: flex; align-items: center; gap: 15px; }
 .logo-img { height: 40px; }
-.logo-text { font-size: 1.6rem; letter-spacing: 5px; color: var(--white); font-weight: 300; }
+.logo-text { font-size: 1.6rem; letter-spacing: 5px; color: var(--white); }
 .nav-menu { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
-.nav-links { font-size: 0.95rem; color: var(--text-color); text-decoration: none; }
+.nav-links { color: var(--text-color); text-decoration: none; font-size: 0.95rem; transition: 0.2s; }
+.nav-links:hover { color: var(--accent-color); }
+.admin-login-btn { font-size: 0.8rem; color: var(--text-light); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 20px; cursor: pointer; background: transparent; }
 
+.btn-primary { display: inline-block; padding: 14px 34px; background-color: var(--accent-color); color: #000; font-weight: 600; text-decoration: none; border: 1px solid var(--accent-color); cursor: pointer; }
+.btn-secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); padding: 10px 20px; cursor: pointer; }
+.kakao-reserve-btn { display: inline-block; background: #FEE500; color: #3C1E1E; padding: 12px 25px; border-radius: 5px; font-weight: bold; text-decoration: none; }
+
+/* Hero Section */
 .hero-section { height: 100vh; background: url('https://images.unsplash.com/photo-1542442828-287217bfb87f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative; display: flex; align-items: center; justify-content: center; }
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,0.9)); z-index: 1; }
 .hero-content { position: relative; z-index: 2; text-align: center; }
 .hero-title { font-size: 5rem; letter-spacing: 8px; color: var(--white); font-weight: 300; }
 
-/* Calendar & Indicators (점 디자인) */
+/* Rooms */
+.room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+.room-card { background: var(--primary-color); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; transition: 0.4s; }
+.room-card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
+.room-image { height: 250px; background-size: cover; background-position: center; }
+.room-info { padding: 30px; }
+
+/* Calendar & 성별 안내 점 (중요 디자인!) */
+.reservation-wrapper { display: flex; flex-wrap: wrap; gap: 40px; background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); }
+.calendar-section { flex: 1; min-width: 320px; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background-color: var(--bg-light); border-radius: 4px; cursor: pointer; position: relative; font-size: 1.1rem; }
-.cal-day.head { background: transparent; color: var(--text-light); cursor: default; }
+.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background-color: var(--bg-light); border-radius: 4px; cursor: pointer; position: relative; }
+.cal-day.head { background: transparent; color: var(--text-light); font-weight: 600; cursor: default; }
 .cal-day.selected { background-color: var(--accent-color); color: #000; font-weight: bold; }
 
 .room-indicators { position: absolute; bottom: 8px; display: flex; gap: 4px; }
@@ -54,29 +69,24 @@ body { font-family: 'Inter', sans-serif; background-color: var(--primary-color);
 .indicator.female { background-color: var(--color-female); }
 .indicator.male { background-color: var(--color-male); }
 .indicator.none { background-color: var(--color-none); }
-
 .full-text-badge { position: absolute; top: 6px; font-size: 0.6rem; background: var(--color-full); color: white; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
 
-/* Status Box Colors */
-.status-box { padding: 20px; margin-bottom: 15px; border-radius: 8px; background-color: #222; border: 1px solid #333; }
-.status-box.female-room { border-left: 4px solid var(--color-female); background: rgba(255, 182, 193, 0.1); }
-.status-box.male-room { border-left: 4px solid var(--color-male); background: rgba(135, 206, 235, 0.1); }
+/* Status Panel */
+.room-status-panel { flex: 1; min-width: 320px; background: var(--bg-light); padding: 30px; border-radius: 8px; border: 1px solid var(--border-color); }
+.status-box { padding: 20px; margin-bottom: 15px; border-radius: 8px; background: #222; }
+.status-box.female-room { border-left: 4px solid var(--color-female); background: rgba(255, 182, 193, 0.05); }
+.status-box.male-room { border-left: 4px solid var(--color-male); background: rgba(135, 206, 235, 0.05); }
 
-.gender-label { font-size: 0.8rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
-.status-box.female-room .gender-label { background: var(--color-female); color: #000; }
-.status-box.male-room .gender-label { background: var(--color-male); color: #000; }
-
-/* LP Vinyl */
-.vinyl-record { width: 250px; height: 250px; background: #111; border-radius: 50%; border: 8px solid #222; position: relative; animation: spin 4s linear infinite; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+/* Vinyl Record */
+.vinyl-record { width: 250px; height: 250px; background: #111; border-radius: 50%; border: 8px solid #222; position: relative; animation: spin 4s linear infinite; }
 .vinyl-record::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; background: url('사진/logo.jpg') center/cover; border-radius: 50%; border: 2px solid #333; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* [추가] 카카오 예약 버튼 */
-.kakao-reserve-btn { display: inline-block; background: #FEE500; color: #3C1E1E; padding: 12px 25px; border-radius: 5px; font-weight: bold; text-decoration: none; transition: 0.3s; }
-.kakao-reserve-btn:hover { background: #E6CF00; }
-
-/* [수정] 중앙 정렬 유지 */
+/* Guide & Community (중앙 정렬 배율 수정) */
 #guide .container, #community .container { display: flex; flex-direction: column; align-items: center; }
 .info-card, .community-wrapper { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 800px; }
+
+/* Modal */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 2000; }
+.modal-overlay.active { display: flex; }
 .login-modal { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--accent-color); text-align: center; }
-.login-modal input { width: 100%; padding: 12px; margin-bottom: 20px; background: #111; color: #fff; border: 1px solid #333; }
