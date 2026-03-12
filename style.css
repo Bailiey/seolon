@@ -664,7 +664,7 @@ body.admin-mode .admin-editable {
     transform: translate(-50%, -50%);
     width: 100px;
     height: 100px;
-    background: url('seolon/logo.jpg') center/cover;
+    background: url('사진/logo.jpg') center/cover;
     border-radius: 50%;
     border: 2px solid #333;
 }
