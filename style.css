@@ -2,8 +2,8 @@
    CSS Variables & Reset (제주 감성 프리미엄 다크)
    ========================================= */
 :root {
-    --primary-color: #121212; /* 짙은 배경 (블랙에 가까운 차콜) */
-    --accent-color: #cda270; /* 로고와 어울릴 법한 세련된 모래빛 골드 */
+    --primary-color: #121212; /* 짙은 배경 */
+    --accent-color: #cda270; /* 모래빛 골드 */
     --bg-color: #181818;
     --bg-light: #242424;
     --text-color: #e0e0e0;
@@ -12,11 +12,11 @@
     --border-color: #333333;
     
     /* 성별 색상 */
-    --color-female: rgba(255, 182, 193, 0.85); /* 연한 분홍 */
-    --color-male: rgba(135, 206, 235, 0.85); /* 연한 하늘 */
-    --color-none: #333333; /* 미지정 */
+    --color-female: rgba(255, 182, 193, 0.85);
+    --color-male: rgba(135, 206, 235, 0.85);
+    --color-none: #333333;
     
-    --color-full: rgba(255, 69, 58, 0.9); /* 예약 마감 빨간색 점용 */
+    --color-full: rgba(255, 69, 58, 0.9); /* 예약 마감 빨간색 */
 
     --font-main: 'Inter', sans-serif;
     
@@ -118,12 +118,25 @@ ul {
     border-color: var(--accent-color);
     color: var(--accent-color);
 }
-.w-100 {
-    width: 100%;
+
+/* [추가] 카카오톡 예약 버튼 스타일 */
+.kakao-reserve-btn {
+    display: inline-block;
+    background: #FEE500;
+    color: #3C1E1E;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.2s;
+    margin-top: 10px;
 }
-.mt-3 {
-    margin-top: 1rem;
+.kakao-reserve-btn:hover {
+    background: #E6CF00;
 }
+
+.w-100 { width: 100%; }
+.mt-3 { margin-top: 1rem; }
 
 /* =========================================
    Navigation
@@ -138,7 +151,6 @@ ul {
     z-index: 1000;
     backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: var(--transition-normal);
 }
 
 .nav-container {
@@ -146,9 +158,6 @@ ul {
     justify-content: space-between;
     align-items: center;
     height: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
 .logo {
@@ -185,9 +194,7 @@ ul {
     letter-spacing: 1px;
 }
 
-.nav-links:hover {
-    color: var(--white);
-}
+.nav-links:hover { color: var(--white); }
 
 .nav-links::after {
     content: '';
@@ -200,9 +207,7 @@ ul {
     transition: var(--transition-fast);
 }
 
-.nav-links:hover::after {
-    width: 100%;
-}
+.nav-links:hover::after { width: 100%; }
 
 .admin-login-btn {
     font-size: 0.8rem;
@@ -211,12 +216,7 @@ ul {
     padding: 5px 12px;
     border-radius: 20px;
     cursor: pointer;
-    transition: var(--transition-fast);
     background: transparent;
-}
-.admin-login-btn:hover {
-    color: var(--accent-color);
-    border-color: var(--accent-color);
 }
 
 .menu-toggle {
@@ -229,7 +229,6 @@ ul {
     width: 25px;
     height: 2px;
     margin: 5px auto;
-    transition: all 0.3s ease-in-out;
     background-color: var(--white);
 }
 
@@ -238,22 +237,17 @@ ul {
    ========================================= */
 .hero-section {
     height: 100vh;
-    width: 100%;
     background: url('https://images.unsplash.com/photo-1542442828-287217bfb87f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: var(--white);
 }
 
 .hero-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,0.9));
     z-index: 1;
 }
@@ -261,9 +255,6 @@ ul {
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 800px;
-    padding: 0 20px;
-    opacity: 0;
     animation: fadeIn 2s ease forwards;
 }
 
@@ -277,7 +268,6 @@ ul {
 
 .hero-subtitle {
     font-size: 1.2rem;
-    font-weight: 300;
     margin-bottom: 50px;
     letter-spacing: 2px;
     color: var(--text-light);
@@ -313,13 +303,6 @@ ul {
     height: 250px;
     background-size: cover;
     background-position: center;
-    position: relative;
-}
-.room-image::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; width: 100%; height: 50%;
-    background: linear-gradient(to top, rgba(18,18,18,1), transparent);
 }
 
 .room-info {
@@ -330,99 +313,10 @@ ul {
     font-size: 1.5rem;
     margin-bottom: 15px;
     color: var(--white);
-    font-weight: 400;
-    letter-spacing: 1px;
-}
-
-.room-info p {
-    color: var(--text-light);
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-    min-height: 45px;
-}
-
-.room-features li {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 /* =========================================
-   Info Cards (Bathroom, Guide)
-   ========================================= */
-.info-card-container {
-    display: flex;
-    justify-content: center;
-}
-.info-card {
-    background: var(--bg-light);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 40px;
-    max-width: 800px;
-    width: 100%;
-}
-.info-card h3 {
-    font-size: 1.5rem;
-    color: var(--accent-color);
-    margin-bottom: 15px;
-    font-weight: 300;
-}
-.info-card p {
-    color: var(--text-light);
-    margin-bottom: 20px;
-}
-.amenity-list li {
-    padding: 10px 0;
-    border-bottom: 1px solid #333;
-    font-size: 0.95rem;
-    color: #ddd;
-}
-.amenity-list li:last-child {
-    border-bottom: none;
-}
-.amenity-list li span {
-    margin-right: 10px;
-}
-
-/* =========================================
-   Event Grid (Potluck, LP)
-   ========================================= */
-.event-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-}
-.event-card {
-    background: var(--bg-light);
-    border: 1px solid var(--border-color);
-    padding: 30px;
-    border-radius: 8px;
-    border-top: 3px solid var(--accent-color);
-}
-.event-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: var(--white);
-    font-weight: 400;
-}
-.event-time, .event-place {
-    font-size: 0.9rem;
-    color: var(--accent-color);
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-.event-desc {
-    margin-top: 15px;
-    font-size: 0.95rem;
-    color: var(--text-light);
-}
-
-/* =========================================
-   Reservation & Calendar (The Core UI)
+   Reservation & Calendar
    ========================================= */
 .reservation-wrapper {
     display: flex;
@@ -434,10 +328,7 @@ ul {
     border: 1px solid var(--border-color);
 }
 
-.calendar-section {
-    flex: 1;
-    min-width: 320px;
-}
+.calendar-section { flex: 1; min-width: 320px; }
 
 .calendar-header {
     display: flex;
@@ -448,37 +339,14 @@ ul {
 
 .month-selector {
     font-size: 1.5rem;
-    font-weight: 300;
     color: var(--white);
     letter-spacing: 2px;
-}
-
-.cal-nav {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--white);
-    padding: 5px 15px;
-    cursor: pointer;
-    transition: var(--transition-fast);
-}
-.cal-nav:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
-    margin-bottom: 30px;
-}
-
-.cal-day.head {
-    text-align: center;
-    font-weight: 600;
-    color: var(--text-light);
-    padding: 10px 0;
-    font-size: 0.9rem;
 }
 
 .cal-day {
@@ -489,52 +357,30 @@ ul {
     background-color: var(--bg-light);
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1.1rem;
-    transition: var(--transition-fast);
     position: relative;
-    border: 1px solid transparent;
 }
-.cal-day:hover:not(.empty) {
-    border-color: var(--accent-color);
-    background-color: #2a2a2a;
-}
-.cal-day.empty {
-    background-color: transparent;
-    cursor: default;
-}
-.cal-day.selected {
-    background-color: var(--accent-color);
-    color: #000;
-    font-weight: 700;
-}
+.cal-day.head { color: var(--text-light); font-weight: 600; cursor: default; }
+.cal-day.selected { background-color: var(--accent-color); color: #000; font-weight: 700; }
 
-/* 방 상태 지시자 (점 같은 것) */
 .room-indicators {
     position: absolute;
     bottom: 5px;
     display: flex;
     gap: 3px;
 }
-.indicator {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-}
+.indicator { width: 6px; height: 6px; border-radius: 50%; }
 .indicator.male { background-color: var(--color-male); }
 .indicator.female { background-color: var(--color-female); }
 .indicator.none { background-color: var(--color-none); }
 
-/* 예약 마감 알림 패치 */
 .full-text-badge {
     position: absolute;
     top: 5px;
     font-size: 0.6rem;
-    font-weight: 700;
     background: var(--color-full);
     color: white;
     padding: 2px 4px;
     border-radius: 3px;
-    line-height: 1;
 }
 
 /* 일별 상태 패널 */
@@ -547,85 +393,17 @@ ul {
     border: 1px solid var(--border-color);
 }
 
-.room-status-panel h3 {
-    font-size: 1.4rem;
-    font-weight: 300;
-    margin-bottom: 25px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
-    color: var(--accent-color);
-}
-
 .status-box {
     padding: 20px;
     margin-bottom: 15px;
     border-radius: 6px;
     background-color: #222;
-    transition: var(--transition-fast);
 }
-
-.status-box.male-room {
-    background-color: rgba(135, 206, 235, 0.15);
-    border-left: 4px solid var(--color-male);
-}
-.status-box.female-room {
-    background-color: rgba(255, 182, 193, 0.15);
-    border-left: 4px solid var(--color-female);
-}
-.status-box.none-room {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-left: 4px solid #555;
-}
-
-.box-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    align-items: center;
-}
-.box-header h4 {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--white);
-}
-
-.gender-label {
-    font-size: 0.8rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 600;
-}
-
-.status-box.male-room .gender-label { background: var(--color-male); color: #000; }
-.status-box.female-room .gender-label { background: var(--color-female); color: #000; }
-.status-box.none-room .gender-label { background: #555; color: #fff; }
-
-.capacity-text {
-    font-weight: 700;
-    color: var(--white);
-}
-
-/* 관리자용 설정 UI */
-.admin-editable {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px dashed rgba(255,255,255,0.1);
-    display: none; /* 관리자 모드 시 block */
-}
-body.admin-mode .admin-editable {
-    display: block;
-}
-
-.admin-editable select {
-    background: var(--primary-color);
-    color: var(--white);
-    border: 1px solid var(--border-color);
-    padding: 8px;
-    width: 100%;
-}
+.status-box.male-room { border-left: 4px solid var(--color-male); }
+.status-box.female-room { border-left: 4px solid var(--color-female); }
 
 /* =========================================
-   Events (LP)
+   Event Vinyl (LP)
    ========================================= */
 .event-container {
     display: flex;
@@ -635,16 +413,7 @@ body.admin-mode .admin-editable {
     background: var(--bg-light);
     padding: 50px;
     border-radius: 8px;
-    border: 1px solid var(--border-color);
 }
-
-.event-vinyl {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    min-width: 300px;
-}
-
 .vinyl-record {
     width: 250px;
     height: 250px;
@@ -652,151 +421,61 @@ body.admin-mode .admin-editable {
     border-radius: 50%;
     position: relative;
     border: 8px solid #222;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,1);
     animation: spin 4s linear infinite;
 }
-
-/* 턴테이블 중간 사진 경로 수정 */
 .vinyl-record::before {
     content: '';
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
+    width: 100px; height: 100px;
     background: url('사진/logo.jpg') center/cover;
     border-radius: 50%;
-    border: 2px solid #333;
 }
-.vinyl-record::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 15px;
-    height: 15px;
-    background: #000;
-    border-radius: 50%;
-    border: 2px solid #555;
-    z-index: 2;
-}
-
-@keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-
-.event-details {
-    flex: 2;
-    min-width: 300px;
-}
-
-.event-details h3 {
-    font-size: 2rem;
-    font-weight: 300;
-    color: var(--accent-color);
-    margin-bottom: 20px;
-}
-
-.lp-schedule {
-    background: var(--primary-color);
-    padding: 25px;
-    border-left: 4px solid var(--accent-color);
-    margin-top: 20px;
-}
-.lp-schedule p {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    color: var(--white);
-}
-
-/* 관리자용 LP 인풋 */
-.lp-admin-inputs {
-    display: none;
-    margin-top: 15px;
-}
-body.admin-mode .lp-admin-inputs {
-    display: block;
-}
-.lp-admin-inputs input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #222;
-    border: 1px solid #444;
-    color: #fff;
-}
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* =========================================
-   Community (게시판)
+   [수정] Guide & Community 중앙 정렬
    ========================================= */
-.community-wrapper {
+#guide .container, #community .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 자식 요소들을 가로 중앙으로 */
+}
+
+.info-card, .community-wrapper {
     background: var(--bg-light);
     padding: 40px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 800px; /* 사장님이 원하신 너비 고정 */
+    margin: 0 auto;
 }
 
-.board-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
+/* [추가] 관리자용 수정 영역 중앙 정렬 */
+.admin-editable {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto 0;
+    text-align: center;
 }
-.board-header h3 {
-    font-weight: 300;
-    font-size: 1.5rem;
-    color: var(--accent-color);
-}
-
-.board-list {
-    margin-bottom: 30px;
-}
-
-.board-item {
-    padding: 15px 0;
-    border-bottom: 1px solid #333;
-}
-
-.board-item-title {
-    font-size: 1.1rem;
-    color: var(--white);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.board-item-title:hover {
-    color: var(--accent-color);
-}
-.board-item-meta {
-    font-size: 0.85rem;
-    color: var(--text-light);
-}
-
-.board-item-content {
-    display: none;
+.admin-editable textarea {
+    width: 100%;
+    background: #111;
+    color: #fff;
+    border: 1px solid var(--border-color);
     padding: 15px;
-    background: #222;
-    margin-top: 10px;
     border-radius: 4px;
-    color: #ccc;
-    font-size: 0.95rem;
-}
-.board-item-content.active {
-    display: block;
 }
 
-/* 글쓰기 폼 */
+/* =========================================
+   Community Board
+   ========================================= */
 .write-form {
     background: var(--primary-color);
     padding: 25px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-}
-.form-group {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 .form-group input, .form-group textarea {
     width: 100%;
@@ -804,12 +483,24 @@ body.admin-mode .lp-admin-inputs {
     background: #222;
     border: 1px solid #444;
     color: #fff;
-    font-family: inherit;
+    margin-bottom: 15px;
 }
-.form-group input:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: var(--accent-color);
+.board-item {
+    border-bottom: 1px solid #333;
+    padding: 15px 0;
 }
+.board-item-title {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+.board-item-content {
+    display: none;
+    padding: 15px;
+    background: #222;
+    margin-top: 10px;
+}
+.board-item-content.active { display: block; }
 
 /* =========================================
    Admin Modal
@@ -821,37 +512,28 @@ body.admin-mode .lp-admin-inputs {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 2000;
     opacity: 0;
     pointer-events: none;
     transition: var(--transition-normal);
 }
-.modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
 
 .login-modal {
     background: var(--bg-light);
     padding: 40px;
     border-radius: 8px;
-    width: 100%;
-    max-width: 400px;
+    width: 320px;
     border: 1px solid var(--accent-color);
     text-align: center;
-}
-.login-modal h2 {
-    color: var(--accent-color);
-    margin-bottom: 20px;
-    font-weight: 300;
 }
 .login-modal input {
     width: 100%;
     padding: 12px;
-    background: #111;
-    border: 1px solid #333;
-    color: #fff;
     margin-bottom: 20px;
+    background: #111;
+    color: #fff;
+    border: 1px solid #333;
 }
 
 /* =========================================
@@ -859,31 +541,9 @@ body.admin-mode .lp-admin-inputs {
    ========================================= */
 footer {
     background-color: #0a0a0a;
-    color: var(--text-light);
-    padding: 80px 0 30px;
+    padding: 50px 0;
     text-align: center;
     border-top: 1px solid #222;
-}
-
-.footer-info h3 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    letter-spacing: 5px;
-    color: var(--white);
-    font-weight: 300;
-}
-
-.footer-info p {
-    margin-bottom: 10px;
-    font-size: 0.9rem;
-}
-
-.copyright {
-    margin-top: 50px;
-    font-size: 0.8rem;
-    color: #555;
-    border-top: 1px solid #222;
-    padding-top: 20px;
 }
 
 /* =========================================
@@ -892,20 +552,11 @@ footer {
 @media screen and (max-width: 768px) {
     .menu-toggle { display: block; }
     .nav-menu {
-        position: fixed; left: -100%; top: 80px; flex-direction: column;
-        background-color: rgba(18, 18, 18, 0.95); width: 100%; text-align: center;
-        transition: 0.3s; padding: 2rem 0; gap: 0;
-        overflow-y: auto;
-        max-height: calc(100vh - 80px); 
+        position: fixed; left: -100%; top: 80px;
+        background: rgba(18, 18, 18, 0.95);
+        width: 100%; flex-direction: column; padding: 2rem 0;
+        transition: 0.3s;
     }
     .nav-menu.active { left: 0; }
-    .nav-menu li { margin: 1.2rem 0; }
-    
-    .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
-    .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
     .hero-title { font-size: 3rem; }
-    
-    .event-container { flex-direction: column; }
 }
