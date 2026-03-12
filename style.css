@@ -160,13 +160,14 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 
 .full-text-badge { 
     position: absolute; 
-    top: 5px; 
-    right: 5px; 
-    font-size: 0.65rem; 
-    background: var(--color-full); 
-    color: white; 
-    padding: 2px 5px; 
-    border-radius: 3px; 
+    top: 8px;           /* 날짜 숫자보다 약간 위쪽 */
+    left: 50%;          /* 가로 중앙으로 보냄 */
+    transform: translateX(-50%); /* 정확한 중앙 정렬을 위한 보정 */
+    font-size: 0.55rem; /* 글자 크기를 더 작고 정갈하게 */
+    color: #e57373;     /* 채도를 낮춘 부드러운 레드) */
+    background: none;   /* 배경 채우기 제거 */
     font-weight: bold; 
+    letter-spacing: -0.5px;
     z-index: 5;
+    white-space: nowrap;
 }
