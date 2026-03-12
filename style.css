@@ -80,8 +80,8 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .event-details { text-align: left; }
 .event-details h3 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 20px; font-weight: 400; }
 .lp-schedule { border-left: 3px solid var(--accent-color); padding: 20px 40px 20px 25px; background: rgba(0,0,0,0.2); }
-.lp-schedule p { font-size: 1.2rem; color: var(--text-color); margin-bottom: 15px; white-space: nowrap; }
-.lp-schedule p span { font-weight: bold; color: var(--white); margin-left: 10px; }
+.lp-schedule p { font-size: 1.1rem; color: var(--text-color); margin-bottom: 15px; white-space: nowrap; }
+.lp-schedule p span {font-weight: inherit; color: var(--white); margin-left: 10px; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 @media (max-width: 850px) { .event-container { flex-direction: column; padding: 40px 20px; gap: 40px; } .lp-schedule { padding-right: 20px; } }
 
