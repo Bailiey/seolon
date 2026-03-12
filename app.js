@@ -1,9 +1,17 @@
 // ==========================================
-// 1. Mobile Menu Toggle
+// 1. 공통 설정 및 변수
 // ==========================================
+let isAdmin = false;
+let currentYear = 2026;
+let currentMonth = 2; // 0-indexed (2 = 3월)
+let selectedDate = null;
+
+const roomCapacities = { room3: 3, room4: 4, room6: 6 };
+
 const mobileMenu = document.querySelector('#mobile-menu');
 const navMenu = document.querySelector('.nav-menu');
 
+// 모바일 메뉴 토글
 mobileMenu.addEventListener('click', () => {
     mobileMenu.classList.toggle('is-active');
     navMenu.classList.toggle('active');
@@ -18,408 +26,233 @@ navLinks.forEach(link => {
 });
 
 // ==========================================
-// 2. Admin Login System
+// 2. 관리자 로그인 (서버 권한 획득)
 // ==========================================
-let isAdmin = false;
-
-const btnAdminLogin = document.getElementById('btn-admin-login');
-const btnAdminLogout = document.getElementById('btn-admin-logout');
-const adminModal = document.getElementById('admin-modal');
-
-btnAdminLogin.addEventListener('click', () => {
-    adminModal.classList.add('active');
-});
-
-function closeAdminModal() {
-    adminModal.classList.remove('active');
-    document.getElementById('admin-pw').value = '';
-}
-
-function attemptAdminLogin() {
+async function attemptAdminLogin() {
     const pw = document.getElementById('admin-pw').value;
     if (pw === 'admin') { 
-        isAdmin = true;
-        document.body.classList.add('admin-mode');
-        btnAdminLogin.style.display = 'none';
-        btnAdminLogout.style.display = 'block';
-        closeAdminModal();
-        alert('관리자 모드로 접속되었습니다.');
-        
-        if (selectedDate) renderRoomStatus(selectedDate);
-    } else {
-        alert('비밀번호가 틀렸습니다.');
-    }
+        try {
+            await auth.signInAnonymously(); // 잠금 모드에서 쓰기 권한을 얻기 위해 로그인
+            isAdmin = true;
+            document.body.classList.add('admin-mode');
+            document.getElementById('btn-admin-login').style.display = 'none';
+            document.getElementById('btn-admin-logout').style.display = 'block';
+            document.getElementById('admin-modal').classList.remove('active');
+            document.getElementById('admin-pw').value = '';
+            alert('관리자 모드로 접속되었습니다. 수정 사항이 실시간으로 모든 손님에게 반영됩니다.');
+            renderCalendar(); 
+        } catch (e) { alert('로그인 실패: ' + e.message); }
+    } else { alert('비밀번호가 틀렸습니다.'); }
 }
 
-btnAdminLogout.addEventListener('click', () => {
-    isAdmin = false;
-    document.body.classList.remove('admin-mode');
-    btnAdminLogin.style.display = 'block';
-    btnAdminLogout.style.display = 'none';
-    alert('로그아웃 되었습니다.');
+document.getElementById('btn-admin-logout').addEventListener('click', () => {
+    auth.signOut().then(() => {
+        isAdmin = false;
+        document.body.classList.remove('admin-mode');
+        document.getElementById('btn-admin-login').style.display = 'block';
+        document.getElementById('btn-admin-logout').style.display = 'none';
+        alert('로그아웃 되었습니다.');
+        renderCalendar();
+    });
 });
 
+document.getElementById('btn-admin-login').addEventListener('click', () => {
+    document.getElementById('admin-modal').classList.add('active');
+});
 
 // ==========================================
-// 3. Calendar & Room Status (Mock DB via LocalStorage)
+// 3. 실시간 데이터 감시 (핵심: 새로고침 없이 화면이 바뀜)
 // ==========================================
-let currentYear = 2026;
-let currentMonth = 2; // 0-indexed (2 = 3월)
-let selectedDate = null;
-
-// 객실 정원 설정
-const roomCapacities = {
-    room3: 3,
-    room4: 4,
-    room6: 6
-};
-
-// 로컬 스토리지에서 예측 현황 가져오기
-function getRoomData(dateStr) {
-    const data = localStorage.getItem('guesthouse_rooms_' + dateStr);
-    if (data) return JSON.parse(data);
-    // 없으면 기본값
-    return { 
-        room3: { gender: 'none', count: 0 }, 
-        room4: { gender: 'none', count: 0 }, 
-        room6: { gender: 'none', count: 0 } 
-    };
-}
-
-// 로컬 스토리지에 예약 현황 저장
-function setRoomData(dateStr, roomData) {
-    localStorage.setItem('guesthouse_rooms_' + dateStr, JSON.stringify(roomData));
-}
-
-const calendarBody = document.getElementById('calendar-body');
-const monthDisplay = document.getElementById('current-month-display');
-const roomStatusContainer = document.getElementById('room-status-container');
-const selectedDateDisplay = document.getElementById('selected-date-display');
-
-function renderCalendar() {
-    calendarBody.innerHTML = '';
-    
-    // 요일 헤더
-    const days = ['일', '월', '화', '수', '목', '금', '토'];
-    days.forEach(d => {
-        const div = document.createElement('div');
-        div.className = 'cal-day head';
-        div.innerText = d;
-        calendarBody.appendChild(div);
+function initRealtimeListeners() {
+    // 예약 현황 감시
+    database.ref('rooms').on('value', () => {
+        renderCalendar();
+        if (selectedDate) renderRoomStatus(selectedDate);
     });
 
-    monthDisplay.innerText = `${currentYear}. ${String(currentMonth + 1).padStart(2, '0')}`;
+    // LP 스케줄 감시
+    database.ref('lp_schedule').on('value', (snap) => {
+        const val = snap.val() || { morning: '아이유 - 꽃갈피', evening: '검정치마 - TeamBaby' };
+        document.getElementById('lp-morning-text').innerText = val.morning;
+        document.getElementById('lp-evening-text').innerText = val.evening;
+        document.getElementById('input-lp-morning').value = val.morning;
+        document.getElementById('input-lp-evening').value = val.evening;
+    });
+
+    // 가이드 감시
+    database.ref('guide').on('value', (snap) => {
+        const val = snap.val() || `주차 안내:\n- 서론 앞 50m 공영주차장을 이용하실 수 있습니다. (무료)\n\n통금 및 에티켓:\n- 자정 24:00 에는 모든 공용 공간이 소등되며 외출입이 통제됩니다.\n- 밤 10시 이후에는 다른 게스트들의 숙면을 위해 소음을 자제해 주세요.\n\n체크인 / 체크아웃:\n- 체크인: 16:00 부터\n- 체크아웃: 10:30 까지`;
+        document.getElementById('guide-display-content').innerText = val;
+        document.getElementById('admin-guide-textarea').value = val;
+    });
+
+    // 게시판 감시
+    database.ref('posts').on('value', (snap) => {
+        loadBoard(snap.val());
+    });
+}
+
+// ==========================================
+// 4. 달력 및 예약 관리 (서버 연동)
+// ==========================================
+function renderCalendar() {
+    const calendarBody = document.getElementById('calendar-body');
+    calendarBody.innerHTML = '';
+    document.getElementById('current-month-display').innerText = `${currentYear}. ${String(currentMonth + 1).padStart(2, '0')}`;
 
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    // 빈 칸 채우기
+    const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+    dayNames.forEach(d => {
+        const div = document.createElement('div');
+        div.className = 'cal-day head'; div.innerText = d;
+        calendarBody.appendChild(div);
+    });
+
     for (let i = 0; i < firstDay; i++) {
-        const div = document.createElement('div');
-        div.className = 'cal-day empty';
-        calendarBody.appendChild(div);
+        calendarBody.appendChild(Object.assign(document.createElement('div'), {className:'cal-day empty'}));
     }
 
-    // 날짜 채우기
-    for (let i = 1; i <= daysInMonth; i++) {
-        const div = document.createElement('div');
-        div.className = 'cal-day';
-        div.innerText = i;
-        
-        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-        div.dataset.date = dateStr;
+    // 서버 데이터를 비동기로 가져와서 그림
+    database.ref('rooms').once('value', (snap) => {
+        const allRoomsData = snap.val() || {};
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+            const div = document.createElement('div');
+            div.className = 'cal-day'; div.innerText = i; div.dataset.date = dateStr;
+            if (selectedDate === dateStr) div.classList.add('selected');
 
-        const roomData = getRoomData(dateStr);
-        let isFullyBooked = true; // 예약이 모두 찼는지 여부 (3,4,6인실 정원 충족시)
-
-        // 점 표시 (인디케이터)
-        const indicatorContainer = document.createElement('div');
-        indicatorContainer.className = 'room-indicators';
-        
-        ['room3', 'room4', 'room6'].forEach(room => {
-            const rData = roomData[room];
-            const dot = document.createElement('div');
-            dot.className = `indicator ${rData.gender}`;
-            indicatorContainer.appendChild(dot);
+            const dayData = allRoomsData[dateStr] || { room3: {gender:'none',count:0}, room4: {gender:'none',count:0}, room6: {gender:'none',count:0} };
             
-            if (rData.count < roomCapacities[room]) {
-                isFullyBooked = false; // 한 방이라도 자리가 있으면 마감이 아님
+            const indicatorContainer = document.createElement('div');
+            indicatorContainer.className = 'room-indicators';
+            let isFull = true;
+
+            ['room3', 'room4', 'room6'].forEach(room => {
+                const r = dayData[room];
+                const dot = document.createElement('div');
+                dot.className = `indicator ${r.gender}`;
+                indicatorContainer.appendChild(dot);
+                if (r.count < roomCapacities[room]) isFull = false;
+            });
+
+            div.appendChild(indicatorContainer);
+            if (isFull) {
+                const badge = document.createElement('span');
+                badge.className = 'full-text-badge'; badge.innerText = '마감';
+                div.appendChild(badge);
             }
-        });
-        
-        div.appendChild(indicatorContainer);
 
-        // 예약 마감(Full) 배지
-        if (isFullyBooked) {
-            const badge = document.createElement('span');
-            badge.className = 'full-text-badge';
-            badge.innerText = '마감';
-            div.appendChild(badge);
-        }
-
-        // 선택 상태 유지
-        if (selectedDate === dateStr) {
-            div.classList.add('selected');
-        }
-
-        div.addEventListener('click', () => {
-            // 기존 선택 제거
-            document.querySelectorAll('.cal-day.selected').forEach(el => el.classList.remove('selected'));
-            div.classList.add('selected');
-            selectedDate = dateStr;
-            renderRoomStatus(dateStr);
-        });
-
-        calendarBody.appendChild(div);
-    }
-}
-
-document.getElementById('prev-month').addEventListener('click', () => {
-    currentMonth--;
-    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-    renderCalendar();
-});
-
-document.getElementById('next-month').addEventListener('click', () => {
-    currentMonth++;
-    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-    renderCalendar();
-});
-
-function renderRoomStatus(dateStr) {
-    roomStatusContainer.style.display = 'block';
-    selectedDateDisplay.innerText = `${dateStr} 예약 현황`;
-    
-    const roomData = getRoomData(dateStr);
-    
-    ['room3', 'room4', 'room6'].forEach(room => {
-        const rData = roomData[room];
-        
-        const box = document.getElementById(`box-${room}`);
-        const label = document.getElementById(`label-${room}`);
-        const select = document.getElementById(`admin-select-${room}`);
-        const capaInput = document.getElementById(`admin-capa-${room}`);
-        const capaText = document.getElementById(`capa-${room}`);
-        
-        // CSS 클래스 정리
-        box.classList.remove('male-room', 'female-room', 'none-room');
-        
-        const gender = rData.gender;
-        if (gender === 'male') {
-            box.classList.add('male-room');
-            label.innerText = '남성 전용 (파랑)';
-        } else if (gender === 'female') {
-            box.classList.add('female-room');
-            label.innerText = '여성 전용 (분홍)';
-        } else {
-            box.classList.add('none-room');
-            label.innerText = '성별 미정';
-        }
-
-        // 인원 텍스트 업데이트
-        capaText.innerText = rData.count;
-
-        if (isAdmin) {
-            select.value = gender;
-            capaInput.value = rData.count;
+            div.onclick = () => {
+                document.querySelectorAll('.cal-day.selected').forEach(el => el.classList.remove('selected'));
+                div.classList.add('selected');
+                selectedDate = dateStr;
+                renderRoomStatus(dateStr);
+            };
+            calendarBody.appendChild(div);
         }
     });
 }
 
-// 관리자가 성별 및 예약 인원 강제 지정할 때
-function saveRoomGender(room) {
-    if (!selectedDate) return;
-    const genderVal = document.getElementById(`admin-select-${room}`).value;
-    const countVal = parseInt(document.getElementById(`admin-capa-${room}`).value, 10);
+function renderRoomStatus(dateStr) {
+    document.getElementById('room-status-container').style.display = 'block';
+    document.getElementById('selected-date-display').innerText = `${dateStr} 예약 현황`;
     
-    const maxCapa = roomCapacities[room];
-    if (countVal < 0 || countVal > maxCapa) {
-        alert(`${room}의 최대 인원은 ${maxCapa}명입니다. 올바른 숫자를 입력하세요.`);
-        return;
-    }
-
-    const roomData = getRoomData(selectedDate);
-    roomData[room] = { gender: genderVal, count: countVal };
-    setRoomData(selectedDate, roomData);
-    alert('저장되었습니다.');
-    
-    // 달력 통째로 다시 렌더링 (마감 상태 갱신 필요)
-    renderCalendar();
-    renderRoomStatus(selectedDate);
-}
-
-
-// ==========================================
-// 4. LP Schedule Management
-// ==========================================
-function loadLP() {
-    const morning = localStorage.getItem('lp_morning') || '아이유 - 꽃갈피';
-    const evening = localStorage.getItem('lp_evening') || '검정치마 - TeamBaby';
-    
-    document.getElementById('lp-morning-text').innerText = morning;
-    document.getElementById('lp-evening-text').innerText = evening;
-    
-    document.getElementById('input-lp-morning').value = morning;
-    document.getElementById('input-lp-evening').value = evening;
-}
-
-function saveLP() {
-    const morning = document.getElementById('input-lp-morning').value;
-    const evening = document.getElementById('input-lp-evening').value;
-    
-    localStorage.setItem('lp_morning', morning);
-    localStorage.setItem('lp_evening', evening);
-    
-    alert('LP 스케줄이 저장되었습니다.');
-    loadLP();
-}
-
-
-// ==========================================
-// 5. Guide Management
-// ==========================================
-function loadGuide() {
-    const defaultGuide = `주차 안내:
-- 서론 앞 50m 공영주차장을 이용하실 수 있습니다. (무료)
-
-통금 및 에티켓:
-- 자정 24:00 에는 모든 공용 공간이 소등되며 외출입이 통제됩니다.
-- 밤 10시 이후에는 다른 게스트들의 숙면을 위해 소음을 자제해 주세요.
-
-체크인 / 체크아웃:
-- 체크인: 16:00 부터
-- 체크아웃: 10:30 까지`;
-
-    const guideContent = localStorage.getItem('guesthouse_guide') || defaultGuide;
-    
-    document.getElementById('guide-display-content').innerText = guideContent;
-    document.getElementById('admin-guide-textarea').value = guideContent;
-}
-
-function saveGuideParams() {
-    const content = document.getElementById('admin-guide-textarea').value;
-    localStorage.setItem('guesthouse_guide', content);
-    alert('기타 안내사항이 반영되었습니다.');
-    loadGuide();
-}
-
-
-// ==========================================
-// 6. Community Board (Mock System)
-// ==========================================
-function loadBoard() {
-    const boardList = document.getElementById('board-list');
-    const posts = JSON.parse(localStorage.getItem('board_posts') || '[]');
-    
-    boardList.innerHTML = '';
-    
-    if (posts.length === 0) {
-        boardList.innerHTML = '<p style="color:#777;">등록된 글이 없습니다.</p>';
-        return;
-    }
-
-    posts.reverse().forEach((post, index) => {
-        const item = document.createElement('div');
-        item.className = 'board-item';
-        
-        // 제목 바
-        const titleBar = document.createElement('div');
-        titleBar.className = 'board-item-title';
-        titleBar.innerHTML = `
-            <span>🔒 비밀글입니다. (작성자: ${post.author})</span>
-            <span class="board-item-meta">${post.date}</span>
-        `;
-        
-        // 내용
-        const contentBox = document.createElement('div');
-        contentBox.className = 'board-item-content';
-        
-        if (isAdmin) {
-            contentBox.innerText = `[비밀번호: ${post.pw}]\n\n${post.content}`;
-            
-            // 삭제 버튼 (관리자만)
-            const delBtn = document.createElement('button');
-            delBtn.className = 'btn-secondary mt-3';
-            delBtn.style.padding = '3px 10px';
-            delBtn.innerText = '게시글 삭제';
-            delBtn.onclick = () => deletePost(index); // reverse 되었으므로 인덱스 주의 - 편의상 나열
-            contentBox.appendChild(delBtn);
-            
-        } else {
-            contentBox.innerHTML = `
-                <input type="password" id="check-pw-${index}" placeholder="글 작성 시 입력한 비밀번호" style="padding:5px; margin-bottom:10px; background:#111; border:1px solid #444; color:#fff;">
-                <button class="btn-secondary" style="padding:5px 10px;" onclick="verifyPostPw(${index}, '${post.pw}')">확인</button>
-                <div id="content-display-${index}" style="margin-top:10px; display:none; white-space: pre-wrap;">${post.content}</div>
-            `;
-        }
-        
-        titleBar.addEventListener('click', () => {
-            contentBox.classList.toggle('active');
+    database.ref(`rooms/${dateStr}`).once('value', (snap) => {
+        const data = snap.val() || { room3: {gender:'none',count:0}, room4: {gender:'none',count:0}, room6: {gender:'none',count:0} };
+        ['room3', 'room4', 'room6'].forEach(room => {
+            const r = data[room];
+            const box = document.getElementById(`box-${room}`);
+            box.className = `status-box ${r.gender}-room`;
+            document.getElementById(`label-${room}`).innerText = r.gender === 'none' ? '성별 미정' : (r.gender === 'male' ? '남성 전용' : '여성 전용');
+            document.getElementById(`capa-${room}`).innerText = r.count;
+            if (isAdmin) {
+                document.getElementById(`admin-select-${room}`).value = r.gender;
+                document.getElementById(`admin-capa-${room}`).value = r.count;
+            }
         });
+    });
+}
 
-        item.appendChild(titleBar);
-        item.appendChild(contentBox);
+async function saveRoomGender(room) {
+    if (!isAdmin) return alert('관리자 로그인이 필요합니다.');
+    const gender = document.getElementById(`admin-select-${room}`).value;
+    const count = parseInt(document.getElementById(`admin-capa-${room}`).value, 10);
+    if (count < 0 || count > roomCapacities[room]) return alert('인원수를 확인해주세요.');
+
+    await database.ref(`rooms/${selectedDate}/${room}`).set({ gender, count });
+    alert('저장되었습니다.');
+}
+
+// ==========================================
+// 5. 기타 관리 기능 (LP, 가이드, 게시판)
+// ==========================================
+async function saveLP() {
+    if (!isAdmin) return alert('권한이 없습니다.');
+    await database.ref('lp_schedule').set({
+        morning: document.getElementById('input-lp-morning').value,
+        evening: document.getElementById('input-lp-evening').value
+    });
+    alert('LP 스케줄이 실시간 반영되었습니다.');
+}
+
+async function saveGuideParams() {
+    if (!isAdmin) return alert('권한이 없습니다.');
+    await database.ref('guide').set(document.getElementById('admin-guide-textarea').value);
+    alert('안내사항이 반영되었습니다.');
+}
+
+async function addBoardContent() {
+    const author = document.getElementById('board-author').value;
+    const pw = document.getElementById('board-pw').value;
+    const content = document.getElementById('board-content').value;
+    if (!author || !content) return alert('내용을 입력해주세요.');
+
+    await database.ref('posts').push().set({
+        author, pw, content, date: new Date().toLocaleDateString()
+    });
+    document.getElementById('board-author').value = '';
+    document.getElementById('board-pw').value = '';
+    document.getElementById('board-content').value = '';
+    alert('비밀글이 서버에 등록되었습니다.');
+}
+
+function loadBoard(postsObj) {
+    const boardList = document.getElementById('board-list');
+    boardList.innerHTML = '';
+    if (!postsObj) return boardList.innerHTML = '<p style="color:#777;">등록된 글이 없습니다.</p>';
+
+    Object.keys(postsObj).reverse().forEach(key => {
+        const post = postsObj[key];
+        const item = document.createElement('div'); item.className = 'board-item';
+        item.innerHTML = `
+            <div class="board-item-title" onclick="this.nextElementSibling.classList.toggle('active')">
+                <span>🔒 비밀글입니다. (작성자: ${post.author})</span>
+                <span class="board-item-meta">${post.date}</span>
+            </div>
+            <div class="board-item-content">
+                ${isAdmin ? `<strong>[PW: ${post.pw}]</strong><br>${post.content}<br><button class="btn-secondary mt-3" onclick="deletePost('${key}')">삭제</button>` : 
+                `<input type="password" id="pw-${key}" placeholder="비밀번호"><button class="btn-secondary" onclick="verifyPw('${key}', '${post.pw}')">확인</button>
+                 <div id="text-${key}" style="display:none; margin-top:10px; white-space:pre-wrap;">${post.content}</div>`}
+            </div>`;
         boardList.appendChild(item);
     });
 }
 
-function verifyPostPw(index, realPw) {
-    const inputPw = document.getElementById(`check-pw-${index}`).value;
-    if (inputPw === realPw) {
-        document.getElementById(`content-display-${index}`).style.display = 'block';
-    } else {
-        alert('비밀번호가 일치하지 않습니다.');
-    }
-}
+window.verifyPw = (key, real) => {
+    if (document.getElementById(`pw-${key}`).value === real) document.getElementById(`text-${key}`).style.display = 'block';
+    else alert('틀렸습니다.');
+};
 
-function deletePost(reversedIndex) {
-    const posts = JSON.parse(localStorage.getItem('board_posts') || '[]');
-    // reverse 배열의 인덱스이므로 원본 인덱스는 posts.length - 1 - reversedIndex
-    const realIndex = posts.length - 1 - reversedIndex;
-    
-    if (confirm('이 게시글을 삭제하시겠습니까?')) {
-        posts.splice(realIndex, 1);
-        localStorage.setItem('board_posts', JSON.stringify(posts));
-        loadBoard();
-    }
-}
-
-function addBoardContent() {
-    const author = document.getElementById('board-author').value;
-    const pw = document.getElementById('board-pw').value;
-    const content = document.getElementById('board-content').value;
-    
-    if (!author || !pw || !content) {
-        alert('모든 항목을 입력해주세요.');
-        return;
-    }
-    
-    const posts = JSON.parse(localStorage.getItem('board_posts') || '[]');
-    const today = new Date();
-    const dateStr = `${today.getFullYear()}.${String(today.getMonth()+1).padStart(2,'0')}.${String(today.getDate()).padStart(2,'0')}`;
-
-    posts.push({ author, pw, content, date: dateStr });
-    localStorage.setItem('board_posts', JSON.stringify(posts));
-    
-    alert('비밀글이 등록되었습니다.');
-    
-    document.getElementById('board-author').value = '';
-    document.getElementById('board-pw').value = '';
-    document.getElementById('board-content').value = '';
-    
-    loadBoard();
-}
+window.deletePost = (key) => { if(confirm('삭제할까요?')) database.ref(`posts/${key}`).remove(); };
 
 // ==========================================
-// 7. Initialize App
+// 6. 시작
 // ==========================================
+document.getElementById('prev-month').onclick = () => { currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} renderCalendar(); };
+document.getElementById('next-month').onclick = () => { currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} renderCalendar(); };
+
 document.addEventListener('DOMContentLoaded', () => {
-    // 기존 데이터 포맷이 변경되었으므로 안전을 위해 오래된 버전을 쓰는 경우를 막기 위함
-    // (이전 { room3: 'male' } -> 현재 { room3: {gender: 'male', count:0} })
-    // 실제 라이브에서는 마이그레이션이 필요함
-    
-    renderCalendar();
-    loadLP();
-    loadGuide();
-    loadBoard();
+    initRealtimeListeners();
 });
