@@ -157,3 +157,16 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     cursor: pointer;
     font-size: 0.8rem;
 }
+
+.full-text-badge { 
+    position: absolute; 
+    top: 5px; 
+    right: 5px; 
+    font-size: 0.65rem; 
+    background: var(--color-full); 
+    color: white; 
+    padding: 2px 5px; 
+    border-radius: 3px; 
+    font-weight: bold; 
+    z-index: 5;
+}
