@@ -9,6 +9,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
+
+    <script>
+        // 사장님의 파이어베이스 설정값
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDEKWXCOgRC9C_RNX_h8XhmWiMXIAtJkM",
+            authDomain: "seolon-66bd0.firebaseapp.com",
+            databaseURL: "https://seolon-66bd0-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "seolon-66bd0",
+            storageBucket: "seolon-66bd0.firebasestorage.app",
+            messagingSenderId: "626593879677",
+            appId: "1:626593879677:web:c778c6189948b6486e8314",
+            measurementId: "G-Y6KY7NQN01"
+        };
+
+        // 파이어베이스 초기화
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+    </script>
 </head>
 <body>
     <nav class="navbar">
@@ -18,9 +41,7 @@
                 <span class="logo-text">서론</span>
             </a>
             <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-links">홈</a></li>
@@ -66,7 +87,7 @@
                         <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
                         <div class="room-info">
                             <h3>4인 도미토리</h3>
-                            <p>아늑한 분위기의 4인실. 조용한 휴식을 원하시는 분들께 추천합니다.</p>
+                            <p>아늑한 분위기의 4인실.</p>
                             <ul class="room-features">
                                 <li><span>🛏️</span> 2층 침대 2개</li>
                                 <li><span>🚿</span> 공용 욕실</li>
@@ -77,29 +98,12 @@
                         <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
                         <div class="room-info">
                             <h3>6인 도미토리</h3>
-                            <p>넓고 쾌적한 다인실. 개인 커튼과 은은한 조명으로 편안함을 제공합니다.</p>
+                            <p>넓고 쾌적한 다인실.</p>
                             <ul class="room-features">
-                                <li><span>🛏️</span> 싱글베드 3개</li>
+                                <li><span>🛏️</span> 2층 침대 3개</li>
                                 <li><span>🚿</span> 공용 욕실</li>
                             </ul>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="bathroom" class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Bathroom</h2>
-                <div class="info-card-container">
-                    <div class="info-card">
-                        <h3>공용 욕실 안내</h3>
-                        <p>깔끔하게 관리되는 공용 욕실을 운영합니다.</p>
-                        <ul class="amenity-list">
-                            <li><span>🧻</span> 기본 제공: 수건(1인 2장), 샴푸, 린스, 바디워시, 치약</li>
-                            <li><span>💨</span> 구비 물품: 헤어드라이어</li>
-                            <li>* 개인 칫솔은 직접 챙겨주세요.</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -121,30 +125,30 @@
                         <h3 id="selected-date-display" style="text-align: center;">날짜를 선택해주세요</h3>
                         <div id="room-status-container" style="display:none;">
                             <div class="status-box" id="box-room3">
-                                <div class="box-header"><h4>3인 프라이빗 룸</h4><span class="gender-label" id="label-room3"></span></div>
+                                <div class="box-header"><h4>3인 프라이빗 룸</h4><span class="gender-label" id="label-room3">미정</span></div>
                                 <p>인원: <span class="capacity-text" id="capa-room3">0</span>/3</p>
                                 <div class="admin-editable">
-                                    <select id="admin-select-room3"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room3" min="0" max="3">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room3')">저장</button>
+                                    <select id="admin-select-room3"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                    <input type="number" id="admin-capa-room3" min="0" max="3" value="0">
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room3')">저장</button>
                                 </div>
                             </div>
                             <div class="status-box" id="box-room4">
-                                <div class="box-header"><h4>4인 도미토리</h4><span class="gender-label" id="label-room4"></span></div>
+                                <div class="box-header"><h4>4인 도미토리</h4><span class="gender-label" id="label-room4">미정</span></div>
                                 <p>인원: <span class="capacity-text" id="capa-room4">0</span>/4</p>
                                 <div class="admin-editable">
-                                    <select id="admin-select-room4"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room4" min="0" max="4">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room4')">저장</button>
+                                    <select id="admin-select-room4"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                    <input type="number" id="admin-capa-room4" min="0" max="4" value="0">
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room4')">저장</button>
                                 </div>
                             </div>
                             <div class="status-box" id="box-room6">
-                                <div class="box-header"><h4>6인 도미토리</h4><span class="gender-label" id="label-room6"></span></div>
+                                <div class="box-header"><h4>6인 도미토리</h4><span class="gender-label" id="label-room6">미정</span></div>
                                 <p>인원: <span class="capacity-text" id="capa-room6">0</span>/6</p>
                                 <div class="admin-editable">
-                                    <select id="admin-select-room6"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room6" min="0" max="6">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room6')">저장</button>
+                                    <select id="admin-select-room6"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                    <input type="number" id="admin-capa-room6" min="0" max="6" value="0">
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room6')">저장</button>
                                 </div>
                             </div>
                         </div>
@@ -160,12 +164,12 @@
                     <div class="event-vinyl"><div class="vinyl-record"></div></div>
                     <div class="event-details">
                         <div class="lp-schedule">
-                            <p>아침: <span id="lp-morning-text"></span></p>
-                            <p>저녁: <span id="lp-evening-text"></span></p>
+                            <p><strong>아침의 LP :</strong> <span id="lp-morning-text">로딩 중...</span></p>
+                            <p><strong>저녁의 LP :</strong> <span id="lp-evening-text">로딩 중...</span></p>
                             <div class="lp-admin-inputs">
-                                <input type="text" id="input-lp-morning">
-                                <input type="text" id="input-lp-evening">
-                                <button class="btn-secondary" onclick="saveLP()">저장</button>
+                                <input type="text" id="input-lp-morning"><br>
+                                <input type="text" id="input-lp-evening"><br>
+                                <button class="btn-secondary" onclick="saveLP()">LP 스케줄 저장</button>
                             </div>
                         </div>
                     </div>
@@ -177,11 +181,11 @@
             <div class="container">
                 <h2 class="section-title">Guide</h2>
                 <div class="info-card" id="guide-viewer">
-                    <div id="guide-display-content" style="white-space: pre-wrap;"></div>
+                    <div id="guide-display-content" style="white-space: pre-wrap;">로딩 중...</div>
                 </div>
-                <div class="admin-editable">
-                    <textarea id="admin-guide-textarea" rows="5" style="width:100%"></textarea>
-                    <button class="btn-secondary" onclick="saveGuideParams()">반영</button>
+                <div class="admin-editable" style="margin-top:20px;">
+                    <textarea id="admin-guide-textarea" rows="10" style="width:100%"></textarea>
+                    <button class="btn-secondary w-100 mt-3" onclick="saveGuideParams()">안내사항 반영하기</button>
                 </div>
             </div>
         </section>
@@ -191,27 +195,241 @@
                 <h2 class="section-title">Community</h2>
                 <div class="write-form">
                     <input type="text" id="board-author" placeholder="닉네임">
-                    <input type="password" id="board-pw" placeholder="비밀번호">
-                    <textarea id="board-content" placeholder="내용"></textarea>
-                    <button class="btn-primary" onclick="addBoardContent()">등록</button>
+                    <input type="password" id="board-pw" placeholder="비밀번호(4자리)">
+                    <textarea id="board-content" placeholder="건의사항을 남겨주세요." rows="4"></textarea>
+                    <button class="btn-primary" onclick="addBoardContent()">비밀글 쓰기</button>
                 </div>
-                <div id="board-list"></div>
+                <div id="board-list" style="margin-top:30px;"></div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="container"><p>&copy; 2026 서론. All rights reserved.</p></div>
-    </footer>
+    <div class="modal-overlay" id="admin-modal">
+        <div class="login-modal">
+            <h2>Admin Login</h2>
+            <input type="password" id="admin-pw" placeholder="Password">
+            <button class="btn-primary w-100" onclick="attemptAdminLogin()">로그인</button>
+            <button class="btn-secondary w-100 mt-3" onclick="document.getElementById('admin-modal').classList.remove('active')">취소</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>서론 | 제주 게스트하우스</title>
+    <link rel="icon" href="사진/logo.jpg" type="image/x-icon">
+    <meta name="description" content="제주도 여행의 서론을 책임지는 감성적인 공간, 게스트하우스 서론입니다.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
+
+    <script>
+        // 사장님의 파이어베이스 설정값
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDEKWXCOgRC9C_RNX_h8XhmWiMXIAtJkM",
+            authDomain: "seolon-66bd0.firebaseapp.com",
+            databaseURL: "https://seolon-66bd0-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "seolon-66bd0",
+            storageBucket: "seolon-66bd0.firebasestorage.app",
+            messagingSenderId: "626593879677",
+            appId: "1:626593879677:web:c778c6189948b6486e8314",
+            measurementId: "G-Y6KY7NQN01"
+        };
+
+        // 파이어베이스 초기화
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <img src="사진/logo.jpg" alt="서론 로고" class="logo-img" onerror="this.style.display='none'">
+                <span class="logo-text">서론</span>
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-links">홈</a></li>
+                <li><a href="#rooms" class="nav-links">객실</a></li>
+                <li><a href="#bathroom" class="nav-links">욕실</a></li>
+                <li><a href="#reservation" class="nav-links">예약현황</a></li>
+                <li><a href="#events-guide" class="nav-links">이벤트안내</a></li>
+                <li><a href="#events" class="nav-links">오늘의LP</a></li>
+                <li><a href="#guide" class="nav-links">안내사항</a></li>
+                <li><a href="#community" class="nav-links">게시판</a></li>
+                <li><button class="admin-login-btn" id="btn-admin-login">Admin</button></li>
+                <li><button class="admin-login-btn" id="btn-admin-logout" style="display:none;">Logout</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">서론</h1>
+                <p class="hero-subtitle">여행의 첫문장. '서론' 게스트하우스</p>
+                <a href="#reservation" class="btn-primary">예약하기</a>
+            </div>
+        </section>
+
+        <section id="rooms" class="section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title">Rooms</h2>
+                <div class="room-grid">
+                    <div class="room-card">
+                        <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="room-info">
+                            <h3>3인 도미토리</h3>
+                            <p>개별 욕실이 포함된 편안한 3인 프라이빗 공간입니다.</p>
+                            <ul class="room-features">
+                                <li><span>🛏️</span> 싱글베드 3개</li>
+                                <li><span>🚿</span> 3인 전용 욕실</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="room-info">
+                            <h3>4인 도미토리</h3>
+                            <p>아늑한 분위기의 4인실.</p>
+                            <ul class="room-features">
+                                <li><span>🛏️</span> 2층 침대 2개</li>
+                                <li><span>🚿</span> 공용 욕실</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="room-info">
+                            <h3>6인 도미토리</h3>
+                            <p>넓고 쾌적한 다인실.</p>
+                            <ul class="room-features">
+                                <li><span>🛏️</span> 싱글베드 3개</li>
+                                <li><span>🚿</span> 공용 욕실</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reservation" class="section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title">Reservation</h2>
+                <div class="reservation-wrapper">
+                    <div class="calendar-section">
+                        <div class="calendar-header">
+                            <button id="prev-month" class="cal-nav">&lt;</button>
+                            <span class="month-selector" id="current-month-display"></span>
+                            <button id="next-month" class="cal-nav">&gt;</button>
+                        </div>
+                        <div class="calendar-grid" id="calendar-body"></div>
+                    </div>
+                    <div class="room-status-panel">
+                        <h3 id="selected-date-display" style="text-align: center;">날짜를 선택해주세요</h3>
+                        <div id="room-status-container" style="display:none;">
+                            <div class="status-box" id="box-room3">
+                                <div class="box-header"><h4>3인 프라이빗 룸</h4><span class="gender-label" id="label-room3">미정</span></div>
+                                <p>인원: <span class="capacity-text" id="capa-room3">0</span>/3</p>
+                                <div class="admin-editable">
+                                    <select id="admin-select-room3"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                    <input type="number" id="admin-capa-room3" min="0" max="3" value="0">
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room3')">저장</button>
+                                </div>
+                            </div>
+                            <div class="status-box" id="box-room4">
+                                <div class="box-header"><h4>4인 도미토리</h4><span class="gender-label" id="label-room4">미정</span></div>
+                                <p>인원: <span class="capacity-text" id="capa-room4">0</span>/4</p>
+                                <div class="admin-editable">
+                                    <select id="admin-select-room4"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                    <input type="number" id="admin-capa-room4" min="0" max="4" value="0">
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room4')">저장</button>
+                                </div>
+                            </div>
+                            <div class="status-box" id="box-room6">
+                                <div class="box-header"><h4>6인 도미토리</h4><span class="gender-label" id="label-room6">미정</span></div>
+                                <p>인원: <span class="capacity-text" id="capa-room6">0</span>/6</p>
+                                <div class="admin-editable">
+                                    <select id="admin-select-room6"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                    <input type="number" id="admin-capa-room6" min="0" max="6" value="0">
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room6')">저장</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="events" class="section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title">Today's LP</h2>
+                <div class="event-container">
+                    <div class="event-vinyl"><div class="vinyl-record"></div></div>
+                    <div class="event-details">
+                        <div class="lp-schedule">
+                            <p><strong>아침의 LP :</strong> <span id="lp-morning-text">로딩 중...</span></p>
+                            <p><strong>저녁의 LP :</strong> <span id="lp-evening-text">로딩 중...</span></p>
+                            <div class="lp-admin-inputs">
+                                <input type="text" id="input-lp-morning"><br>
+                                <input type="text" id="input-lp-evening"><br>
+                                <button class="btn-secondary" onclick="saveLP()">LP 스케줄 저장</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="guide" class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Guide</h2>
+                <div class="info-card" id="guide-viewer">
+                    <div id="guide-display-content" style="white-space: pre-wrap;">로딩 중...</div>
+                </div>
+                <div class="admin-editable" style="margin-top:20px;">
+                    <textarea id="admin-guide-textarea" rows="10" style="width:100%"></textarea>
+                    <button class="btn-secondary w-100 mt-3" onclick="saveGuideParams()">안내사항 반영하기</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="community" class="section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title">Community</h2>
+                <div class="write-form">
+                    <input type="text" id="board-author" placeholder="닉네임">
+                    <input type="password" id="board-pw" placeholder="비밀번호(4자리)">
+                    <textarea id="board-content" placeholder="건의사항을 남겨주세요." rows="4"></textarea>
+                    <button class="btn-primary" onclick="addBoardContent()">비밀글 쓰기</button>
+                </div>
+                <div id="board-list" style="margin-top:30px;"></div>
+            </div>
+        </section>
+    </main>
 
     <div class="modal-overlay" id="admin-modal">
         <div class="login-modal">
-            <h2>Admin</h2>
+            <h2>Admin Login</h2>
             <input type="password" id="admin-pw" placeholder="Password">
-            <button class="btn-primary" onclick="attemptAdminLogin()">Login</button>
-            <button onclick="closeAdminModal()">Close</button>
+            <button class="btn-primary w-100" onclick="attemptAdminLogin()">로그인</button>
+            <button class="btn-secondary w-100 mt-3" onclick="document.getElementById('admin-modal').classList.remove('active')">취소</button>
         </div>
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>
