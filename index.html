@@ -3,23 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>서론 | 제주 게스트하우스</title>
+    <link rel="icon" href="사진/logo.jpg" type="image/x-icon">
     <meta name="description" content="제주도 여행의 서론을 책임지는 감성적인 공간, 게스트하우스 서론입니다.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDEKWXCOgRC9C_RNX_h8XhmWiMXIAtJkM",
+            authDomain: "seolon-66bd0.firebaseapp.com",
+            databaseURL: "https://seolon-66bd0-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "seolon-66bd0",
+            storageBucket: "seolon-66bd0.firebasestorage.app",
+            messagingSenderId: "626593879677",
+            appId: "1:626593879677:web:c778c6189948b6486e8314",
+            measurementId: "G-Y6KY7NQN01"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+    </script>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
-                <img src="seolon/logo.jpg" alt="서론 로고" class="logo-img" onerror="this.style.display='none'">
+                <img src="사진/logo.jpg" alt="서론 로고" class="logo-img" onerror="this.style.display='none'">
                 <span class="logo-text">서론</span>
             </a>
             <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-links">홈</a></li>
@@ -107,6 +126,11 @@
         <section id="reservation" class="section-padding bg-light">
             <div class="container">
                 <h2 class="section-title">Reservation</h2>
+                <p style="text-align:center; color: var(--text-light); margin-bottom: 30px;">
+                    ※ 객실의 성별은 매일 첫 예약자의 성별에 따라 자동으로 확정됩니다.<br>
+                    (관리자에 의해 조정될 수 있습니다)<br>
+                    ※ 성별에 따른 예약 가능 객실을 확인하신 뒤, 서론 카카오톡 채널으로 예약 부탁드립니다.
+                </p>
                 <div class="reservation-wrapper">
                     <div class="calendar-section">
                         <div class="calendar-header">
@@ -120,33 +144,62 @@
                         <h3 id="selected-date-display" style="text-align: center;">날짜를 선택해주세요</h3>
                         <div id="room-status-container" style="display:none;">
                             <div class="status-box" id="box-room3">
-                                <div class="box-header"><h4>3인 프라이빗 룸</h4><span class="gender-label" id="label-room3"></span></div>
-                                <p>인원: <span class="capacity-text" id="capa-room3">0</span>/3</p>
+                                <div class="box-header"><h4>3인 프라이빗 룸</h4><span class="gender-label" id="label-room3">미정</span></div>
+                                <p>현재 예약 인원: <span class="capacity-text" id="capa-room3">0</span>/3 명</p>
                                 <div class="admin-editable">
-                                    <select id="admin-select-room3"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room3" min="0" max="3">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room3')">저장</button>
+                                    <label style="display:block; margin-bottom:5px; font-size:0.9rem;">관리자 설정 (성별 & 인원)</label>
+                                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                        <select id="admin-select-room3" style="flex:2;"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                        <input type="number" id="admin-capa-room3" min="0" max="3" value="0" style="flex:1; background:#222; border:1px solid #444; color:#fff; padding:8px;">
+                                    </div>
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room3')">저장</button>
                                 </div>
                             </div>
                             <div class="status-box" id="box-room4">
-                                <div class="box-header"><h4>4인 도미토리</h4><span class="gender-label" id="label-room4"></span></div>
-                                <p>인원: <span class="capacity-text" id="capa-room4">0</span>/4</p>
+                                <div class="box-header"><h4>4인 도미토리</h4><span class="gender-label" id="label-room4">미정</span></div>
+                                <p>현재 예약 인원: <span class="capacity-text" id="capa-room4">0</span>/4 명</p>
                                 <div class="admin-editable">
-                                    <select id="admin-select-room4"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room4" min="0" max="4">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room4')">저장</button>
+                                    <label style="display:block; margin-bottom:5px; font-size:0.9rem;">관리자 설정</label>
+                                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                        <select id="admin-select-room4" style="flex:2;"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                        <input type="number" id="admin-capa-room4" min="0" max="4" value="0" style="flex:1; background:#222; border:1px solid #444; color:#fff; padding:8px;">
+                                    </div>
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room4')">저장</button>
                                 </div>
                             </div>
                             <div class="status-box" id="box-room6">
-                                <div class="box-header"><h4>6인 도미토리</h4><span class="gender-label" id="label-room6"></span></div>
-                                <p>인원: <span class="capacity-text" id="capa-room6">0</span>/6</p>
+                                <div class="box-header"><h4>6인 도미토리</h4><span class="gender-label" id="label-room6">미정</span></div>
+                                <p>현재 예약 인원: <span class="capacity-text" id="capa-room6">0</span>/6 명</p>
                                 <div class="admin-editable">
-                                    <select id="admin-select-room6"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room6" min="0" max="6">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room6')">저장</button>
+                                    <label style="display:block; margin-bottom:5px; font-size:0.9rem;">관리자 설정</label>
+                                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                        <select id="admin-select-room6" style="flex:2;"><option value="none">성별 미정</option><option value="female">여성 전용</option><option value="male">남성 전용</option></select>
+                                        <input type="number" id="admin-capa-room6" min="0" max="6" value="0" style="flex:1; background:#222; border:1px solid #444; color:#fff; padding:8px;">
+                                    </div>
+                                    <button class="btn-secondary w-100" onclick="saveRoomGender('room6')">저장</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="events-guide" class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Events</h2>
+                <div class="event-grid">
+                    <div class="event-card">
+                        <h3>포틀럭 파티 (Potluck Party)</h3>
+                        <p class="event-time">⏱ 매주 금, 토 / 20:00 ~ 22:00</p>
+                        <p class="event-place">📍 장소: 서론 1층 거실</p>
+                        <p class="event-desc">각자 취향이 담긴 작은 음식이나 마실 거리를 나눠먹으며 새로운 사람들과 따뜻한 대화를 나누는 시간입니다.</p>
+                    </div>
+                    <div class="event-card">
+                        <h3>아날로그 LP 청음회</h3>
+                        <p class="event-time">⏱ 매일 아침 & 저녁 (자율 참석)</p>
+                        <p class="event-place">📍 장소: 서론 LP 존</p>
+                        <p class="event-desc">서론만의 감성이 가득한 공간에서 턴테이블이 돌아갑니다. 온전히 음악에 집중하며 여행의 피로를 풀어보세요.</p>
                     </div>
                 </div>
             </div>
@@ -158,13 +211,14 @@
                 <div class="event-container">
                     <div class="event-vinyl"><div class="vinyl-record"></div></div>
                     <div class="event-details">
+                        <p style="color:var(--text-light); margin-bottom: 20px;">서론에서는 매일 특별한 음악으로 공간을 채웁니다.</p>
                         <div class="lp-schedule">
-                            <p>아침: <span id="lp-morning-text"></span></p>
-                            <p>저녁: <span id="lp-evening-text"></span></p>
+                            <p><strong>아침의 LP :</strong> <span id="lp-morning-text"></span></p>
+                            <p><strong>저녁의 LP :</strong> <span id="lp-evening-text"></span></p>
                             <div class="lp-admin-inputs">
-                                <input type="text" id="input-lp-morning">
-                                <input type="text" id="input-lp-evening">
-                                <button class="btn-secondary" onclick="saveLP()">저장</button>
+                                <label>아침 LP 수정</label><input type="text" id="input-lp-morning">
+                                <label>저녁 LP 수정</label><input type="text" id="input-lp-evening">
+                                <button class="btn-secondary" onclick="saveLP()">LP 스케줄 저장</button>
                             </div>
                         </div>
                     </div>
@@ -175,12 +229,11 @@
         <section id="guide" class="section-padding">
             <div class="container">
                 <h2 class="section-title">Guide</h2>
-                <div class="info-card" id="guide-viewer">
-                    <div id="guide-display-content" style="white-space: pre-wrap;"></div>
-                </div>
-                <div class="admin-editable">
-                    <textarea id="admin-guide-textarea" rows="5" style="width:100%"></textarea>
-                    <button class="btn-secondary" onclick="saveGuideParams()">반영</button>
+                <div class="info-card" id="guide-viewer"><div id="guide-display-content" style="white-space: pre-wrap; line-height: 1.8;"></div></div>
+                <div class="admin-editable" style="margin-top:20px;">
+                    <h4>[관리자] 안내사항 수정</h4>
+                    <textarea id="admin-guide-textarea" rows="10" style="width:100%; padding:15px; background:#111; color:#fff; border:1px solid #333;"></textarea>
+                    <button class="btn-secondary w-100 mt-3" onclick="saveGuideParams()">반영하기</button>
                 </div>
             </div>
         </section>
@@ -188,27 +241,35 @@
         <section id="community" class="section-padding bg-light">
             <div class="container">
                 <h2 class="section-title">Community</h2>
-                <div class="write-form">
-                    <input type="text" id="board-author" placeholder="닉네임">
-                    <input type="password" id="board-pw" placeholder="비밀번호">
-                    <textarea id="board-content" placeholder="내용"></textarea>
-                    <button class="btn-primary" onclick="addBoardContent()">등록</button>
+                <div class="community-wrapper">
+                    <h3>사장님께 말해요 (건의사항)</h3>
+                    <div class="write-form">
+                        <div style="display:flex; gap:10px; margin-bottom:10px;">
+                            <input type="text" id="board-author" placeholder="닉네임" style="flex:1;">
+                            <input type="password" id="board-pw" placeholder="비번(4자리)" style="flex:1;" maxlength="4">
+                        </div>
+                        <textarea id="board-content" placeholder="건의사항을 남겨주세요." rows="4"></textarea>
+                        <button class="btn-primary" onclick="addBoardContent()">비밀글 쓰기</button>
+                    </div>
+                    <div id="board-list" style="margin-top:30px;"></div>
                 </div>
-                <div id="board-list"></div>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="container"><p>&copy; 2026 서론. All rights reserved.</p></div>
+        <div class="container">
+            <div class="footer-info"><h3>서론</h3><p>제주특별자치도 어딘가 예쁜 바닷가 마을</p></div>
+            <p class="copyright">&copy; 2026 서론 (SEORON). All rights reserved.</p>
+        </div>
     </footer>
 
     <div class="modal-overlay" id="admin-modal">
         <div class="login-modal">
-            <h2>Admin</h2>
+            <h2>Admin Login</h2>
             <input type="password" id="admin-pw" placeholder="Password">
-            <button class="btn-primary" onclick="attemptAdminLogin()">Login</button>
-            <button onclick="closeAdminModal()">Close</button>
+            <button class="btn-primary w-100" onclick="attemptAdminLogin()">로그인</button>
+            <button class="btn-secondary w-100 mt-3" onclick="document.getElementById('admin-modal').classList.remove('active')">취소</button>
         </div>
     </div>
     <script src="app.js"></script>
