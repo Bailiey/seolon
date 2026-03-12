@@ -656,7 +656,7 @@ body.admin-mode .admin-editable {
     animation: spin 4s linear infinite;
 }
 
-/* 턴테이블 중간 사진을 사진/logo.jpg로 변경 */
+/* 턴테이블 중간 사진 */
 .vinyl-record::before {
     content: '';
     position: absolute;
@@ -664,7 +664,7 @@ body.admin-mode .admin-editable {
     transform: translate(-50%, -50%);
     width: 100px;
     height: 100px;
-    background: url('사진/logo.jpg') center/cover;
+    background: url('seolon/logo.jpg') center/cover;
     border-radius: 50%;
     border: 2px solid #333;
 }
