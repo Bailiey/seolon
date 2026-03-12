@@ -18,13 +18,7 @@
 /* 기본 설정 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
-    background-color: var(--primary-color); 
-    color: var(--text-color); 
-    line-height: 1.6; 
-    font-size: 16px; 
-}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: var(--primary-color); color: var(--text-color); line-height: 1.6; font-size: 16px; }
 
 /* 관리자 모드 제어 */
 .admin-editable, .lp-admin-inputs { display: none !important; }
@@ -40,7 +34,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .nav-links { font-size: 1rem; color: var(--text-color); text-decoration: none; }
 .admin-login-btn { font-size: 0.8rem; color: var(--text-light); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 20px; cursor: pointer; background: transparent; }
 
-/* Hero Section (여백 시원하게 조절) */
+/* Hero Section */
 .hero-section { height: 100vh; background: url('https://images.unsplash.com/photo-1542442828-287217bfb87f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,0.9)); z-index: 1; }
 .hero-content { position: relative; z-index: 2; }
@@ -51,28 +45,9 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .btn-primary { display: inline-block; padding: 14px 45px; background-color: var(--accent-color); color: #000; font-weight: bold; text-decoration: none; border-radius: 2px; border: none; cursor: pointer; font-size: 1.1rem; }
 .btn-secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 15px; cursor: pointer; }
 
-/카카오톡 예약 버튼 디자인 */
-.kakao-reserve-btn {
-    display: inline-block;
-    background: transparent;          
-    color: var(--accent-color);       /* 글자색을 금색 포인트로 */
-    padding: 12px 25px;
-    border-radius: 2px;               /* 다른 버튼들과 통일 (각진 느낌) */
-    font-weight: bold;
-    text-decoration: none;
-    border: 1px solid var(--accent-color); /* 금색 테두리 추가 */
-    transition: all 0.3s ease;
-    margin-top: 20px;
-    font-size: 1rem;
-    letter-spacing: 1px;
-}
-
-/* 카톡버튼 마우스를 올렸을 때 효과 */
-.kakao-reserve-btn:hover {
-    background: var(--accent-color);  /* 금색으로 채워짐 */
-    color: #000;                      /* 글자는 검정색으로 */
-    box-shadow: 0 0 15px rgba(205, 162, 112, 0.3); /* 은은한 광채 */
-}
+/* 카카오톡 예약 버튼 디자인 */
+.kakao-reserve-btn { display: inline-block; background: transparent; color: var(--accent-color); padding: 12px 25px; border-radius: 2px; font-weight: bold; text-decoration: none; border: 1px solid var(--accent-color); transition: all 0.3s ease; margin-top: 20px; font-size: 1rem; letter-spacing: 1px; }
+.kakao-reserve-btn:hover { background: var(--accent-color); color: #000; box-shadow: 0 0 15px rgba(205, 162, 112, 0.3); }
 
 /* Reservation Section */
 .reservation-wrapper { display: flex; flex-wrap: wrap; gap: 40px; background: var(--primary-color); padding: 40px; border: 1px solid var(--border-color); border-radius: 8px; }
@@ -80,7 +55,6 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .month-selector { font-size: 1.8rem; color: #fff; font-weight: bold; }
 .cal-nav { background: none; border: 1px solid #444; color: #fff; padding: 5px 15px; cursor: pointer; border-radius: 4px; }
-
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
 .cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background-color: var(--bg-light); border-radius: 4px; cursor: pointer; position: relative; font-size: 1.2rem; }
 .cal-day.head { background: transparent; color: var(--text-light); cursor: default; font-weight: bold; }
@@ -99,23 +73,17 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .status-box.female-room { border-left: 4px solid var(--color-female); }
 .status-box.male-room { border-left: 4px solid var(--color-male); }
 
-
-/* =========================================
-   LP 디자인 (턴테이블)
-   ========================================= */
-.event-container { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; 
-                  background: var(--bg-light); padding: 50px; border-radius: 8px; border: 1px solid var(--border-color); }
-
-/* LP판 본체 */
-.vinyl-record { width: 250px; height: 250px; background: #111; border-radius: 50%;
-               border: 8px solid #222; position: relative; animation: spin 4s linear infinite; /* 빙글빙글 돌아가는 효과 */box-shadow: 0 0 30px rgba(0,0,0,0.5); /* 깊이감 있는 그림자 */}
-
-/* LP판 중앙 로고 (사진/logo.jpg) */
-.vinyl-record::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; 
-    height: 90px; background: url('사진/logo.jpg') center/cover; border-radius: 50%; border: 2px solid #333; }
-
-/* 회전 애니메이션 설정 */
+/* LP 디자인 (턴테이블) */
+.event-container { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 60px; background: var(--bg-light); padding: 60px 80px; border-radius: 12px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; margin: 40px auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.vinyl-record { width: 240px; height: 240px; background: #111; border-radius: 50%; border: 10px solid #222; position: relative; animation: spin 6s linear infinite; box-shadow: 0 0 50px rgba(0,0,0,0.6); }
+.vinyl-record::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; background: url('사진/logo.jpg') center/cover; border-radius: 50%; border: 3px solid #333; }
+.event-details { text-align: left; }
+.event-details h3 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 20px; font-weight: 400; }
+.lp-schedule { border-left: 3px solid var(--accent-color); padding: 20px 40px 20px 25px; background: rgba(0,0,0,0.2); }
+.lp-schedule p { font-size: 1.2rem; color: var(--text-color); margin-bottom: 15px; white-space: nowrap; }
+.lp-schedule p span { font-weight: bold; color: var(--white); margin-left: 10px; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
+@media (max-width: 850px) { .event-container { flex-direction: column; padding: 40px 20px; gap: 40px; } .lp-schedule { padding-right: 20px; } }
 
 /* 중앙 정렬 */
 #guide .container, #community .container { display: flex; flex-direction: column; align-items: center; }
