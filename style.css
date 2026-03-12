@@ -1,6 +1,17 @@
 /* =========================================
-   기본 테마 & 디자인 (제주 프리미엄 다크)
+   웹폰트 설정 (그리운고운체 + 의연체)
    ========================================= */
+@font-face {
+    font-family: 'Ownglyph_Euiyeon';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2205-2@1.0/Ownglyph_Euiyeon-Rg.woff2') format('woff2');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'GRI_Goun';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/GRI_Goun.woff2') format('woff2');
+    font-weight: normal;
+}
+
 :root {
     --primary-color: #121212;
     --accent-color: #cda270;
@@ -16,62 +27,60 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background-color: var(--primary-color); color: var(--text-color); line-height: 1.6; }
+body { font-family: 'Ownglyph_Euiyeon', sans-serif; background-color: var(--primary-color); color: var(--text-color); line-height: 1.6; }
 
 /* 관리자 모드 제어 */
 .admin-editable, .lp-admin-inputs { display: none !important; }
 body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: block !important; }
 
-/* =========================================
-   [수정] Hero Section (버튼 간격 확대)
-   ========================================= */
-.hero-section {
-    height: 100vh;
-    background: url('https://images.unsplash.com/photo-1542442828-287217bfb87f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
+/* Navbar */
+.navbar { background-color: rgba(18, 18, 18, 0.9); height: 80px; position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-img { height: 40px; border-radius: 4px; }
+.logo-text { font-family: 'GRI_Goun'; font-size: 1.8rem; letter-spacing: 5px; color: var(--white); }
+.nav-menu { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
+.nav-links { font-size: 1.2rem; color: var(--text-color); text-decoration: none; }
+.admin-login-btn { font-size: 0.8rem; color: var(--text-light); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 20px; cursor: pointer; background: transparent; }
+
+/* Hero Section (여백 조절됨) */
+.hero-section { height: 100vh; background: url('https://images.unsplash.com/photo-1542442828-287217bfb87f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative; display: flex; align-items: center; justify-content: center; }
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,0.9)); z-index: 1; }
-.hero-content { position: relative; z-index: 2; padding: 0 20px; }
+.hero-content { position: relative; z-index: 2; text-align: center; }
+.hero-title { font-family: 'GRI_Goun'; font-size: 6.5rem; letter-spacing: 8px; color: var(--white); margin-bottom: 35px; }
+.hero-subtitle { font-size: 2.2rem; color: var(--text-light); margin-bottom: 75px; }
 
-.hero-title { 
-    font-size: 5rem; 
-    letter-spacing: 8px; 
-    color: var(--white); 
-    font-weight: 300; 
-    margin-bottom: 30px; /* 제목 아래 간격 늘림 */
-}
-.hero-subtitle { 
-    font-size: 1.2rem; 
-    letter-spacing: 2px; 
-    color: var(--text-light); 
-    margin-bottom: 60px; /* [핵심] 설명과 버튼 사이 간격을 넓힘 */
-}
+/* Buttons */
+.btn-primary { display: inline-block; padding: 14px 45px; background-color: var(--accent-color); color: #000; font-size: 1.5rem; font-weight: bold; text-decoration: none; border-radius: 2px; }
+.btn-secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 15px; cursor: pointer; }
+.kakao-reserve-btn { display: inline-block; background: #FEE500; color: #3C1E1E; padding: 12px 25px; border-radius: 5px; font-weight: bold; text-decoration: none; }
 
-/* =========================================
-   LP 디자인 복구
-   ========================================= */
-.event-container { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; background: var(--bg-light); padding: 50px; border-radius: 8px; border: 1px solid var(--border-color); }
-.event-vinyl { flex: 1; display: flex; justify-content: center; min-width: 300px; }
-.vinyl-record { width: 250px; height: 250px; background: #111; border-radius: 50%; border: 8px solid #222; position: relative; animation: spin 4s linear infinite; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+/* Calendar & Indicators */
+.reservation-wrapper { display: flex; flex-wrap: wrap; gap: 40px; background: var(--primary-color); padding: 40px; border: 1px solid var(--border-color); }
+.calendar-section { flex: 1; min-width: 320px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background-color: var(--bg-light); border-radius: 4px; cursor: pointer; position: relative; font-size: 1.2rem; }
+.cal-day.head { background: transparent; color: var(--text-light); cursor: default; }
+.cal-day.selected { background-color: var(--accent-color); color: #000; font-weight: bold; }
+.room-indicators { position: absolute; bottom: 8px; display: flex; gap: 4px; }
+.indicator { width: 6px; height: 6px; border-radius: 50%; }
+.indicator.female { background-color: var(--color-female); }
+.indicator.male { background-color: var(--color-male); }
+.indicator.none { background-color: var(--color-none); }
+
+/* LP Vinyl (복구됨) */
+.event-container { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; background: var(--bg-light); padding: 50px; border-radius: 8px; }
+.vinyl-record { width: 250px; height: 250px; background: #111; border-radius: 50%; border: 8px solid #222; position: relative; animation: spin 4s linear infinite; }
 .vinyl-record::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; background: url('사진/logo.jpg') center/cover; border-radius: 50%; border: 2px solid #333; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* =========================================
-   커뮤니티 중앙 정렬 & 디자인
-   ========================================= */
-#community .container { display: flex; flex-direction: column; align-items: center; }
-.community-wrapper { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 800px; }
-.write-form { background: var(--primary-color); padding: 25px; border-radius: 4px; margin-bottom: 30px; }
-.write-form input, .write-form textarea { width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: #fff; margin-bottom: 10px; }
-.board-item { border-bottom: 1px solid #333; padding: 15px 0; width: 100%; }
-.board-item-title { cursor: pointer; display: flex; justify-content: space-between; color: var(--white); }
-.board-item-content { display: none; padding: 15px; background: #222; margin-top: 10px; border-radius: 4px; }
-.board-item-content.active { display: block; }
+/* Community & Guide 중앙 정렬 */
+#guide .container, #community .container { display: flex; flex-direction: column; align-items: center; }
+.info-card, .community-wrapper { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 800px; }
+.write-form { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.write-form input, .write-form textarea { background: #111; border: 1px solid #333; color: #fff; padding: 12px; font-family: inherit; }
 
-/* 나머지 달력 및 버튼 스타일 유지 */
-.kakao-reserve-btn { display: inline-block; background: #FEE500; color: #3C1E1E; padding: 12px 25px; border-radius: 5px; font-weight: bold; text-decoration: none; }
-.btn-primary { display: inline-block; padding: 14px 34px; background-color: var(--accent-color); color: #000; font-weight: 600; text-decoration: none; }
+/* Modal */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 2000; }
+.modal-overlay.active { display: flex; }
+.login-modal { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--accent-color); text-align: center; }
