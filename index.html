@@ -15,7 +15,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
 
     <script>
-        // 사장님의 파이어베이스 설정값
         const firebaseConfig = {
             apiKey: "AIzaSyCDEKWXCOgRC9C_RNX_h8XhmWiMXIAtJkM",
             authDomain: "seolon-66bd0.firebaseapp.com",
@@ -26,8 +25,6 @@
             appId: "1:626593879677:web:c778c6189948b6486e8314",
             measurementId: "G-Y6KY7NQN01"
         };
-
-        // 파이어베이스 초기화
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const auth = firebase.auth();
@@ -74,53 +71,15 @@
                 <div class="room-grid">
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
-                        <div class="room-info">
-                            <h3>3인 도미토리</h3>
-                            <p>개별 욕실이 포함된 편안한 3인 프라이빗 공간입니다.</p>
-                            <ul class="room-features">
-                                <li><span>🛏️</span> 싱글베드 3개</li>
-                                <li><span>🚿</span> 3인 전용 욕실</li>
-                            </ul>
-                        </div>
+                        <div class="room-info"><h3>3인 도미토리</h3><p>개별 욕실이 포함된 편안한 3인 프라이빗 공간입니다.</p></div>
                     </div>
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
-                        <div class="room-info">
-                            <h3>4인 도미토리</h3>
-                            <p>아늑한 분위기의 4인실. 조용한 휴식을 원하시는 분들께 추천합니다.</p>
-                            <ul class="room-features">
-                                <li><span>🛏️</span> 2층 침대 2개</li>
-                                <li><span>🚿</span> 공용 욕실</li>
-                            </ul>
-                        </div>
+                        <div class="room-info"><h3>4인 도미토리</h3><p>아늑한 분위기의 4인실. 조용한 휴식을 원하시는 분들께 추천합니다.</p></div>
                     </div>
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
-                        <div class="room-info">
-                            <h3>6인 도미토리</h3>
-                            <p>넓고 쾌적한 다인실. 개인 커튼과 은은한 조명으로 편안함을 제공합니다.</p>
-                            <ul class="room-features">
-                                <li><span>🛏️</span> 싱글베드 3개</li>
-                                <li><span>🚿</span> 공용 욕실</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="bathroom" class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Bathroom</h2>
-                <div class="info-card-container">
-                    <div class="info-card">
-                        <h3>공용 욕실 안내</h3>
-                        <p>깔끔하게 관리되는 공용 욕실을 운영합니다.</p>
-                        <ul class="amenity-list">
-                            <li><span>🧻</span> 기본 제공: 수건(1인 2장), 샴푸, 린스, 바디워시, 치약</li>
-                            <li><span>💨</span> 구비 물품: 헤어드라이어</li>
-                            <li>* 개인 칫솔은 직접 챙겨주세요.</li>
-                        </ul>
+                        <div class="room-info"><h3>6인 도미토리</h3><p>넓고 쾌적한 다인실. 개인 커튼과 은은한 조명으로 편안함을 제공합니다.</p></div>
                     </div>
                 </div>
             </div>
@@ -168,34 +127,10 @@
                                     <button class="btn-secondary" onclick="saveRoomGender('room6')">저장</button>
                                 </div>
                             </div>
-
-                            <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px; text-align: center;">
-                                <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 15px;">예약은 카카오톡 채널 '서론'으로 문의 부탁드립니다.</p>
-                                <a href="https://pf.kakao.com/_xxxx" target="_blank" class="kakao-reserve-btn">
-                                    💬 숙박 예약하기 (카카오톡 채널)
-                                </a>
+                            <div style="margin-top: 30px; text-align: center; border-top: 1px solid #333; padding-top: 20px;">
+                                <a href="https://pf.kakao.com/_your_link" target="_blank" class="kakao-reserve-btn">💬 숙박 예약하기 (카카오톡 채널)</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="events-guide" class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Events</h2>
-                <div class="event-grid">
-                    <div class="event-card">
-                        <h3>포틀럭 파티 (Potluck Party)</h3>
-                        <p class="event-time">⏱ 매주 금, 토 / 20:00 ~ 22:00</p>
-                        <p class="event-place">📍 장소: 서론 1층 거실</p>
-                        <p class="event-desc">각자 취향이 담긴 작은 음식이나 마실 거리를 나눠먹으며 새로운 사람들과 따뜻한 대화를 나누는 시간입니다.</p>
-                    </div>
-                    <div class="event-card">
-                        <h3>아날로그 LP 청음회</h3>
-                        <p class="event-time">⏱ 매일 아침 & 저녁 (자율 참석)</p>
-                        <p class="event-place">📍 장소: 서론 LP 존</p>
-                        <p class="event-desc">서론만의 감성이 가득한 공간에서 턴테이블이 돌아갑니다. 온전히 음악에 집중하며 여행의 피로를 풀어보세요.</p>
                     </div>
                 </div>
             </div>
@@ -230,7 +165,7 @@
                     </div>
                 </div>
                 <div class="admin-editable" style="margin-top:20px; text-align: center;">
-                    <textarea id="admin-guide-textarea" rows="8" style="width:100%; max-width: 800px;"></textarea><br>
+                    <textarea id="admin-guide-textarea" rows="5" style="width:100%; max-width:800px;"></textarea>
                     <button class="btn-secondary mt-3" onclick="saveGuideParams()">반영</button>
                 </div>
             </div>
@@ -240,32 +175,28 @@
             <div class="container">
                 <h2 class="section-title">Community</h2>
                 <div class="community-wrapper">
-                    <div class="board-header"><h3>사장님께 말해요</h3></div>
                     <div class="write-form">
-                        <div class="form-group"><input type="text" id="board-author" placeholder="닉네임"></div>
-                        <div class="form-group"><input type="password" id="board-pw" placeholder="비밀번호(4자리)"></div>
-                        <div class="form-group"><textarea id="board-content" placeholder="건의사항을 자유롭게 남겨주세요." rows="4"></textarea></div>
+                        <input type="text" id="board-author" placeholder="닉네임">
+                        <input type="password" id="board-pw" placeholder="비밀번호">
+                        <textarea id="board-content" placeholder="내용" rows="4"></textarea>
                         <button class="btn-primary" onclick="addBoardContent()">등록</button>
                     </div>
-                    <div id="board-list" class="board-list" style="margin-top:30px;"></div>
+                    <div id="board-list" class="board-list"></div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="container"><p>&copy; 2026 서론. All rights reserved.</p></div>
-    </footer>
+    <footer><div class="container"><p>&copy; 2026 서론. All rights reserved.</p></div></footer>
 
     <div class="modal-overlay" id="admin-modal">
         <div class="login-modal">
-            <h2>Admin Login</h2>
+            <h2>Admin</h2>
             <input type="password" id="admin-pw" placeholder="Password">
-            <button class="btn-primary w-100" onclick="attemptAdminLogin()">로그인</button>
-            <button class="btn-secondary w-100 mt-3" onclick="closeAdminModal()">취소</button>
+            <button class="btn-primary" onclick="attemptAdminLogin()">Login</button>
+            <button onclick="closeAdminModal()">Close</button>
         </div>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
