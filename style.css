@@ -1,17 +1,6 @@
 /* =========================================
-   웹폰트 설정 (그리운고운체 + 온글잎의연체)
+   기본 테마 & 디자인 (제주 프리미엄 다크)
    ========================================= */
-@font-face {
-    font-family: 'Ownglyph_Euiyeon';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2205-2@1.0/Ownglyph_Euiyeon-Rg.woff2') format('woff2');
-    font-weight: normal;
-}
-@font-face {
-    font-family: 'GRI_Goun';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/GRI_Goun.woff2') format('woff2');
-    font-weight: normal;
-}
-
 :root {
     --primary-color: #121212;
     --accent-color: #cda270;
@@ -20,16 +9,17 @@
     --text-light: #a0a0a0;
     --white: #ffffff;
     --border-color: #333333;
-    --color-female: rgba(255, 182, 193, 0.85); /* 핑크 */
-    --color-male: rgba(135, 206, 235, 0.85);   /* 블루 */
-    --color-none: #333333;                      /* 미정 */
-    --color-full: rgba(255, 69, 58, 0.9);       /* 마감 */
+    --color-female: rgba(255, 182, 193, 0.85);
+    --color-male: rgba(135, 206, 235, 0.85);
+    --color-none: #333333;
+    --color-full: rgba(255, 69, 58, 0.9);
 }
 
 /* 기본 설정 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body { 
-    font-family: 'Ownglyph_Euiyeon', sans-serif; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
     background-color: var(--primary-color); 
     color: var(--text-color); 
     line-height: 1.6; 
@@ -45,20 +35,20 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo-img { height: 40px; border-radius: 4px; }
-.logo-text { font-family: 'GRI_Goun'; font-size: 1.8rem; letter-spacing: 5px; color: var(--white); }
+.logo-text { font-size: 1.6rem; letter-spacing: 5px; color: var(--white); font-weight: bold; }
 .nav-menu { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
-.nav-links { font-size: 1.2rem; color: var(--text-color); text-decoration: none; }
+.nav-links { font-size: 1rem; color: var(--text-color); text-decoration: none; }
 .admin-login-btn { font-size: 0.8rem; color: var(--text-light); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 20px; cursor: pointer; background: transparent; }
 
-/* Hero Section (메인 여백 수정본) */
+/* Hero Section (여백 시원하게 조절) */
 .hero-section { height: 100vh; background: url('https://images.unsplash.com/photo-1542442828-287217bfb87f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,0.9)); z-index: 1; }
 .hero-content { position: relative; z-index: 2; }
-.hero-title { font-family: 'GRI_Goun'; font-size: 6.5rem; letter-spacing: 8px; color: var(--white); margin-bottom: 35px; }
-.hero-subtitle { font-size: 2.2rem; color: var(--text-light); margin-bottom: 75px; }
+.hero-title { font-size: 5rem; letter-spacing: 8px; color: var(--white); margin-bottom: 30px; font-weight: bold; }
+.hero-subtitle { font-size: 1.3rem; color: var(--text-light); margin-bottom: 75px; letter-spacing: 2px; }
 
 /* Buttons */
-.btn-primary { display: inline-block; padding: 14px 45px; background-color: var(--accent-color); color: #000; font-size: 1.5rem; font-weight: bold; text-decoration: none; border-radius: 2px; border: none; cursor: pointer; }
+.btn-primary { display: inline-block; padding: 14px 45px; background-color: var(--accent-color); color: #000; font-weight: bold; text-decoration: none; border-radius: 2px; border: none; cursor: pointer; font-size: 1.1rem; }
 .btn-secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 15px; cursor: pointer; }
 .kakao-reserve-btn { display: inline-block; background: #FEE500; color: #3C1E1E; padding: 12px 25px; border-radius: 5px; font-weight: bold; text-decoration: none; }
 
@@ -66,12 +56,12 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .reservation-wrapper { display: flex; flex-wrap: wrap; gap: 40px; background: var(--primary-color); padding: 40px; border: 1px solid var(--border-color); border-radius: 8px; }
 .calendar-section { flex: 1; min-width: 320px; }
 .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.month-selector { font-size: 1.8rem; color: #fff; font-family: 'GRI_Goun'; }
-.cal-nav { background: none; border: 1px solid #444; color: #fff; padding: 5px 15px; cursor: pointer; }
+.month-selector { font-size: 1.8rem; color: #fff; font-weight: bold; }
+.cal-nav { background: none; border: 1px solid #444; color: #fff; padding: 5px 15px; cursor: pointer; border-radius: 4px; }
 
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
 .cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background-color: var(--bg-light); border-radius: 4px; cursor: pointer; position: relative; font-size: 1.2rem; }
-.cal-day.head { background: transparent; color: var(--text-light); cursor: default; }
+.cal-day.head { background: transparent; color: var(--text-light); cursor: default; font-weight: bold; }
 .cal-day.selected { background-color: var(--accent-color); color: #000; font-weight: bold; }
 
 /* 성별 점 디자인 */
@@ -93,23 +83,23 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .vinyl-record::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; background: url('사진/logo.jpg') center/cover; border-radius: 50%; border: 2px solid #333; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* Community & Guide 중앙 정렬 */
+/* 중앙 정렬 */
 #guide .container, #community .container { display: flex; flex-direction: column; align-items: center; }
 .info-card, .community-wrapper { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 800px; margin: 0 auto; }
 .write-form { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 20px; }
-.write-form input, .write-form textarea { background: #111; border: 1px solid #333; color: #fff; padding: 12px; font-family: inherit; font-size: 1.1rem; }
+.write-form input, .write-form textarea { background: #111; border: 1px solid #333; color: #fff; padding: 12px; font-size: 1rem; }
 .board-item { border-bottom: 1px solid #333; padding: 15px 0; width: 100%; }
 .board-item-title { cursor: pointer; display: flex; justify-content: space-between; font-size: 1.1rem; }
 .board-item-content { display: none; padding: 15px; background: #222; margin-top: 10px; border-radius: 4px; }
 .board-item-content.active { display: block; }
 
+/* Section Titles */
+.section-padding { padding: 100px 0; }
+.section-title { font-size: 2.2rem; text-align: center; margin-bottom: 3.5rem; color: #fff; letter-spacing: 4px; text-transform: uppercase; font-weight: bold; }
+.section-title::after { content: ''; display: block; width: 60px; height: 2px; background: var(--accent-color); margin: 20px auto 0; }
+.bg-light { background-color: var(--bg-light); }
+
 /* Modal */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 2000; }
 .modal-overlay.active { display: flex; }
 .login-modal { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--accent-color); text-align: center; }
-
-/* Section Titles */
-.section-padding { padding: 100px 0; }
-.section-title { font-family: 'GRI_Goun'; font-size: 2.5rem; text-align: center; margin-bottom: 3.5rem; color: #fff; letter-spacing: 4px; text-transform: uppercase; }
-.section-title::after { content: ''; display: block; width: 60px; height: 2px; background: var(--accent-color); margin: 20px auto 0; }
-.bg-light { background-color: var(--bg-light); }
