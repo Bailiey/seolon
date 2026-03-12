@@ -27,23 +27,20 @@
 </head>
 <body>
     <nav class="navbar">
-    <div class="nav-container">
-        <a href="#home" class="logo">
-            <img src="사진/logo.jpg" alt="서론" class="logo-img">
-            <span class="logo-text">서론</span>
-        </a>
-        <ul class="nav-menu">
-            <li><a href="#home" class="nav-links">홈</a></li>
-            <li><a href="#rooms" class="nav-links">공간안내</a></li> 
-            <li><a href="#reservation" class="nav-links">예약현황</a></li> 
-            <li><a href="#events" class="nav-links">오늘의LP</a></li>   
-            <li><a href="#guide" class="nav-links">안내사항</a></li>
-            <li><a href="#community" class="nav-links">게시판</a></li>
-            <li><button class="admin-login-btn" id="btn-admin-login">Admin</button></li>
-            <li><button class="admin-login-btn" id="btn-admin-logout" style="display:none;">Logout</button></li>
-        </ul>
-    </div>
-</nav>
+        <div class="nav-container">
+            <a href="#home" class="logo"><img src="사진/logo.jpg" alt="서론" class="logo-img"><span class="logo-text">서론</span></a>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-links">홈</a></li>
+                <li><a href="#rooms" class="nav-links">공간안내</a></li> 
+                <li><a href="#reservation" class="nav-links">예약현황</a></li> 
+                <li><a href="#events" class="nav-links">오늘의LP</a></li>   
+                <li><a href="#guide" class="nav-links">안내사항</a></li>
+                <li><a href="#community" class="nav-links">게시판</a></li>
+                <li><button class="admin-login-btn" id="btn-admin-login">Admin</button></li>
+                <li><button class="admin-login-btn" id="btn-admin-logout" style="display:none;">Logout</button></li>
+            </ul>
+        </div>
+    </nav>
 
     <main>
         <section id="home" class="hero-section">
@@ -56,52 +53,32 @@
         </section>
 
         <section id="rooms" class="section-padding bg-light">
-    <div class="container">
-        <h2 class="section-title">Rooms & Facilities</h2>
-        <div class="rooms-wrapper" style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto;">
-            
-            <div class="info-card" style="flex: 1; min-width: 320px; max-width: 500px;">
-                <h3 style="color: var(--accent-color); margin-bottom: 20px; font-weight: 400;">Stay (객실 안내)</h3>
-                <ul style="list-style: none; color: var(--text-color); line-height: 2.2;">
-                    <li><span style="margin-right: 10px;">🏠</span> 3인 프라이빗 룸 (개별 욕실)</li>
-                    <li><span style="margin-right: 10px;">👩‍👧‍👧</span> 4인 여성 도미토리</li>
-                    <li><span style="margin-right: 10px;">👨‍👦‍👦</span> 6인 남성 도미토리</li>
-                    <li style="color: var(--text-light); font-size: 0.9rem; margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
-                        * 모든 객실은 매일 정갈하게 정돈됩니다.
-                    </li>
-                </ul>
+            <div class="container">
+                <h2 class="section-title">Rooms & Facilities</h2>
+                <div class="rooms-wrapper" style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto;">
+                    <div class="info-card" style="flex: 1; min-width: 320px; max-width: 500px;">
+                        <h3 style="color: var(--accent-color); margin-bottom: 20px; font-weight: 400;">Stay (객실 안내)</h3>
+                        <ul style="list-style: none; color: var(--text-color); line-height: 2.2;">
+                            <li><span style="margin-right: 10px;">🏠</span> 3인 프라이빗 룸 (개별 욕실)</li>
+                            <li><span style="margin-right: 10px;">👩‍👧‍👧</span> 4인 여성 도미토리</li>
+                            <li><span style="margin-right: 10px;">👨‍👦‍👦</span> 6인 남성 도미토리</li>
+                            <li style="color: var(--text-light); font-size: 0.9rem; margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">* 모든 객실은 매일 정갈하게 정돈됩니다.</li>
+                        </ul>
+                    </div>
+                    <div id="bathroom" class="info-card" style="flex: 1; min-width: 320px; max-width: 500px;">
+                        <h3 style="color: var(--accent-color); margin-bottom: 20px; font-weight: 400;">Bathroom (욕실 안내)</h3>
+                        <p style="margin-bottom: 15px; color: var(--text-light);">깔끔하게 관리되는 공용 욕실을 운영합니다.</p>
+                        <ul style="list-style: none; color: var(--text-color); line-height: 2.2;">
+                            <li><span style="margin-right: 10px;">🧻</span> 수건(1인 2장), 샴푸, 린스, 바디워시, 치약</li>
+                            <li><span style="margin-right: 10px;">💨</span> 구비 물품: 헤어드라이어</li>
+                            <li style="color: var(--text-light); font-size: 0.9rem; margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">* 개인 칫솔은 직접 챙겨주세요.<br>* 타인을 배려하는 조용한 사용을 부탁드립니다.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div id="bathroom" class="info-card" style="flex: 1; min-width: 320px; max-width: 500px;">
-                <h3 style="color: var(--accent-color); margin-bottom: 20px; font-weight: 400;">Bathroom (욕실 안내)</h3>
-                <p style="margin-bottom: 15px; color: var(--text-light);">깔끔하게 관리되는 공용 욕실을 운영합니다.</p>
-                <ul style="list-style: none; color: var(--text-color); line-height: 2.2;">
-                    <li><span style="margin-right: 10px;">🧻</span> 기본 제공: 수건(1인 2장), 샴푸, 린스, 바디워시, 치약</li>
-                    <li><span style="margin-right: 10px;">💨</span> 구비 물품: 헤어드라이어</li>
-                    <li style="color: var(--text-light); font-size: 0.9rem; margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
-                        * 개인 칫솔은 직접 챙겨주세요.<br>
-                        * 타인을 배려하는 조용한 사용을 부탁드립니다.
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-    <section id="reservation" class="section-padding">
-        <div class="container">
-            <h2 class="section-title">Reservation</h2>
-            </div>
-    </section>
-
-    <section id="events" class="section-padding bg-light">
-        <div class="container">
-            <h2 class="section-title">Today's LP</h2>
-            </div>
-    </section>
-
-        <section id="reservation" class="section-padding bg-light">
+        <section id="reservation" class="section-padding">
             <div class="container">
                 <h2 class="section-title">Reservation</h2>
                 <div class="reservation-wrapper">
@@ -138,32 +115,27 @@
             </div>
         </section>
 
-        <section id="events" class="section-padding">
-    <div class="container">
-        <h2 class="section-title">Today's LP</h2>
-        <div class="event-container">
-            <div class="event-vinyl"><div class="vinyl-record"></div></div>
-            <div class="event-details">
-                <h3>아날로그 LP 감성 청음</h3>
-                <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">
-                    서론에서는 매주 특별한 음악으로 공간을 채웁니다.<br>
-                    자유롭게 돌아가는 턴테이블과 함께 휴식을 취하세요.
-                </p>
-                <div class="lp-schedule">
-                    <p>아침의 LP : <span id="lp-morning-text">-</span></p>
-                    <p>저녁의 LP : <span id="lp-evening-text">-</span></p>
-                    <div class="lp-admin-inputs">
-                        <input type="text" id="input-lp-morning" placeholder="아침 LP">
-                        <input type="text" id="input-lp-evening" placeholder="저녁 LP">
-                        <button class="btn-secondary" onclick="saveLP()">저장</button>
+        <section id="events" class="section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title">Today's LP</h2>
+                <div class="event-container">
+                    <div class="event-vinyl"><div class="vinyl-record"></div></div>
+                    <div class="event-details">
+                        <h3>아날로그 LP 감성 청음</h3>
+                        <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">서론에서는 매주 특별한 음악으로 공간을 채웁니다.<br>자유롭게 돌아가는 턴테이블과 함께 휴식을 취하세요.</p>
+                        <div class="lp-schedule">
+                            <p>아침의 LP : <span id="lp-morning-text">-</span></p>
+                            <p>저녁의 LP : <span id="lp-evening-text">-</span></p>
+                            <div class="lp-admin-inputs">
+                                <input type="text" id="input-lp-morning" placeholder="아침 LP"><input type="text" id="input-lp-evening" placeholder="저녁 LP"><button class="btn-secondary" onclick="saveLP()">저장</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-        <section id="guide" class="section-padding bg-light">
+        <section id="guide" class="section-padding">
             <div class="container">
                 <h2 class="section-title">Guide</h2>
                 <div class="info-card"><div id="guide-display-content" style="white-space: pre-wrap;"></div></div>
@@ -171,7 +143,7 @@
             </div>
         </section>
 
-        <section id="community" class="section-padding">
+        <section id="community" class="section-padding bg-light">
             <div class="container">
                 <h2 class="section-title">Community</h2>
                 <div class="community-wrapper">
@@ -183,20 +155,15 @@
     </main>
 
     <div class="modal-overlay" id="admin-modal"><div class="login-modal"><h2>Admin Login</h2><input type="password" id="admin-pw" placeholder="Password"><button class="btn-primary" onclick="attemptAdminLogin()">로그인</button><button class="btn-secondary" onclick="closeAdminModal()">취소</button></div></div>
-    <script src="app.js"></script>
-
+    
     <footer style="padding: 60px 0; text-align: center; border-top: 1px solid #333; margin-top: 80px; background-color: #121212;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-        <p style="color: var(--text-color); font-size: 0.95rem; margin-bottom: 15px; letter-spacing: 0.5px;">
-            대표: 설정현 <span style="color: var(--accent-color); margin: 0 10px; font-weight: bold;">|</span> 사업자등록번호: 000-00-00000
-        </p>
-        <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 25px;">
-            주소: 제주특별자치도 OO동 OOO길
-        </p>
-        <p style="color: #666; font-size: 0.85rem; letter-spacing: 1px; margin-top: 20px; border-top: 1px solid #222; padding-top: 20px;">
-            &copy; 2026 SEOLON GUESTHOUSE. All rights reserved.
-        </p>
-    </div>
-</footer>
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <p style="color: var(--text-color); font-size: 0.95rem; margin-bottom: 15px; letter-spacing: 0.5px;">대표: 설정현 <span style="color: var(--accent-color); margin: 0 10px; font-weight: bold;">|</span> 사업자등록번호: 000-00-00000</p>
+            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 25px;">주소: 제주특별자치도 OO동 OOO길</p>
+            <p style="color: #666; font-size: 0.85rem; letter-spacing: 1px; margin-top: 20px; border-top: 1px solid #222; padding-top: 20px;">&copy; 2026 SEOLON GUESTHOUSE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
 </body>
 </html>
