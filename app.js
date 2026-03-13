@@ -108,47 +108,35 @@ function refreshRoomStatus(data) {
         const box = document.getElementById(`box-${r}`);
         const label = document.getElementById(`label-${r}`);
         
-        // [중요] 사장님 HTML의 6인실 ID가 'capa-room36'이므로 둘 다 체크하도록 보완
+        // 6인실 ID 오타(capa-room36) 방어 로직
         let capa = document.getElementById(`capa-${r}`);
         if(r === 'room6' && !capa) {
             capa = document.getElementById('capa-room36');
         }
 
-        // 1. 성별 배경색 입히기 (이미 잘 작동하는 부분)
+        // 1. 성별 배경색 및 라벨 업데이트
         if(box) box.className = `status-box ${rd.gender}-room`;
         if(label) label.innerText = rd.gender === 'none' ? '미정' : (rd.gender === 'male' ? '남성' : '여성');
         
-        // 2. [오류 해결] 실제 Firebase 데이터(rd.count)를 화면에 주입
+        // 2. 인원수 텍스트 업데이트 (중복 오류 방지)
         if(capa) {
             let statusText = `인원: ${rd.count} / ${max}`;
-            
-            // 만약 다 찼다면 뒤에 Full 추가
             if(rd.count >= max) {
-                statusText += ` <span class="full-label" style="color: #c05a5a; font-weight: 400; margin-left: 8px;">Full</span>`;
+                statusText += ` <span class="full-label">Full</span>`;
             }
-            
-            // HTML의 0 / 3 글자를 싹 지우고 실제 데이터로 덮어씌움
             capa.innerHTML = statusText;
         }
 
+        // 3. 관리자 모드 동기화 (오류 발생 지점 수정완료)
         if(isAdmin) {
             const adminSel = document.getElementById(`admin-select-${r}`);
             const adminCap = document.getElementById(`admin-capa-${r}`);
             if(adminSel) adminSel.value = rd.gender;
             if(adminCap) adminCap.value = rd.count;
         }
-    });
-}
-        // 4. 관리자 모드 동기화
-        if(isAdmin) {
-            const adminSel = document.getElementById(`admin-select-${r}`);
-            const adminCap = document.getElementById(`admin-capa-${r}`);
-            if(adminSel) adminSel.value = rd.gender;
-            if(adminCap) adminCap.value = rd.count;
-        }
-    });
-}
-    
+    }); // forEach 끝
+} // 함수 끝
+
 
 async function attemptAdminLogin() {
     if (document.getElementById('admin-pw').value === ADMIN_PW) { 
