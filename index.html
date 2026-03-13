@@ -128,31 +128,31 @@
             </div>
         </section>
 
-        <section id="potluck" class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Potluck Time</h2>
-                <div class="event-container" style="background: var(--bg-light);">
-                    <div style="flex: 0 0 240px; height: 240px; background: url('https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover; border-radius: 50%; border: 10px solid #222; box-shadow: 0 0 50px rgba(0,0,0,0.6);"></div>
-                    <div class="event-details">
-                        <h3>각자의 맛, 하나의 이야기</h3>
-                        <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">준비한 저녁 거리와 소중한 이야기들을 들고 모여주세요.<br>서론의 저녁은 함께 나누는 온기로 완성됩니다.</p>
-                        <div class="lp-schedule">
-                            <p>🕒 시 간 : <span>매일 저녁 8시</span></p>
-                            <p>🍷 장 소 : <span>서론 공용 라운지</span></p>
-                            <p>🎒 준비물 : <span>음식, 술, 그리고 이야기</span></p>
-                        </div>
-                    </div>
+        <section id="potluck" class="section-padding"> <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+        <h2 class="section-title">Potluck Time</h2>
+        
+        <div class="potluck-container" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
+            
+            <div style="flex: 0 0 300px; height: 220px; background: url('https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);">
+            </div>
+
+            <div style="flex: 1; min-width: 250px; text-align: left;">
+                <h3 style="color: var(--accent-color); font-size: 1.6rem; margin-bottom: 15px; font-weight: 400;">각자의 맛, 하나의 이야기</h3>
+                <p style="color: var(--text-color); line-height: 1.8; font-size: 1rem; margin-bottom: 20px;">
+                    서론의 저녁은 함께 나누는 온기로 완성됩니다.<br>
+                    각자 준비한 간단한 저녁 거리와 약간의 술,<br>
+                    그리고 오늘 하루의 이야기를 들고 모여주세요.
+                </p>
+                
+                <div style="border-left: 2px solid var(--accent-color); padding-left: 15px; background: rgba(0,0,0,0.2); padding: 12px 15px;">
+                    <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 5px;">🕒 <strong>시간:</strong> 매일 저녁 8시 / 공용 라운지</p>
+                    <p style="font-size: 0.95rem; color: var(--text-light);">🍷 <strong>준비물:</strong> 음식, 약간의 술, 그리고 당신의 이야기</p>
                 </div>
             </div>
-        </section>
 
-        <section id="guide" class="section-padding bg-light">
-            <div class="container">
-                <h2 class="section-title">Guide</h2>
-                <div class="info-card"><div id="guide-display-content" style="white-space: pre-wrap;"></div></div>
-                <div class="admin-editable" style="margin-top:20px; text-align: center;"><textarea id="admin-guide-textarea" rows="5" style="width:100%; max-width:800px;"></textarea><br><button class="btn-secondary mt-3" onclick="saveGuideParams()">반영</button></div>
-            </div>
-        </section>
+        </div>
+    </div>
+</section>
 
         <section id="community" class="section-padding">
             <div class="container">
