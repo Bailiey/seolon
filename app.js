@@ -143,34 +143,77 @@ function closeAdminModal() {
 }
 
 async function addBoardContent() {
-    const a = document.getElementById('board-author').value;
-    const p = document.getElementById('board-pw').value;
-    const c = document.getElementById('board-content').value;
-    if(!a || !c) return alert('닉네임과 내용을 적어주세요.');
-    await database.ref('posts').push().set({ author: a, pw: p, content: c, date: new Date().toLocaleDateString() });
-    alert('등록되었습니다.');
-    document.getElementById('board-author').value = ''; 
-    document.getElementById('board-pw').value = ''; 
-    document.getElementById('board-content').value = '';
+    const authorInput = document.getElementById('board-author');
+    const pwInput = document.getElementById('board-pw');
+    const contentInput = document.getElementById('board-content');
+
+    const author = authorInput.value.trim();
+    const pw = pwInput.value.trim();
+    const content = contentInput.value.trim();
+
+    if (!author || !content) {
+        return alert('닉네임과 내용을 입력해주세요.');
+    }
+
+    try {
+        // Firebase에 데이터 밀어넣기 (id를 자동으로 생성하는 push 사용)
+        await database.ref('posts').push({
+            author: author,
+            pw: pw,
+            content: content,
+            date: new Date().toLocaleDateString()
+        });
+
+        alert('이야기가 등록되었습니다.');
+
+        // 입력창 초기화
+        authorInput.value = '';
+        pwInput.value = '';
+        contentInput.value = '';
+        
+    } catch (error) {
+        console.error("데이터 저장 오류:", error);
+        alert('저장에 실패했습니다. 다시 시도해주세요.');
+    }
 }
 
+// 2. 게시판 렌더링 함수 수정 (데이터 구조 충돌 방지)
 function renderBoard(posts) {
-    const list = document.getElementById('board-list'); list.innerHTML = '';
-    if(!posts) return;
-    Object.keys(posts).reverse().forEach(k => {
-        const p = posts[k];
-        const item = document.createElement('div'); item.className = 'board-item';
+    const list = document.getElementById('board-list');
+    if (!list) return;
+    
+    list.innerHTML = '';
+    if (!posts) {
+        list.innerHTML = '<p style="text-align:center; color:var(--text-light); padding:20px;">아직 작성된 이야기가 없습니다.</p>';
+        return;
+    }
+
+    // 최신글이 위로 오도록 역순 정렬하여 출력
+    Object.keys(posts).reverse().forEach(key => {
+        const p = posts[key];
+        const item = document.createElement('div');
+        item.className = 'board-item';
+        
+        // 사장님의 '#2'번 디자인 레이아웃 그대로 유지
         item.innerHTML = `
             <div class="board-item-title" onclick="this.nextElementSibling.classList.toggle('active')">
                 <span>🔒 비밀글 (${p.author})</span>
                 <span>${p.date}</span>
             </div>
             <div class="board-item-content">
-                ${isAdmin ? `[비번:${p.pw}]<br>${p.content}<br><button onclick="deletePost('${k}')">삭제</button>` : 
-                `<input type="password" id="pw-${k}" style="width:80px; background:#111; color:#fff;">
-                 <button onclick="checkPw('${k}','${p.pw}')">확인</button>
-                 <div id="tx-${k}" style="display:none; margin-top:10px;">${p.content}</div>`}
-            </div>`;
+                ${isAdmin ? `
+                    <div style="color:var(--accent-color); margin-bottom:10px;">[비밀번호: ${p.pw}]</div>
+                    <div style="margin-bottom:10px;">${p.content}</div>
+                    <button class="btn-secondary" style="font-size:0.8rem;" onclick="deletePost('${key}')">삭제</button>
+                ` : `
+                    <div id="pw-area-${key}">
+                        <input type="password" id="pw-${key}" placeholder="비밀번호 입력" style="width:100px; background:#111; color:#fff; border:1px solid #333; padding:5px;">
+                        <button class="btn-secondary" style="padding:5px 10px;" onclick="checkPw('${key}', '${p.pw}')">확인</button>
+                    </div>
+                    <div id="tx-${key}" style="display:none; margin-top:10px; white-space:pre-wrap;">${p.content}</div>
+                `}
+            </div>
+        `;
         list.appendChild(item);
     });
 }
