@@ -128,23 +128,26 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     [수정] 객실 안내 (Rooms) 280px 일렬 정렬
    ========================================= */
 #rooms .container {
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 1000px !important; 
+    margin: 0 auto !important;
 }
+
 .room-grid {
-    display: grid;
-    /* [핵심] 너비를 280px로 딱 고정해서 세 개가 한 줄에 나오도록 유도 */
-    grid-template-columns: repeat(3, 280px) !important;
-    gap: 20px; /* 사이 간격도 살짝 조절 */
-    justify-content: center;
+    display: grid !important;
+    /* [핵심] 너비를 220px로 고정하고 '무조건 3열'로 생성 */
+    grid-template-columns: repeat(3, 220px) !important; 
+    gap: 30px;                /* 카드 사이 간격 */
+    justify-content: center;  /* 3개의 덩어리를 화면 중앙으로 */
+    width: 100%;
 }
+
 .room-card {
     background: var(--primary-color);
     border-radius: 4px;
     overflow: hidden;
     transition: transform 0.4s ease, border-color 0.4s ease;
     border: 1px solid var(--border-color);
-    width: 280px !important;
+    width: 220px !important;  /* 카드 너비 고정 */
     margin: 0 auto;
 }
 .room-card:hover {
