@@ -23,12 +23,11 @@ body {
     background-color: var(--primary-color); 
     color: var(--text-color); 
     line-height: 1.6; 
-    font-size: 16px; 
 }
 
 /* 관리자 모드 제어 */
-.admin-editable, .lp-admin-inputs { display: none !important; }
-body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: block !important; }
+.admin-editable { display: none !important; }
+body.admin-mode .admin-editable { display: block !important; }
 
 /* Navbar */
 .navbar { background-color: rgba(18, 18, 18, 0.9); height: 80px; position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
@@ -37,24 +36,12 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .logo-img { height: 40px; border-radius: 4px; }
 .logo-text { font-size: 1.6rem; letter-spacing: 5px; color: var(--white); font-weight: bold; }
 .nav-menu { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
-
-.nav-links { 
-    font-size: 0.95rem; 
-    color: var(--text-color); 
-    text-decoration: none; 
-    position: relative; 
-    transition: 0.3s;
-}
-.nav-links::after {
-    content: ''; position: absolute; width: 0; height: 1px; bottom: -6px; left: 0;
-    background-color: var(--accent-color); transition: 0.3s;
-}
+.nav-links { font-size: 0.95rem; color: var(--text-color); text-decoration: none; position: relative; transition: 0.3s; }
+.nav-links::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -6px; left: 0; background-color: var(--accent-color); transition: 0.3s; }
 .nav-links:hover::after { width: 100%; }
-.nav-links:hover { color: var(--white); }
-
 .admin-login-btn { font-size: 0.8rem; color: var(--text-light); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 20px; cursor: pointer; background: transparent; }
 
-/* Hero Section */
+/* Hero */
 .hero-section { height: 100vh; background-size: cover; background-position: center; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,0.9)); z-index: 1; }
 .hero-content { position: relative; z-index: 2; }
@@ -62,41 +49,67 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .hero-subtitle { font-size: 1.3rem; color: var(--text-light); margin-bottom: 75px; letter-spacing: 2px; }
 
 /* Buttons */
-.btn-primary { display: inline-block; padding: 14px 45px; background-color: var(--accent-color); color: #000; font-weight: bold; text-decoration: none; border-radius: 2px; border: none; cursor: pointer; font-size: 1.1rem; }
+.btn-primary { display: inline-block; padding: 14px 45px; background-color: var(--accent-color); color: #000; font-weight: bold; text-decoration: none; border-radius: 2px; border: none; cursor: pointer; }
 .btn-secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 15px; cursor: pointer; }
 
-/* Rooms Section */
-#rooms .container { max-width: 1000px !important; margin: 0 auto !important; padding: 0 20px; }
-.room-grid { display: grid !important; grid-template-columns: repeat(3, 280px) !important; gap: 30px; justify-content: center; width: 100%; }
-.room-card { background: var(--primary-color); border-radius: 6px; overflow: hidden; transition: transform 0.4s ease, border-color 0.4s ease; border: 1px solid var(--border-color); width: 280px !important; margin: 0 auto; }
-.room-card:hover { transform: translateY(-10px); border-color: var(--accent-color); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+/* Rooms (280px 그리드 고정) */
+#rooms .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+.room-grid { display: grid; grid-template-columns: repeat(3, 280px); gap: 30px; justify-content: center; width: 100%; }
+.room-card { background: var(--primary-color); border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color); transition: 0.4s; }
+.room-card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
 .room-image { height: 200px; background-size: cover; background-position: center; }
 .room-info { padding: 22px; min-height: 150px; }
-.room-info h3 { font-size: 1.35rem; margin-bottom: 12px; color: var(--white); font-weight: 400; }
-.room-info p { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
 
-/* Community Section (수정됨) */
-.community-wrapper { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 800px; margin: 0 auto; }
-.write-form { display: flex; flex-direction: column; gap: 15px; }
-.input-row { display: flex; gap: 10px; }
-.input-row input { flex: 1; padding: 12px; background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 4px; }
-.write-form textarea { width: 100%; padding: 15px; background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 4px; resize: none; }
-.write-form button { align-self: flex-end; }
+/* Reservation & Calendar */
+.reservation-wrapper { display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--primary-color); }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.cal-day { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: var(--bg-light); border-radius: 4px; cursor: pointer; position: relative; }
+.cal-day.selected { background-color: var(--accent-color); color: #000; }
 
-/* Modal Overlay (수정됨 - 중앙 정렬) */
-.modal-overlay { 
-    display: none; position: fixed; top: 0; left: 0; 
-    width: 100%; height: 100%; background: rgba(0,0,0,0.9); 
-    z-index: 2000; justify-content: center; align-items: center; 
+/* 마감 배지 디자인 */
+.full-text-badge { 
+    position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+    font-size: 0.6rem; color: #ff453a; font-weight: bold; z-index: 5;
 }
+
+/* Indicators */
+.room-indicators { position: absolute; bottom: 8px; display: flex; gap: 4px; }
+.indicator { width: 6px; height: 6px; border-radius: 50%; }
+.indicator.female { background-color: var(--color-female); }
+.indicator.male { background-color: var(--color-male); }
+.indicator.none { background-color: var(--color-none); }
+
+/* Potluck (수정된 디자인 복구) */
+.potluck-container { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+.potluck-img-box { flex: 0 0 300px; height: 220px; background: url('https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover; border-radius: 4px; }
+.potluck-badge { border-left: 2px solid var(--accent-color); padding: 12px 15px; background: rgba(0,0,0,0.2); margin-top: 15px; }
+
+/* Guide & Community (수정됨) */
+.info-card, .community-wrapper { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto; }
+.write-form { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }
+.input-row { display: flex; gap: 10px; }
+.input-row input { flex: 1; padding: 12px; background: #1a1a1a; border: 1px solid #444; color: #fff; }
+.write-form textarea { padding: 15px; background: #1a1a1a; border: 1px solid #444; color: #fff; resize: none; }
+.board-item { border-bottom: 1px solid #333; padding: 15px 0; }
+.board-item-title { cursor: pointer; display: flex; justify-content: space-between; }
+.board-item-content { display: none; padding: 15px; background: #1a1a1a; margin-top: 10px; }
+.board-item-content.active { display: block; }
+
+/* Modal (정중앙 고정 수정) */
+.modal-overlay { 
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; 
+}
+.modal-overlay.active { display: flex; }
 .login-modal { 
     background: var(--bg-light); padding: 40px; border-radius: 12px; 
-    border: 1px solid var(--accent-color); width: 320px; text-align: center;
+    border: 1px solid var(--accent-color); width: 320px; text-align: center; 
 }
 .login-modal input { width: 100%; padding: 12px; margin: 20px 0; background: #000; border: 1px solid #444; color: #fff; }
-.modal-buttons { display: flex; flex-direction: column; gap: 10px; }
 
-/* 기타 공통 */
+/* Footer */
+.footer { padding: 60px 0; text-align: center; border-top: 1px solid #333; background-color: #121212; color: var(--text-light); }
+
 .section-padding { padding: 100px 0; }
 .section-title { font-size: 2.2rem; text-align: center; margin-bottom: 3.5rem; color: #fff; letter-spacing: 4px; text-transform: uppercase; font-weight: bold; }
 .section-title::after { content: ''; display: block; width: 60px; height: 2px; background: var(--accent-color); margin: 20px auto 0; }
