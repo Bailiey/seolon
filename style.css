@@ -228,9 +228,9 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 
 /* 방별 마감 표시 스타일 */
 .full-label {
-    color: #ff4d4d; /* 붉은색 */
-    font-weight: bold;
-    margin-left: 8px;
-    font-size: 0.85rem;
+    color: #c05a5a; /* 채도를 낮춘 차분한 빨강 */
+    font-weight: 400; /* 굵지 않게 (Normal) */
+    margin-left: 5px;
+    font-size: 0.9rem;
     letter-spacing: 0.5px;
 }
