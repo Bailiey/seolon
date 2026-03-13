@@ -109,22 +109,28 @@ function refreshRoomStatus(data) {
         const label = document.getElementById(`label-${r}`);
         const capa = document.getElementById(`capa-${r}`);
 
-        // 성별에 따른 배경색 변경 (미정:회색, 남:하늘, 여:분홍)
+        // 1. 성별 클래스 유지 (사장님이 이미 잘 적용하신 회색 배경 유지)
         if(box) box.className = `status-box ${rd.gender}-room`;
+        
+        // 2. 성별 라벨 텍스트
         if(label) label.innerText = rd.gender === 'none' ? '미정' : (rd.gender === 'male' ? '남성' : '여성');
         
-        // [수정된 인원수 로직]
+        // 3. 인원수 표시 교정 (중복 출력 원천 차단)
         if(capa) {
-            // 기본적으로는 항상 "현재인원 / 최대인원"을 표시
-            let capaHTML = `${rd.count} / ${max}`;
+            // [해결책] 기존 HTML 구조를 무시하고 텍스트를 아예 새로 씁니다.
+            let statusText = `인원: ${rd.count} / ${max}`;
             
-            // 만약 인원이 다 찼다면 뒤에 Full만 추가 (빨간색)
+            // 다 찼을 때만 사장님이 원하신 '채도 낮은 레드' Full 추가
             if(rd.count >= max) {
-                capaHTML += ` <span class="full-label">Full</span>`;
+                statusText += ` <span class="full-label" style="color: #c05a5a; font-weight: 400; margin-left: 8px; font-size: 0.9rem;">Full</span>`;
             }
-            capa.innerHTML = capaHTML;
+            
+            // 부모 요소인 status-box 내부의 p 태그를 깔끔하게 정리하거나 
+            // capa 요소 자체의 내용을 덮어씌웁니다.
+            capa.innerHTML = statusText;
         }
 
+        // 4. 관리자 모드 동기화
         if(isAdmin) {
             const adminSel = document.getElementById(`admin-select-${r}`);
             const adminCap = document.getElementById(`admin-capa-${r}`);
