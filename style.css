@@ -131,7 +131,8 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 }
 .room-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* [수정] 모든 카드의 너비를 320px로 균일하게 고정 */
+    grid-template-columns: repeat(auto-fit, 320px) !important;
     gap: 30px;
     justify-content: center;
 }
@@ -141,7 +142,8 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     overflow: hidden;
     transition: transform 0.4s ease, border-color 0.4s ease;
     border: 1px solid var(--border-color);
-    max-width: 320px;
+    /* [수정] 카드 너비 강제 고정 */
+    width: 320px !important;
     margin: 0 auto;
 }
 .room-card:hover {
@@ -150,7 +152,11 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     cursor: pointer;
 }
 .room-image { height: 220px; background-size: cover; background-position: center; }
-.room-info { padding: 25px; }
+.room-info { 
+    padding: 25px;
+    /* [추가] 내용 길이에 상관없이 하단 라인을 맞추기 위해 최소 높이 설정 */
+    min-height: 140px; 
+}
 .room-info h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--white); font-weight: 400; }
 .room-info p { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
 .room-features { list-style: none; font-size: 0.85rem; margin-top: 15px; }
