@@ -130,8 +130,15 @@ async function attemptAdminLogin() {
         document.getElementById('admin-modal').classList.remove('active');
         document.getElementById('admin-pw').value = '';
         
-        // 3. 데이터 즉시 갱신
-        renderCalendar();
+        // 3. [중요!] 데이터 즉시 갱신
+        renderCalendar(); // 예약현황 갱신
+        
+        // ★ 이 코드를 추가하세요! ★
+        // 게시판 데이터를 다시 불러와서 관리자 모드로 즉시 다시 그립니다.
+        database.ref('posts').once('value', (snap) => {
+            renderBoard(snap.val());
+        });
+        
         alert('관리자 모드로 로그인되었습니다.');
     } else {
         alert('비밀번호가 틀렸습니다.');
