@@ -167,14 +167,19 @@
         </section>
 
         <section id="guide" class="section-padding">
-            <div class="container">
-                <h2 class="section-title">Guide</h2>
-                <div class="info-card" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
-                    <div id="guide-display-content" style="white-space: pre-wrap; color: var(--text-color);">가이드 내용을 불러오고 있습니다...</div>
-                </div>
-                <div class="admin-editable" style="display:none; margin-top:20px; text-align: center;"><textarea id="admin-guide-textarea" rows="8" style="width:100%; max-width:1000px; background: #111; color: #fff; padding: 15px;"></textarea><br><button class="btn-primary" style="margin-top: 15px;" onclick="saveGuideParams()">가이드 내용 저장</button></div>
-            </div>
-        </section>
+    <div class="container">
+        <h2 class="section-title">Guide</h2>
+        <div class="info-card" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
+            <div id="guide-display-content" style="white-space: pre-wrap; color: var(--text-color);">가이드 내용을 불러오고 있습니다...</div>
+        </div>
+        
+        <div class="admin-editable" style="display:none; margin-top:30px; text-align: center; width: 100%; max-width: 1000px; margin-left: auto; margin-right: auto;">
+            <textarea id="admin-guide-textarea" rows="12" style="width:100%; background: #111; color: #fff; padding: 25px; border: 1px solid var(--accent-color); border-radius: 8px; line-height: 1.6; font-size: 1rem; outline: none;" placeholder="손님들에게 전달할 안내사항을 입력하세요."></textarea>
+            <br>
+            <button class="btn-primary" style="margin-top: 20px; width: 200px;" onclick="saveGuideParams()">가이드 내용 저장</button>
+        </div>
+    </div>
+</section>
 
         <section id="community" class="section-padding bg-light">
             <div class="container">
