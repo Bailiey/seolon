@@ -32,9 +32,9 @@
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-links">홈</a></li>
                 <li><a href="#rooms" class="nav-links">객실안내</a></li>
-                <li><a href="#bath" class="nav-links">욕실안내</a></li>
+                <li><a href="#bathroom" class="nav-links">욕실안내</a></li>
                 <li><a href="#reservation" class="nav-links">예약현황</a></li>
-                <li><a href="#events" class="nav-links">서론 청음회</a></li>
+                <li><a href="#events" class="nav-links">청음회</a></li>
                 <li><a href="#potluck" class="nav-links">포틀럭타임</a></li>
                 <li><a href="#guide" class="nav-links">안내사항</a></li>
                 <li><a href="#community" class="nav-links">게시판</a></li>
@@ -60,38 +60,31 @@
                 <div class="room-grid">
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('사진/3인실/3인실1.jpg');"></div>
-                        <div class="room-info"><h3>3인 프라이빗 룸</h3><p>전용 욕실이 포함된 편안한 3인 공간입니다.</p></div>
+                        <div class="room-info"><h3>3인 도미토리</h3><p>개별 욕실이 포함된 편안한 3인 프라이빗 공간입니다.</p></div>
                     </div>
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('사진/4인실/4인실1.jpg');"></div>
-                        <div class="room-info"><h3>4인 도미토리</h3><p>아늑한 분위기의 4인 도미토리입니다.</p></div>
+                        <div class="room-info"><h3>4인 도미토리</h3><p>아늑한 분위기의 4인실. 조용한 휴식을 원하시는 분들께 추천합니다.</p></div>
                     </div>
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('사진/6인실/6인실1.jpg');"></div>
-                        <div class="room-info"><h3>6인 도미토리</h3><p>넓고 쾌적한 6인 도미토리입니다.</p></div>
+                        <div class="room-info"><h3>6인 도미토리</h3><p>넓고 쾌적한 다인실. 개인 커튼과 은은한 조명으로 편안함을 제공합니다.</p></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="bath" class="section-padding">
-            <div class="container">
+        <section id="bathroom" class="section-padding">
+            <div class="container" style="display: flex; flex-direction: column; align-items: center;">
                 <h2 class="section-title">Bathroom</h2>
-                <div class="info-card" style="background: var(--bg-light); padding: 50px; border-radius: 12px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 300px;">
-                        <h3 style="color: var(--accent-color); font-size: 1.8rem; margin-bottom: 25px; font-weight: 400;">쾌적한 욕실 환경과 비품 제공</h3>
-                        <p style="color: var(--text-color); line-height: 1.8; font-size: 1.1rem; margin-bottom: 20px;">
-                            가벼운 발걸음으로 오실 수 있도록<br>
-                            필요한 모든 세면 용품을 정갈하게 준비했습니다.
-                        </p>
-                        <ul style="list-style: none; color: var(--text-light); font-size: 1rem; line-height: 2.2;">
-                            <li>🚿 <strong>세면 용품:</strong> 샴푸, 린스, 바디워시 상시 비치</li>
-                            <li>🧼 <strong>수건 제공:</strong> 깨끗하게 세탁된 수건 넉넉히 제공</li>
-                            <li>💨 <strong>헤어 드라이기:</strong> 각 객실 욕실 내 드라이기 구비</li>
-                            <li>✨ <strong>프라이빗:</strong> 모든 객실 내 개별 욕실 완비</li>
-                        </ul>
-                    </div>
-                    <div style="flex: 1; min-width: 300px; height: 300px; background: url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover; border-radius: 8px;"></div>
+                <div class="info-card" style="background: var(--bg-light); padding: 40px; border-radius: 8px; width: 100%; max-width: 800px; border: 1px solid var(--border-color);">
+                    <h3 style="color: var(--accent-color); margin-bottom: 20px; font-weight: 400;">공용 욕실 안내</h3>
+                    <p style="margin-bottom: 20px;">깔끔하게 관리되는 공용 욕실을 운영합니다.</p>
+                    <ul style="list-style: none; line-height: 2.2;">
+                        <li><span style="margin-right: 10px;">🧻</span> 기본 제공: 수건(1인 2장), 샴푸, 린스, 바디워시, 치약</li>
+                        <li><span style="margin-right: 10px;">💨</span> 구비 물품: 헤어드라이어</li>
+                        <li style="color: var(--text-light); font-size: 0.9rem; margin-top: 15px;">* 개인 칫솔은 직접 챙겨주세요.</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -114,29 +107,17 @@
                             <div class="status-box" id="box-room3">
                                 <div class="box-header"><h4>3인 프라이빗 룸</h4><span class="gender-label" id="label-room3"></span></div>
                                 <p>인원: <span class="capacity-text" id="capa-room3">0</span>/3</p>
-                                <div class="admin-editable" style="display:none; margin-top:10px;">
-                                    <select id="admin-select-room3" style="background:#111; color:#fff; border:1px solid #333;"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room3" min="0" max="3" style="width:50px; background:#111; color:#fff; border:1px solid #333;">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room3')">저장</button>
-                                </div>
+                                <div class="admin-editable" style="display:none; margin-top:10px;"><select id="admin-select-room3"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select><input type="number" id="admin-capa-room3" min="0" max="3"><button class="btn-secondary" onclick="saveRoomGender('room3')">저장</button></div>
                             </div>
                             <div class="status-box" id="box-room4">
                                 <div class="box-header"><h4>4인 도미토리</h4><span class="gender-label" id="label-room4"></span></div>
                                 <p>인원: <span class="capacity-text" id="capa-room4">0</span>/4</p>
-                                <div class="admin-editable" style="display:none; margin-top:10px;">
-                                    <select id="admin-select-room4" style="background:#111; color:#fff; border:1px solid #333;"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room4" min="0" max="4" style="width:50px; background:#111; color:#fff; border:1px solid #333;">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room4')">저장</button>
-                                </div>
+                                <div class="admin-editable" style="display:none; margin-top:10px;"><select id="admin-select-room4"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select><input type="number" id="admin-capa-room4" min="0" max="4"><button class="btn-secondary" onclick="saveRoomGender('room4')">저장</button></div>
                             </div>
                             <div class="status-box" id="box-room6">
                                 <div class="box-header"><h4>6인 도미토리</h4><span class="gender-label" id="label-room6"></span></div>
                                 <p>인원: <span class="capacity-text" id="capa-room6">0</span>/6</p>
-                                <div class="admin-editable" style="display:none; margin-top:10px;">
-                                    <select id="admin-select-room6" style="background:#111; color:#fff; border:1px solid #333;"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select>
-                                    <input type="number" id="admin-capa-room6" min="0" max="6" style="width:50px; background:#111; color:#fff; border:1px solid #333;">
-                                    <button class="btn-secondary" onclick="saveRoomGender('room6')">저장</button>
-                                </div>
+                                <div class="admin-editable" style="display:none; margin-top:10px;"><select id="admin-select-room6"><option value="none">미정</option><option value="female">여성</option><option value="male">남성</option></select><input type="number" id="admin-capa-room6" min="0" max="6"><button class="btn-secondary" onclick="saveRoomGender('room6')">저장</button></div>
                             </div>
                             <div style="margin-top: 30px; text-align: center;"><a href="https://pf.kakao.com/_your_link" target="_blank" class="kakao-reserve-btn">💬 숙박 예약하기 (카카오톡 채널)</a></div>
                         </div>
@@ -147,12 +128,12 @@
 
         <section id="events" class="section-padding">
             <div class="container">
-                <h2 class="section-title">서론 청음회 : 각주</h2>
+                <h2 class="section-title">서론 청음회</h2>
                 <div class="event-container" style="background: var(--bg-light);">
                     <div class="event-vinyl"><div class="vinyl-record"></div></div>
                     <div class="event-details">
                         <h3>아날로그 LP 감성 청음</h3>
-                        <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">서론에서는 매일 밤 특별한 음악으로 공간을 채웁니다.<br>턴테이블의 선율과 함께 여행의 각주를 적어보세요.</p>
+                        <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">서론에서는 매일 밤 특별한 음악으로 공간을 채웁니다.<br>턴테이블과 함께 여유로운 제주의 감성을 느껴보세요.</p>
                         <div class="lp-schedule">
                             <p>아침의 LP : <span id="lp-morning-text">-</span></p>
                             <p>저녁의 LP : <span id="lp-evening-text">-</span></p>
@@ -185,10 +166,7 @@
                 <div class="info-card" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
                     <div id="guide-display-content" style="white-space: pre-wrap; color: var(--text-color);">가이드 내용을 불러오고 있습니다...</div>
                 </div>
-                <div class="admin-editable" style="display:none; margin-top:20px; text-align: center;">
-                    <textarea id="admin-guide-textarea" rows="8" style="width:100%; max-width:1000px; background: #111; color: #fff; padding: 15px;"></textarea><br>
-                    <button class="btn-primary" style="margin-top: 15px;" onclick="saveGuideParams()">가이드 내용 저장</button>
-                </div>
+                <div class="admin-editable" style="display:none; margin-top:20px; text-align: center;"><textarea id="admin-guide-textarea" rows="8" style="width:100%; max-width:1000px; background: #111; color: #fff; padding: 15px;"></textarea><br><button class="btn-primary" style="margin-top: 15px;" onclick="saveGuideParams()">가이드 내용 저장</button></div>
             </div>
         </section>
 
