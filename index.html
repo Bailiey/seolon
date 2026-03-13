@@ -37,8 +37,8 @@
                 <li><a href="#potluck" class="nav-links">포틀럭타임</a></li>
                 <li><a href="#guide" class="nav-links">안내사항</a></li>
                 <li><a href="#community" class="nav-links">게시판</a></li>
-                <li><button class="admin-login-btn" id="btn-admin-login" onclick="openAdminModal()">Admin</button></li>
-                <li><button class="admin-login-btn" id="btn-admin-logout" style="display:none;" onclick="logoutAdmin()">Logout</button></li>
+                <li><button class="admin-login-btn" id="btn-admin-login">Admin</button></li>
+                <li><button class="admin-login-btn" id="btn-admin-logout" style="display:none;">Logout</button></li>
             </ul>
         </div>
     </nav>
@@ -88,6 +88,29 @@
                     <div class="room-status-panel">
                         <h3 id="selected-date-display" style="text-align: center;">날짜를 선택해주세요</h3>
                         <div id="room-status-container" style="display:none;">
+                            <div class="admin-editable" style="margin-bottom: 20px; padding: 15px; background: #111; border-radius: 8px;">
+                                <h4 style="color: var(--accent-color); margin-bottom: 10px;">관리자 설정</h4>
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    <div>
+                                        <span>3인실: </span>
+                                        <select id="admin-select-room3"><option value="none">미정</option><option value="male">남성</option><option value="female">여성</option></select>
+                                        <input type="number" id="admin-capa-room3" min="0" max="3" style="width: 40px;"> /3
+                                        <button onclick="saveRoomGender('room3')">저장</button>
+                                    </div>
+                                    <div>
+                                        <span>4인실: </span>
+                                        <select id="admin-select-room4"><option value="none">미정</option><option value="male">남성</option><option value="female">여성</option></select>
+                                        <input type="number" id="admin-capa-room4" min="0" max="4" style="width: 40px;"> /4
+                                        <button onclick="saveRoomGender('room4')">저장</button>
+                                    </div>
+                                    <div>
+                                        <span>6인실: </span>
+                                        <select id="admin-select-room6"><option value="none">미정</option><option value="male">남성</option><option value="female">여성</option></select>
+                                        <input type="number" id="admin-capa-room6" min="0" max="6" style="width: 40px;"> /6
+                                        <button onclick="saveRoomGender('room6')">저장</button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="status-box" id="box-room3">
                                 <div class="box-header"><h4>3인 도미토리</h4><span class="gender-label" id="label-room3"></span></div>
                                 <p>인원: <span class="capacity-text" id="capa-room3">0</span>/3</p>
@@ -115,11 +138,15 @@
                     <div class="event-details">
                         <h3>오늘의 LP</h3>
                         <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">서론에서는 매주 특별한 음악으로 공간을 채웁니다.<br>턴테이블과 함께 여유로운 제주의 감성을 느껴보세요.
-                        <br>저녁 청음회: 20시 ~ 한 트랙이 끝날 때까지 <br>오전 청음회: 09시 ~ 한 트랙이 끝날 때까지
-</p>
+                        <br>저녁 청음회: 20시 ~ 한 트랙이 끝날 때까지 <br>오전 청음회: 09시 ~ 한 트랙이 끝날 때까지</p>
                         <div class="lp-schedule">
                             <p>저녁의 LP : <span id="lp-evening-text">-</span></p>
                             <p>아침의 LP : <span id="lp-morning-text">-</span></p>
+                        </div>
+                        <div class="lp-admin-inputs admin-editable" style="margin-top: 20px;">
+                            <input type="text" id="input-lp-morning" placeholder="아침 LP 입력">
+                            <input type="text" id="input-lp-evening" placeholder="저녁 LP 입력">
+                            <button onclick="saveLP()">LP 업데이트</button>
                         </div>
                     </div>
                 </div>
@@ -129,14 +156,14 @@
         <section id="potluck" class="section-padding">
             <div class="container" style="display: flex; flex-direction: column; align-items: center;">
                 <h2 class="section-title">Potluck Time</h2>
-                <div class="potluck-container" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
-                    <div style="flex: 0 0 300px; height: 220px; background: url('https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);"></div>
-                    <div style="flex: 1; min-width: 250px; text-align: left;">
-                        <h3 style="color: var(--accent-color); font-size: 1.6rem; margin-bottom: 15px; font-weight: 400;">각자의 맛, 하나의 이야기</h3>
-                        <p style="color: var(--text-color); line-height: 1.8; font-size: 1rem; margin-bottom: 20px;">서론의 저녁은 함께 나누는 온기로 완성됩니다.<br>준비한 음식과 이야기들을 들고 자유롭게 모여주세요.</p>
-                        <div style="border-left: 2px solid var(--accent-color); padding-left: 15px; background: rgba(0,0,0,0.2); padding: 12px 15px;">
-                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 5px;">🕒 매일 저녁 7시 / 공용 라운지</p>
-                            <p style="font-size: 0.95rem; color: var(--text-light);">🍷 준비물: 음식, 술, 그리고 당신의 이야기</p>
+                <div class="potluck-container">
+                    <div class="potluck-img-box"></div>
+                    <div class="potluck-info">
+                        <h3>각자의 맛, 하나의 이야기</h3>
+                        <p>서론의 저녁은 함께 나누는 온기로 완성됩니다.<br>준비한 음식과 이야기들을 들고 자유롭게 모여주세요.</p>
+                        <div class="potluck-badge">
+                            <p>🕒 매일 저녁 7시 / 공용 라운지</p>
+                            <p>🍷 준비물: 음식, 술, 그리고 당신의 이야기</p>
                         </div>
                     </div>
                 </div>
@@ -146,12 +173,12 @@
         <section id="guide" class="section-padding bg-light">
             <div class="container">
                 <h2 class="section-title">Guide</h2>
-                <div class="info-card" style="background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
-                    <div id="guide-display-content" style="white-space: pre-wrap; color: var(--text-color);">가이드 내용을 불러오고 있습니다...</div>
+                <div class="info-card">
+                    <div id="guide-display-content">가이드 내용을 불러오고 있습니다...</div>
                 </div>
-                <div class="admin-editable" style="margin-top:20px; text-align: center; display: none;">
-                    <textarea id="admin-guide-textarea" rows="8" style="width:100%; max-width:1000px; background: #111; color: #fff; padding: 15px;"></textarea><br>
-                    <button class="btn-primary" style="margin-top: 15px;" onclick="saveGuideParams()">가이드 내용 저장</button>
+                <div class="admin-editable" style="margin-top:20px; text-align: center;">
+                    <textarea id="admin-guide-textarea" rows="8"></textarea><br>
+                    <button class="btn-primary" onclick="saveGuideParams()">가이드 내용 저장</button>
                 </div>
             </div>
         </section>
@@ -168,14 +195,14 @@
                         <textarea id="board-content" placeholder="사장님께 하고 싶은 이야기를 남겨주세요." rows="4"></textarea>
                         <button class="btn-primary" onclick="addBoardContent()">등록</button>
                     </div>
-                    <div id="board-list" class="board-list" style="margin-top: 30px;"></div>
+                    <div id="board-list" class="board-list"></div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer style="padding: 60px 0; text-align: center; border-top: 1px solid #333; background-color: #121212;">
-        <p style="color: var(--text-light);">&copy; 2026 SEOLON GUESTHOUSE. All rights reserved.</p>
+    <footer class="footer">
+        <p>&copy; 2026 SEOLON GUESTHOUSE. All rights reserved.</p>
     </footer>
 
     <div class="modal-overlay" id="admin-modal">
