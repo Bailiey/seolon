@@ -37,8 +37,8 @@
                 <li><a href="#potluck" class="nav-links">포틀럭타임</a></li>
                 <li><a href="#guide" class="nav-links">안내사항</a></li>
                 <li><a href="#community" class="nav-links">게시판</a></li>
-                <li><button class="admin-login-btn" id="btn-admin-login">Admin</button></li>
-                <li><button class="admin-login-btn" id="btn-admin-logout" style="display:none;">Logout</button></li>
+                <li><button class="admin-login-btn" id="btn-admin-login" onclick="openAdminModal()">Admin</button></li>
+                <li><button class="admin-login-btn" id="btn-admin-logout" style="display:none;" onclick="logoutAdmin()">Logout</button></li>
             </ul>
         </div>
     </nav>
@@ -59,7 +59,7 @@
                 <div class="room-grid">
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('사진/3인실/3인실1.jpg');"></div>
-                        <div class="room-info"><h3>3인 도미토리</h3><p>금액: 40,000원 <br>개별 욕실이 포함된 3인실. <br> 편안한 3인 프라이빗 공간입니다.</p></div>
+                        <div class="room-info"><h3>3인 도미토리</h3><p>금액: 40,000원 <br>개별 욕실이 포함된 3인실. <br>편안한 3인 프라이빗 공간입니다.</p></div>
                     </div>
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('사진/4인실/4인실1.jpg');"></div>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="room-card">
                         <div class="room-image" style="background-image: url('사진/6인실/6인실1.jpg');"></div>
-                        <div class="room-info"><h3>6인 도미토리</h3><p>금액: 30,000원 <br>넓고 쾌적한 다인실. <br> 여럿이 함께 즐거운 공간입니다.</p></div>
+                        <div class="room-info"><h3>6인 도미토리</h3><p>금액: 30,000원 <br>넓고 쾌적한 다인실. <br>여럿이 함께 즐거운 공간입니다.</p></div>
                     </div>
                 </div>
             </div>
@@ -159,9 +159,16 @@
         <section id="community" class="section-padding">
             <div class="container">
                 <h2 class="section-title">Community</h2>
-                <div class="community-wrapper" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
-                    <div class="write-form"><input type="text" id="board-author" placeholder="닉네임"><input type="password" id="board-pw" placeholder="비밀번호"><textarea id="board-content" placeholder="건의사항을 입력해주세요." rows="4"></textarea><button class="btn-primary" onclick="addBoardContent()">등록</button></div>
-                    <div id="board-list" class="board-list"></div>
+                <div class="community-wrapper">
+                    <div class="write-form">
+                        <div class="input-row">
+                            <input type="text" id="board-author" placeholder="닉네임">
+                            <input type="password" id="board-pw" placeholder="비밀번호">
+                        </div>
+                        <textarea id="board-content" placeholder="사장님께 하고 싶은 이야기를 남겨주세요." rows="4"></textarea>
+                        <button class="btn-primary" onclick="addBoardContent()">등록</button>
+                    </div>
+                    <div id="board-list" class="board-list" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </section>
@@ -171,7 +178,17 @@
         <p style="color: var(--text-light);">&copy; 2026 SEOLON GUESTHOUSE. All rights reserved.</p>
     </footer>
 
-    <div class="modal-overlay" id="admin-modal"><div class="login-modal"><h2>Admin Login</h2><input type="password" id="admin-pw" placeholder="Password"><button class="btn-primary" onclick="attemptAdminLogin()">로그인</button><button class="btn-secondary" onclick="closeAdminModal()">취소</button></div></div>
+    <div class="modal-overlay" id="admin-modal">
+        <div class="login-modal">
+            <h2>Admin Login</h2>
+            <input type="password" id="admin-pw" placeholder="Password">
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="attemptAdminLogin()">로그인</button>
+                <button class="btn-secondary" onclick="closeAdminModal()">취소</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
