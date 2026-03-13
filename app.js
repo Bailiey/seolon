@@ -291,5 +291,34 @@ async function saveGuideParams() {
     alert('안내사항이 저장되었습니다.'); 
 }
 
+function refreshRoomStatus(data) {
+    document.getElementById('room-status-container').style.display = 'block';
+    document.getElementById('selected-date-display').innerText = `${selectedDate} 현황`;
+
+    ['room3', 'room4', 'room6'].forEach(r => {
+        const rd = (data || {})[r] || { gender: 'none', count: 0 };
+        const max = roomCapacities[r]; // 각 방의 최대 정원 (3, 4, 6)
+        
+        // 1. 기존 요소 업데이트
+        document.getElementById(`box-${r}`).className = `status-box ${rd.gender}-room`;
+        document.getElementById(`label-${r}`).innerText = rd.gender === 'none' ? '미정' : (rd.gender === 'male' ? '남성' : '여성');
+        
+        // 2. 인원수 표시 및 마감 체크 (n/n Full 로직)
+        const capaElement = document.getElementById(`capa-${r}`);
+        let capaHTML = `${rd.count} / ${max}`;
+        
+        if (rd.count >= max) {
+            capaHTML += ` <span class="full-label">Full</span>`;
+        }
+        capaElement.innerHTML = capaHTML;
+
+        // 3. 관리자 모드인 경우 입력창 값 세팅
+        if (isAdmin) {
+            document.getElementById(`admin-select-${r}`).value = rd.gender;
+            document.getElementById(`admin-capa-${r}`).value = rd.count;
+        }
+    });
+}
+
 document.getElementById('prev-month').onclick = () => { currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} renderCalendar(); };
 document.getElementById('next-month').onclick = () => { currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} renderCalendar(); };
