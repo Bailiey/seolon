@@ -38,7 +38,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .logo-text { font-size: 1.6rem; letter-spacing: 5px; color: var(--white); font-weight: bold; }
 .nav-menu { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
 
-/* [복구] 네비게이션 밑줄 애니메이션 */
+/* 네비게이션 밑줄 애니메이션 */
 .nav-links { 
     font-size: 0.95rem; 
     color: var(--text-color); 
@@ -56,7 +56,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .admin-login-btn { font-size: 0.8rem; color: var(--text-light); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 20px; cursor: pointer; background: transparent; }
 
 /* Hero Section */
-.hero-section { height: 100vh; background: url('https://images.unsplash.com/photo-1542442828-287217bfb87f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
+.hero-section { height: 100vh; background-size: cover; background-position: center; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,0.9)); z-index: 1; }
 .hero-content { position: relative; z-index: 2; }
 .hero-title { font-size: 5rem; letter-spacing: 8px; color: var(--white); margin-bottom: 30px; font-weight: bold; }
@@ -71,7 +71,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .kakao-reserve-btn:hover { background: var(--accent-color); color: #000; box-shadow: 0 0 15px rgba(205, 162, 112, 0.3); }
 
 /* =========================================
-    Reservation Section (수정: 1000px 제한)
+    Reservation Section (1000px 제한)
    ========================================= */
 #reservation .container {
     max-width: 1000px !important;
@@ -124,16 +124,18 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 @keyframes spin { 100% { transform: rotate(360deg); } }
 @media (max-width: 850px) { .event-container { flex-direction: column; padding: 40px 20px; gap: 40px; } .lp-schedule { padding-right: 20px; } }
 
-/* [수정] 객실 안내 (Rooms) 콤팩트 스타일 */
+/* =========================================
+    [수정] 객실 안내 (Rooms) 280px 일렬 정렬
+   ========================================= */
 #rooms .container {
     max-width: 1000px;
     margin: 0 auto;
 }
 .room-grid {
     display: grid;
-    /* [수정] 모든 카드의 너비를 320px로 균일하게 고정 */
-    grid-template-columns: repeat(auto-fit, 320px) !important;
-    gap: 30px;
+    /* [핵심] 너비를 280px로 딱 고정해서 세 개가 한 줄에 나오도록 유도 */
+    grid-template-columns: repeat(3, 280px) !important;
+    gap: 20px; /* 사이 간격도 살짝 조절 */
     justify-content: center;
 }
 .room-card {
@@ -142,8 +144,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     overflow: hidden;
     transition: transform 0.4s ease, border-color 0.4s ease;
     border: 1px solid var(--border-color);
-    /* [수정] 카드 너비 강제 고정 */
-    width: 320px !important;
+    width: 280px !important;
     margin: 0 auto;
 }
 .room-card:hover {
@@ -151,26 +152,17 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     border-color: var(--accent-color);
     cursor: pointer;
 }
-.room-image { height: 220px; background-size: cover; background-position: center; }
+.room-image { height: 180px; background-size: cover; background-position: center; }
 .room-info { 
-    padding: 25px;
-    /* [추가] 내용 길이에 상관없이 하단 라인을 맞추기 위해 최소 높이 설정 */
+    padding: 20px;
     min-height: 140px; 
 }
-.room-info h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--white); font-weight: 400; }
-.room-info p { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
-.room-features { list-style: none; font-size: 0.85rem; margin-top: 15px; }
-.room-features li { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--text-light); }
+.room-info h3 { font-size: 1.25rem; margin-bottom: 10px; color: var(--white); font-weight: 400; }
+.room-info p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
 
 /* 중앙 정렬 (Guide & Community) */
 #guide .container, #community .container { display: flex; flex-direction: column; align-items: center; }
-.info-card, .community-wrapper { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 800px; margin: 0 auto; }
-.write-form { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 20px; }
-.write-form input, .write-form textarea { background: #111; border: 1px solid #333; color: #fff; padding: 12px; font-size: 1rem; }
-.board-item { border-bottom: 1px solid #333; padding: 15px 0; width: 100%; }
-.board-item-title { cursor: pointer; display: flex; justify-content: space-between; font-size: 1.1rem; }
-.board-item-content { display: none; padding: 15px; background: #222; margin-top: 10px; border-radius: 4px; }
-.board-item-content.active { display: block; }
+.info-card, .community-wrapper { background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto; }
 
 /* Section Titles */
 .section-padding { padding: 100px 0; }
@@ -178,18 +170,9 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .section-title::after { content: ''; display: block; width: 60px; height: 2px; background: var(--accent-color); margin: 20px auto 0; }
 .bg-light { background-color: var(--bg-light); }
 
-/* 마감 배지 */
-.full-text-badge { 
-    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
-    font-size: 0.55rem; color: #e57373; font-weight: bold; z-index: 5;
-    white-space: nowrap;
+/* 모바일 반응형 (화면이 좁아지면 세로로 정렬) */
+@media (max-width: 900px) {
+    .room-grid {
+        grid-template-columns: repeat(auto-fit, 280px) !important;
+    }
 }
-
-/* Modal & Login */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 2000; }
-.modal-overlay.active { display: flex; }
-.login-modal { background: var(--bg-light); padding: 40px; border-radius: 12px; border: 1px solid var(--accent-color); text-align: center; width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-.login-modal h2 { margin-bottom: 25px; color: var(--white); font-weight: 300; letter-spacing: 2px; }
-.login-modal input { width: 100%; padding: 12px; margin-bottom: 15px; background: #111; color: #fff; border: 1px solid #333; border-radius: 4px; outline: none; }
-.login-modal .btn-primary { width: 100%; display: block; padding: 14px; background-color: var(--accent-color); color: #000; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; margin-bottom: 10px; }
-.login-modal .btn-secondary { width: 100%; background: transparent; border: 1px solid #444; color: #888; padding: 8px; cursor: pointer; font-size: 0.8rem; }
