@@ -32,8 +32,8 @@
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-links">홈</a></li>
                 <li><a href="#rooms" class="nav-links">객실안내</a></li>
-                <li><a href="#reservation" class="nav-links">예약현황</a></li>
-                <li><a href="#events" class="nav-links">청음회</a></li> 
+                <li><a href="#bath" class="nav-links">욕실안내</a></li> <li><a href="#reservation" class="nav-links">예약현황</a></li>
+                <li><a href="#events" class="nav-links">서론 청음회</a></li>
                 <li><a href="#potluck" class="nav-links">포틀럭타임</a></li>
                 <li><a href="#guide" class="nav-links">안내사항</a></li>
                 <li><a href="#community" class="nav-links">게시판</a></li>
@@ -44,7 +44,7 @@
     </nav>
 
     <main>
-        <section id="home" class="hero-section">
+        <section id="home" class="hero-section" style="background-image: url('사진/메인/LP1.jpg');">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1 class="hero-title">서론</h1>
@@ -58,25 +58,45 @@
                 <h2 class="section-title">Rooms</h2>
                 <div class="room-grid">
                     <div class="room-card">
-                        <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
-                        <div class="room-info"><h3>3인 도미토리</h3><p>개별 욕실이 포함된 편안한 3인 프라이빗 공간입니다.</p></div>
+                        <div class="room-image" style="background-image: url('사진/3인실/3인실1.jpg');"></div>
+                        <div class="room-info"><h3>3인 도미토리</h3><p>편안한 3인 프라이빗 공간입니다.</p></div>
                     </div>
                     <div class="room-card">
-                        <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
-                        <div class="room-info"><h3>4인 도미토리</h3><p>아늑한 분위기의 4인실. 조용한 휴식을 원하시는 분들께 추천합니다.</p></div>
+                        <div class="room-image" style="background-image: url('사진/4인실/4인실1.jpg');"></div>
+                        <div class="room-info"><h3>4인 도미토리</h3><p>아늑한 분위기의 4인 도미토리입니다.</p></div>
                     </div>
                     <div class="room-card">
-                        <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
-                        <div class="room-info"><h3>6인 도미토리</h3><p>넓고 쾌적한 다인실. 개인 커튼과 은은한 조명으로 편안함을 제공합니다.</p></div>
+                        <div class="room-image" style="background-image: url('사진/6인실/6인실1.jpg');"></div>
+                        <div class="room-info"><h3>6인 도미토리</h3><p>넓고 쾌적한 6인 도미토리입니다.</p></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="reservation" class="section-padding">
+        <section id="bath" class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Bathroom</h2>
+                <div class="info-card" style="background: var(--bg-light); padding: 50px; border-radius: 12px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="color: var(--accent-color); font-size: 1.8rem; margin-bottom: 20px; font-weight: 400;">모든 객실 내 개별 욕실</h3>
+                        <p style="color: var(--text-color); line-height: 1.8; font-size: 1.1rem; margin-bottom: 15px;">
+                            서론의 모든 객실은 외부에 나갈 필요 없이<br>
+                            <strong>객실 내부에 전용 욕실</strong>을 갖추고 있습니다.
+                        </p>
+                        <p style="color: var(--text-light); font-size: 1rem;">
+                            도미토리 이용객분들도 타인의 방해 없이<br>
+                            더욱 편리하고 프라이빗하게 이용하실 수 있습니다.
+                        </p>
+                    </div>
+                    <div style="flex: 1; min-width: 300px; height: 250px; background: url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover; border-radius: 8px;"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reservation" class="section-padding bg-light">
             <div class="container">
                 <h2 class="section-title">Reservation</h2>
-                <div class="reservation-wrapper">
+                <div class="reservation-wrapper" style="background: var(--primary-color);">
                     <div class="calendar-section">
                         <div class="calendar-header">
                             <button id="prev-month" class="cal-nav">&lt;</button>
@@ -122,32 +142,27 @@
             </div>
         </section>
 
-        <section id="events" class="section-padding bg-light">
+        <section id="events" class="section-padding">
             <div class="container">
-                <h2 class="section-title">청음회</h2>
-                <div class="event-container">
+                <h2 class="section-title">서론 청음회 : 각주</h2>
+                <div class="event-container" style="background: var(--bg-light);">
                     <div class="event-vinyl"><div class="vinyl-record"></div></div>
                     <div class="event-details">
-                        <h3>오늘의 LP</h3>
-                        <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">서론에서는 매주 특별한 음악으로 공간을 채웁니다.<br>턴테이블과 함께 여유로운 제주의 감성을 느껴보세요.</p>
+                        <h3>아날로그 LP 감성 청음</h3>
+                        <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">서론에서는 매일 밤 특별한 음악으로 공간을 채웁니다.<br>턴테이블의 선율과 함께 여행의 각주를 적어보세요.</p>
                         <div class="lp-schedule">
                             <p>아침의 LP : <span id="lp-morning-text">-</span></p>
                             <p>저녁의 LP : <span id="lp-evening-text">-</span></p>
-                            <div class="lp-admin-inputs" style="display:none; margin-top:10px;">
-                                <input type="text" id="input-lp-morning" placeholder="아침 곡" style="background:#111; color:#fff; border:1px solid #333;">
-                                <input type="text" id="input-lp-evening" placeholder="저녁 곡" style="background:#111; color:#fff; border:1px solid #333;">
-                                <button class="btn-secondary" onclick="saveLP()">저장</button>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="potluck" class="section-padding">
+        <section id="potluck" class="section-padding bg-light">
             <div class="container" style="display: flex; flex-direction: column; align-items: center;">
                 <h2 class="section-title">Potluck Time</h2>
-                <div class="potluck-container" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
+                <div class="potluck-container" style="background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
                     <div style="flex: 0 0 300px; height: 220px; background: url('https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);"></div>
                     <div style="flex: 1; min-width: 250px; text-align: left;">
                         <h3 style="color: var(--accent-color); font-size: 1.6rem; margin-bottom: 15px; font-weight: 400;">각자의 맛, 하나의 이야기</h3>
@@ -161,10 +176,10 @@
             </div>
         </section>
 
-        <section id="guide" class="section-padding bg-light">
+        <section id="guide" class="section-padding">
             <div class="container">
                 <h2 class="section-title">Guide</h2>
-                <div class="info-card" style="background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
+                <div class="info-card" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
                     <div id="guide-display-content" style="white-space: pre-wrap; color: var(--text-color);">가이드 내용을 불러오고 있습니다...</div>
                 </div>
                 <div class="admin-editable" style="display:none; margin-top:20px; text-align: center;">
@@ -174,10 +189,10 @@
             </div>
         </section>
 
-        <section id="community" class="section-padding">
+        <section id="community" class="section-padding bg-light">
             <div class="container">
                 <h2 class="section-title">Community</h2>
-                <div class="community-wrapper" style="background: var(--bg-light); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
+                <div class="community-wrapper" style="background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
                     <div class="write-form"><input type="text" id="board-author" placeholder="닉네임"><input type="password" id="board-pw" placeholder="비밀번호"><textarea id="board-content" placeholder="함께 나누고 싶은 이야기" rows="4"></textarea><button class="btn-primary" onclick="addBoardContent()">등록</button></div>
                     <div id="board-list" class="board-list"></div>
                 </div>
