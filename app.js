@@ -96,7 +96,6 @@ function updateCalendarWithData(roomsData) {
     }
 }
 
-// [핵심 수정] Full 표시 로직 안전하게 통합
 function refreshRoomStatus(data) {
     const container = document.getElementById('room-status-container');
     if(!container) return;
@@ -110,21 +109,21 @@ function refreshRoomStatus(data) {
         const label = document.getElementById(`label-${r}`);
         const capa = document.getElementById(`capa-${r}`);
 
+        // 성별에 따른 배경색 변경 (미정:회색, 남:하늘, 여:분홍)
         if(box) box.className = `status-box ${rd.gender}-room`;
         if(label) label.innerText = rd.gender === 'none' ? '미정' : (rd.gender === 'male' ? '남성' : '여성');
         
+        // [수정된 인원수 로직]
         if(capa) {
-    let capaHTML = ""; // 초기화
-    
-    if(rd.count >= max) {
-        // 꽉 찼을 때는 숫자 없이 Full만 표시
-        capaHTML = `<span class="full-label">Full</span>`;
-    } else {
-        // 꽉 차지 않았을 때만 숫자 표시
-        capaHTML = `${rd.count} / ${max}`;
-    }
-    capa.innerHTML = capaHTML;
-}
+            // 기본적으로는 항상 "현재인원 / 최대인원"을 표시
+            let capaHTML = `${rd.count} / ${max}`;
+            
+            // 만약 인원이 다 찼다면 뒤에 Full만 추가 (빨간색)
+            if(rd.count >= max) {
+                capaHTML += ` <span class="full-label">Full</span>`;
+            }
+            capa.innerHTML = capaHTML;
+        }
 
         if(isAdmin) {
             const adminSel = document.getElementById(`admin-select-${r}`);
@@ -134,6 +133,7 @@ function refreshRoomStatus(data) {
         }
     });
 }
+    
 
 async function attemptAdminLogin() {
     if (document.getElementById('admin-pw').value === ADMIN_PW) { 
