@@ -10,37 +10,36 @@ document.addEventListener('DOMContentLoaded', () => {
     initRealtimeListeners();
     renderCalendar();
     
-    // 로그인 버튼 클릭 시 모달 열기
     document.getElementById('btn-admin-login').onclick = () => {
         document.getElementById('admin-modal').classList.add('active');
     };
     
-    // 로그아웃 로직
     document.getElementById('btn-admin-logout').onclick = async () => {
         await auth.signOut(); 
         isAdmin = false;
         document.body.classList.remove('admin-mode');
         document.getElementById('btn-admin-login').style.display = 'block';
         document.getElementById('btn-admin-logout').style.display = 'none';
-        
-        // 로그아웃 시에도 화면 즉시 갱신
         renderCalendar();
         database.ref('posts').once('value', (snap) => renderBoard(snap.val()));
-        
         alert('로그아웃 되었습니다.');
     };
 });
 
 function initRealtimeListeners() {
+    // [보완] 에러 방지를 위해 데이터가 없을 경우 빈 객체 처리 강화
     database.ref('rooms').on('value', (snap) => updateCalendarWithData(snap.val() || {}));
     database.ref('lp_schedule').on('value', (snap) => {
         const val = snap.val() || { morning: '-', evening: '-' };
-        document.getElementById('lp-morning-text').innerText = val.morning;
-        document.getElementById('lp-evening-text').innerText = val.evening;
+        const m = document.getElementById('lp-morning-text');
+        const e = document.getElementById('lp-evening-text');
+        if(m) m.innerText = val.morning;
+        if(e) e.innerText = val.evening;
     });
     database.ref('guide').on('value', (snap) => {
         const val = snap.val() || "내용을 입력해주세요.";
-        document.getElementById('guide-display-content').innerText = val;
+        const g = document.getElementById('guide-display-content');
+        if(g) g.innerText = val;
     });
     database.ref('posts').on('value', (snap) => renderBoard(snap.val()));
 }
@@ -75,8 +74,7 @@ function updateCalendarWithData(roomsData) {
         const isFull = (dayData.room3?.count >= 3) && (dayData.room4?.count >= 4) && (dayData.room6?.count >= 6);
         if(isFull) {
             const badge = document.createElement('span');
-            badge.className = 'full-text-badge';
-            badge.innerText = '마감';
+            badge.className = 'full-text-badge'; badge.innerText = '마감';
             div.appendChild(badge);
         }
 
@@ -98,69 +96,61 @@ function updateCalendarWithData(roomsData) {
     }
 }
 
+// [핵심 수정] Full 표시 로직 안전하게 통합
 function refreshRoomStatus(data) {
-    document.getElementById('room-status-container').style.display = 'block';
+    const container = document.getElementById('room-status-container');
+    if(!container) return;
+    container.style.display = 'block';
     document.getElementById('selected-date-display').innerText = `${selectedDate} 현황`;
 
-    ['room3', 'room4', 'room6'].forEach(r => {
-        const rd = (data || {})[r] || { gender: 'none', count: 0 };
-        const max = roomCapacities[r]; // 각 방의 최대 정원 (3, 4, 6)
-        
-        // 1. 기존 요소 업데이트
-        document.getElementById(`box-${r}`).className = `status-box ${rd.gender}-room`;
-        document.getElementById(`label-${r}`).innerText = rd.gender === 'none' ? '미정' : (rd.gender === 'male' ? '남성' : '여성');
-        
-        // 2. 인원수 표시 및 마감 체크 (n/n Full 로직)
-        const capaElement = document.getElementById(`capa-${r}`);
-        let capaHTML = `${rd.count} / ${max}`;
-        
-        if (rd.count >= max) {
-            capaHTML += ` <span class="full-label">Full</span>`;
-        }
-        capaElement.innerHTML = capaHTML;
+    ['room3','room4','room6'].forEach(r => {
+        const rd = (data || {})[r] || {gender:'none', count:0};
+        const max = roomCapacities[r];
+        const box = document.getElementById(`box-${r}`);
+        const label = document.getElementById(`label-${r}`);
+        const capa = document.getElementById(`capa-${r}`);
 
-        // 3. 관리자 모드인 경우 입력창 값 세팅
-        if (isAdmin) {
-            document.getElementById(`admin-select-${r}`).value = rd.gender;
-            document.getElementById(`admin-capa-${r}`).value = rd.count;
+        if(box) box.className = `status-box ${rd.gender}-room`;
+        if(label) label.innerText = rd.gender === 'none' ? '미정' : (rd.gender === 'male' ? '남성' : '여성');
+        
+        if(capa) {
+            let capaText = `${rd.count} / ${max}`;
+            if(rd.count >= max) {
+                capaText += ` <span class="full-label" style="color:#ff453a; font-weight:bold; margin-left:5px;">Full</span>`;
+            }
+            capa.innerHTML = capaText;
+        }
+
+        if(isAdmin) {
+            const adminSel = document.getElementById(`admin-select-${r}`);
+            const adminCap = document.getElementById(`admin-capa-${r}`);
+            if(adminSel) adminSel.value = rd.gender;
+            if(adminCap) adminCap.value = rd.count;
         }
     });
-};
 }
 
 async function attemptAdminLogin() {
     if (document.getElementById('admin-pw').value === ADMIN_PW) { 
         await auth.signInAnonymously(); 
         isAdmin = true;
-        
         document.body.classList.add('admin-mode');
-        document.querySelectorAll('.admin-editable, .lp-admin-inputs').forEach(el => {
-            el.style.display = 'block';
-        });
-        
+        document.querySelectorAll('.admin-editable, .lp-admin-inputs').forEach(el => el.style.display = 'block');
         document.getElementById('btn-admin-login').style.display = 'none';
         document.getElementById('btn-admin-logout').style.display = 'block';
         document.getElementById('admin-modal').classList.remove('active');
         document.getElementById('admin-pw').value = '';
-        
-        // [중요] 로그인 즉시 예약 달력과 게시판 강제 새로고침
         renderCalendar();
         database.ref('posts').once('value', (snap) => renderBoard(snap.val()));
-        
         alert('관리자 모드로 로그인되었습니다.');
     } else {
         alert('비밀번호가 틀렸습니다.');
     }
 }
 
-function closeAdminModal() { 
-    document.getElementById('admin-modal').classList.remove('active'); 
-}
-
 /* =========================================
-   게시판 운영 로직 (관리자 프리패스 통합)
+   게시판 운영 로직 (수정 없음)
    ========================================= */
-
 let currentPage = 1;
 const postsPerPage = 5;
 
@@ -169,7 +159,6 @@ async function addBoardContent() {
     const pw = document.getElementById('board-pw').value.trim();
     const content = document.getElementById('board-content').value.trim();
     if (!author || !content) return alert('닉네임과 내용을 입력해주세요.');
-
     try {
         await database.ref('posts').push({
             author, pw, content,
@@ -201,90 +190,74 @@ window.checkPw = (key, correctPw) => {
     if(inputPw === correctPw) {
         document.getElementById(`pw-area-${key}`).style.display = 'none';
         document.getElementById(`tx-${key}`).style.display = 'block';
-    } else {
-        alert('비밀번호가 일치하지 않습니다.');
-    }
+    } else { alert('비밀번호가 일치하지 않습니다.'); }
 };
 
 function renderBoard(posts) {
     const list = document.getElementById('board-list');
     if (!list) return;
     list.innerHTML = '';
-
     if (!posts) {
         list.innerHTML = '<p style="text-align:center; padding:20px;">아직 작성된 이야기가 없습니다.</p>';
         return;
     }
-
     const postKeys = Object.keys(posts).reverse();
-    const totalPosts = postKeys.length;
-    
     const startIndex = (currentPage - 1) * postsPerPage;
-    const endIndex = startIndex + postsPerPage;
-    const paginatedKeys = postKeys.slice(startIndex, endIndex);
+    const paginatedKeys = postKeys.slice(startIndex, startIndex + postsPerPage);
 
     paginatedKeys.forEach(key => {
         const p = posts[key];
         const item = document.createElement('div');
         item.className = 'board-item';
-        
         const boardBody = isAdmin ? `
             <div class="admin-view-area">
-                <div style="color:var(--accent-color); margin-bottom:10px; font-size:0.9rem;">[비밀번호: ${p.pw}]</div>
+                <div style="color:var(--accent-color); margin-bottom:10px;">[비번: ${p.pw}]</div>
                 <div style="white-space:pre-wrap; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">${p.content}</div>
                 <div class="reply-section">
-                    <textarea id="reply-input-${key}" placeholder="답변을 입력하세요" style="width:100%; background:#111; color:#fff; border:1px solid #444; padding:10px; font-size:0.9rem;">${p.reply || ''}</textarea>
+                    <textarea id="reply-input-${key}" placeholder="답변을 입력하세요" style="width:100%; background:#111; color:#fff; border:1px solid #444; padding:10px;">${p.reply || ''}</textarea>
                     <div style="margin-top:10px; display:flex; gap:10px;">
-                        <button class="btn-primary" style="padding:5px 15px; font-size:0.8rem;" onclick="saveReply('${key}')">답변저장</button>
-                        <button class="btn-secondary" style="padding:5px 15px; font-size:0.8rem;" onclick="deletePost('${key}')">삭제</button>
+                        <button class="btn-primary" onclick="saveReply('${key}')">답변저장</button>
+                        <button class="btn-secondary" onclick="deletePost('${key}')">삭제</button>
                     </div>
                 </div>
-            </div>
-        ` : `
+            </div>` : `
             <div id="pw-area-${key}">
                 <input type="password" id="pw-${key}" placeholder="비밀번호" style="width:100px; background:#111; color:#fff; border:1px solid #333; padding:5px;">
-                <button class="btn-secondary" style="padding:5px 10px;" onclick="checkPw('${key}', '${p.pw}')">확인</button>
+                <button class="btn-secondary" onclick="checkPw('${key}', '${p.pw}')">확인</button>
             </div>
             <div id="tx-${key}" style="display:none; margin-top:10px;">
                 <div style="white-space:pre-wrap; margin-bottom:15px;">${p.content}</div>
                 ${p.reply ? `<div style="background:#222; padding:15px; border-left:3px solid var(--accent-color);">
-                    <strong style="color:var(--accent-color); display:block; margin-bottom:5px;">서론 사장님 답변</strong>
-                    <div style="white-space:pre-wrap; font-size:0.95rem;">${p.reply}</div>
+                    <strong style="color:var(--accent-color);">서론 사장님 답변</strong>
+                    <div style="margin-top:5px;">${p.reply}</div>
                 </div>` : ''}
-            </div>
-        `;
-
-        item.innerHTML = `
-            <div class="board-item-title" onclick="this.nextElementSibling.classList.toggle('active')">
-                <span>🔒 비밀글 (${p.author}) ${p.reply ? '<span style="color:var(--accent-color); font-size:0.8rem; margin-left:5px;">[답변완료]</span>' : ''}</span>
-                <span>${p.date}</span>
-            </div>
-            <div class="board-item-content">${boardBody}</div>
-        `;
+            </div>`;
+        item.innerHTML = `<div class="board-item-title" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span>🔒 비밀글 (${p.author}) ${p.reply ? '<span style="color:var(--accent-color); font-size:0.8rem;">[답변완료]</span>' : ''}</span>
+            <span>${p.date}</span>
+        </div><div class="board-item-content">${boardBody}</div>`;
         list.appendChild(item);
     });
-
-    renderPagination(totalPosts);
+    renderPagination(postKeys.length);
 }
 
 function renderPagination(totalPosts) {
     const list = document.getElementById('board-list');
     const totalPages = Math.ceil(totalPosts / postsPerPage);
     if(totalPages <= 1) return;
-
     const nav = document.createElement('div');
     nav.style = "display:flex; justify-content:center; gap:10px; margin-top:25px;";
-
     for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('span');
         btn.innerText = i;
-        btn.style = `cursor:pointer; padding:5px 12px; border:1px solid ${i === currentPage ? 'var(--accent-color)' : '#444'}; color:${i === currentPage ? 'var(--accent-color)' : '#fff'}; border-radius:4px; font-size:0.9rem;`;
+        btn.style = `cursor:pointer; padding:5px 12px; border:1px solid ${i === currentPage ? 'var(--accent-color)' : '#444'}; color:${i === currentPage ? 'var(--accent-color)' : '#fff'}; border-radius:4px;`;
         btn.onclick = () => { currentPage = i; database.ref('posts').once('value', snap => renderBoard(snap.val())); };
         nav.appendChild(btn);
     }
     list.appendChild(nav);
 }
 
+// [공통 관리 기능]
 async function saveRoomGender(r) { 
     if(!isAdmin) return; 
     const count = parseInt(document.getElementById(`admin-capa-${r}`).value);
@@ -306,6 +279,6 @@ async function saveGuideParams() {
     alert('안내사항이 저장되었습니다.'); 
 }
 
-
+function closeAdminModal() { document.getElementById('admin-modal').classList.remove('active'); }
 document.getElementById('prev-month').onclick = () => { currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} renderCalendar(); };
 document.getElementById('next-month').onclick = () => { currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} renderCalendar(); };
