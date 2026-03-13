@@ -30,6 +30,7 @@ body {
 .admin-editable, .lp-admin-inputs { display: none !important; }
 body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: block !important; }
 
+
 /* Navbar */
 .navbar { background-color: rgba(18, 18, 18, 0.9); height: 80px; position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
 .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
