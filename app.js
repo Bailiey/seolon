@@ -142,80 +142,134 @@ function closeAdminModal() {
     document.getElementById('admin-modal').classList.remove('active'); 
 }
 
+사장님, 좋습니다! 게시판이 이제 데이터를 잘 쌓기 시작했으니, 운영의 효율을 높여줄 [삭제/답변/페이징] 기능을 '#2'번 코드 기반 위에 튼튼하게 올려드릴게요.
+
+기존 디자인과 데이터 구조를 유지하면서, app.js의 게시판 로직을 고도화했습니다.
+
+🛠️ app.js 수정 (삭제, 답변, 페이징 기능 추가)
+기존 app.js의 게시판 관련 함수들을 아래 코드로 교체해 주세요. (페이징 처리를 위해 전역 변수가 추가되었습니다.)
+
+JavaScript
+/* =========================================
+   [#2 기반] 게시판 고도화 (삭제/답변/페이징)
+   ========================================= */
+
+let currentPage = 1;
+const postsPerPage = 5; // 사장님 요청대로 5개씩 끊어서 보여줍니다.
+
+// 1. 게시글 등록 (디자인 유지)
 async function addBoardContent() {
-    const authorInput = document.getElementById('board-author');
-    const pwInput = document.getElementById('board-pw');
-    const contentInput = document.getElementById('board-content');
+    const author = document.getElementById('board-author').value.trim();
+    const pw = document.getElementById('board-pw').value.trim();
+    const content = document.getElementById('board-content').value.trim();
 
-    const author = authorInput.value.trim();
-    const pw = pwInput.value.trim();
-    const content = contentInput.value.trim();
+    if (!author || !content) return alert('닉네임과 내용을 입력해주세요.');
 
-    if (!author || !content) {
-        return alert('닉네임과 내용을 입력해주세요.');
-    }
+    await database.ref('posts').push({
+        author, pw, content,
+        date: new Date().toLocaleDateString(),
+        reply: "" // 답변 공간 미리 생성
+    });
 
-    try {
-        // Firebase에 데이터 밀어넣기 (id를 자동으로 생성하는 push 사용)
-        await database.ref('posts').push({
-            author: author,
-            pw: pw,
-            content: content,
-            date: new Date().toLocaleDateString()
-        });
+    alert('이야기가 등록되었습니다.');
+    document.getElementById('board-author').value = '';
+    document.getElementById('board-pw').value = '';
+    document.getElementById('board-content').value = '';
+}
 
-        alert('이야기가 등록되었습니다.');
+// 2. 관리자 답변 저장 함수
+async function saveReply(key) {
+    const replyText = document.getElementById(`reply-input-${key}`).value;
+    await database.ref(`posts/${key}/reply`).set(replyText);
+    alert('답변이 등록되었습니다.');
+}
 
-        // 입력창 초기화
-        authorInput.value = '';
-        pwInput.value = '';
-        contentInput.value = '';
-        
-    } catch (error) {
-        console.error("데이터 저장 오류:", error);
-        alert('저장에 실패했습니다. 다시 시도해주세요.');
+// 3. 게시글 삭제 함수
+async function deletePost(key) {
+    if(confirm('정말 삭제하시겠습니까?')) {
+        await database.ref(`posts/${key}`).remove();
+        alert('삭제되었습니다.');
     }
 }
 
-// 2. 게시판 렌더링 함수 수정 (데이터 구조 충돌 방지)
+// 4. 게시판 렌더링 (페이징 로직 포함)
 function renderBoard(posts) {
     const list = document.getElementById('board-list');
     if (!list) return;
-    
     list.innerHTML = '';
+
     if (!posts) {
-        list.innerHTML = '<p style="text-align:center; color:var(--text-light); padding:20px;">아직 작성된 이야기가 없습니다.</p>';
+        list.innerHTML = '<p style="text-align:center; padding:20px;">아직 작성된 이야기가 없습니다.</p>';
         return;
     }
 
-    // 최신글이 위로 오도록 역순 정렬하여 출력
-    Object.keys(posts).reverse().forEach(key => {
+    const postKeys = Object.keys(posts).reverse();
+    const totalPosts = postKeys.length;
+    
+    // 페이징 계산
+    const startIndex = (currentPage - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const paginatedKeys = postKeys.slice(startIndex, endIndex);
+
+    paginatedKeys.forEach(key => {
         const p = posts[key];
         const item = document.createElement('div');
         item.className = 'board-item';
         
-        // 사장님의 '#2'번 디자인 레이아웃 그대로 유지
         item.innerHTML = `
             <div class="board-item-title" onclick="this.nextElementSibling.classList.toggle('active')">
-                <span>🔒 비밀글 (${p.author})</span>
+                <span>🔒 비밀글 (${p.author}) ${p.reply ? '<span style="color:var(--accent-color); font-size:0.8rem; margin-left:5px;">[답변완료]</span>' : ''}</span>
                 <span>${p.date}</span>
             </div>
             <div class="board-item-content">
                 ${isAdmin ? `
-                    <div style="color:var(--accent-color); margin-bottom:10px;">[비밀번호: ${p.pw}]</div>
-                    <div style="margin-bottom:10px;">${p.content}</div>
-                    <button class="btn-secondary" style="font-size:0.8rem;" onclick="deletePost('${key}')">삭제</button>
+                    <div style="color:var(--accent-color); margin-bottom:10px;">[비번: ${p.pw}]</div>
+                    <div style="margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">${p.content}</div>
+                    <div class="admin-reply-area">
+                        <textarea id="reply-input-${key}" placeholder="답변을 입력하세요" style="width:100%; background:#111; color:#fff; border:1px solid #444; padding:10px;">${p.reply || ''}</textarea>
+                        <div style="margin-top:10px; display:flex; gap:10px;">
+                            <button class="btn-primary" style="padding:5px 15px; font-size:0.8rem;" onclick="saveReply('${key}')">답변저장</button>
+                            <button class="btn-secondary" style="padding:5px 15px; font-size:0.8rem;" onclick="deletePost('${key}')">삭제</button>
+                        </div>
+                    </div>
                 ` : `
                     <div id="pw-area-${key}">
-                        <input type="password" id="pw-${key}" placeholder="비밀번호 입력" style="width:100px; background:#111; color:#fff; border:1px solid #333; padding:5px;">
+                        <input type="password" id="pw-${key}" placeholder="비밀번호" style="width:100px; background:#111; color:#fff; border:1px solid #333; padding:5px;">
                         <button class="btn-secondary" style="padding:5px 10px;" onclick="checkPw('${key}', '${p.pw}')">확인</button>
                     </div>
-                    <div id="tx-${key}" style="display:none; margin-top:10px; white-space:pre-wrap;">${p.content}</div>
+                    <div id="tx-${key}" style="display:none; margin-top:10px;">
+                        <div style="white-space:pre-wrap; margin-bottom:15px;">${p.content}</div>
+                        ${p.reply ? `<div style="background:#222; padding:15px; border-left:3px solid var(--accent-color);">
+                            <strong style="color:var(--accent-color); display:block; margin-bottom:5px;">서론 사장님 답변</strong>
+                            <div style="white-space:pre-wrap;">${p.reply}</div>
+                        </div>` : ''}
+                    </div>
                 `}
             </div>
         `;
         list.appendChild(item);
     });
+
+    renderPagination(totalPosts);
+}
+
+// 5. 페이지 번호 생성 함수
+function renderPagination(totalPosts) {
+    const list = document.getElementById('board-list');
+    const totalPages = Math.ceil(totalPosts / postsPerPage);
+    if(totalPages <= 1) return;
+
+    const nav = document.createElement('div');
+    nav.style = "display:flex; justify-content:center; gap:15px; margin-top:30px;";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('span');
+        btn.innerText = i;
+        btn.style = `cursor:pointer; padding:5px 10px; border:1px solid ${i === currentPage ? 'var(--accent-color)' : '#444'}; color:${i === currentPage ? 'var(--accent-color)' : '#fff'};`;
+        btn.onclick = () => { currentPage = i; database.ref('posts').once('value', snap => renderBoard(snap.val())); };
+        nav.appendChild(btn);
+    }
+    list.appendChild(nav);
 }
 
 // 부가 기능 (체크/삭제/저장)
