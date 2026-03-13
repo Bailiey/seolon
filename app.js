@@ -117,19 +117,19 @@ function refreshRoomStatus(data) {
         
         // 3. 인원수 표시 교정 (중복 출력 원천 차단)
         if(capa) {
-            // [해결책] 기존 HTML 구조를 무시하고 텍스트를 아예 새로 씁니다.
-            let statusText = `인원: ${rd.count} / ${max}`;
-            
-            // 다 찼을 때만 사장님이 원하신 '채도 낮은 레드' Full 추가
-            if(rd.count >= max) {
-                statusText += ` <span class="full-label" style="color: #c05a5a; font-weight: 400; margin-left: 8px; font-size: 0.9rem;">Full</span>`;
-            }
-            
-            // 부모 요소인 status-box 내부의 p 태그를 깔끔하게 정리하거나 
-            // capa 요소 자체의 내용을 덮어씌웁니다.
-            capa.innerHTML = statusText;
-        }
-
+    // 1. 기존에 HTML에 적혀 있던 내용을 무시하고 
+    //    n / max 형태의 깔끔한 텍스트를 먼저 만듭니다.
+    let capaHTML = `${rd.count} / ${max}`;
+    
+    // 2. 만약 다 찼다면 뒤에만 Full을 붙입니다.
+    if(rd.count >= max) {
+        capaHTML += ` <span class="full-label">Full</span>`;
+    }
+    
+    // 3. [핵심] 텍스트 앞에 '인원: '을 붙여서 capa 요소에 통째로 넣습니다.
+    // 이렇게 하면 기존 HTML의 '인원:' 글자와 겹치지 않고 하나만 나오게 됩니다.
+    capa.innerHTML = `인원: ${capaHTML}`;
+}
         // 4. 관리자 모드 동기화
         if(isAdmin) {
             const adminSel = document.getElementById(`admin-select-${r}`);
