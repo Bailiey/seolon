@@ -116,12 +116,23 @@ async function attemptAdminLogin() {
     if (document.getElementById('admin-pw').value === ADMIN_PW) { 
         await auth.signInAnonymously(); 
         isAdmin = true;
+        
+        // 1. 관리자 모드 시각화 (CSS 연동)
         document.body.classList.add('admin-mode');
+        
+        // 2. 숨겨진 관리자 요소들 강제 표시
+        document.querySelectorAll('.admin-editable, .lp-admin-inputs').forEach(el => {
+            el.style.display = 'block';
+        });
+        
         document.getElementById('btn-admin-login').style.display = 'none';
         document.getElementById('btn-admin-logout').style.display = 'block';
         document.getElementById('admin-modal').classList.remove('active');
         document.getElementById('admin-pw').value = '';
+        
+        // 3. 데이터 즉시 갱신
         renderCalendar();
+        alert('관리자 모드로 로그인되었습니다.');
     } else {
         alert('비밀번호가 틀렸습니다.');
     }
