@@ -110,6 +110,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 /* Room Status Panel */
 .room-status-panel { flex: 1; min-width: 300px; background: var(--bg-light); padding: 25px; border-radius: 8px; border: 1px solid var(--border-color); }
 .status-box { padding: 20px; margin-bottom: 15px; border-radius: 8px; background-color: #222; }
+.status-box.none-room {border-left: 4px solid #777 !important; background-color: rgba(60, 60, 60, 0.4) !important; color: #bbb; }
 .status-box.female-room { border-left: 4px solid var(--color-female); }
 .status-box.male-room { border-left: 4px solid var(--color-male); }
 
