@@ -22,7 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('admin-mode');
         document.getElementById('btn-admin-login').style.display = 'block';
         document.getElementById('btn-admin-logout').style.display = 'none';
+        
+        // 로그아웃 시에도 화면 즉시 갱신
         renderCalendar();
+        database.ref('posts').once('value', (snap) => renderBoard(snap.val()));
+        
         alert('로그아웃 되었습니다.');
     };
 });
@@ -54,7 +58,6 @@ function updateCalendarWithData(roomsData) {
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    // 요일 헤더
     ['일','월','화','수','목','금','토'].forEach(d => {
         const h = document.createElement('div'); h.className = 'cal-day head'; h.innerText = d;
         body.appendChild(h);
@@ -69,8 +72,6 @@ function updateCalendarWithData(roomsData) {
         if(selectedDate === dateStr) div.classList.add('selected');
         
         const dayData = roomsData[dateStr] || {};
-        
-        // [복구] 만실 체크 로직 (디자인 적용)
         const isFull = (dayData.room3?.count >= 3) && (dayData.room4?.count >= 4) && (dayData.room6?.count >= 6);
         if(isFull) {
             const badge = document.createElement('span');
@@ -117,10 +118,7 @@ async function attemptAdminLogin() {
         await auth.signInAnonymously(); 
         isAdmin = true;
         
-        // 1. 관리자 모드 시각화 (CSS 연동)
         document.body.classList.add('admin-mode');
-        
-        // 2. 숨겨진 관리자 요소들 강제 표시
         document.querySelectorAll('.admin-editable, .lp-admin-inputs').forEach(el => {
             el.style.display = 'block';
         });
@@ -130,14 +128,9 @@ async function attemptAdminLogin() {
         document.getElementById('admin-modal').classList.remove('active');
         document.getElementById('admin-pw').value = '';
         
-        // 3. [중요!] 데이터 즉시 갱신
-        renderCalendar(); // 예약현황 갱신
-        
-        // ★ 이 코드를 추가하세요! ★
-        // 게시판 데이터를 다시 불러와서 관리자 모드로 즉시 다시 그립니다.
-        database.ref('posts').once('value', (snap) => {
-            renderBoard(snap.val());
-        });
+        // [중요] 로그인 즉시 예약 달력과 게시판 강제 새로고침
+        renderCalendar();
+        database.ref('posts').once('value', (snap) => renderBoard(snap.val()));
         
         alert('관리자 모드로 로그인되었습니다.');
     } else {
@@ -150,18 +143,16 @@ function closeAdminModal() {
 }
 
 /* =========================================
-   게시판 운영 로직 (관리자 프리패스 포함)
+   게시판 운영 로직 (관리자 프리패스 통합)
    ========================================= */
 
 let currentPage = 1;
 const postsPerPage = 5;
 
-// 1. 게시글 등록
 async function addBoardContent() {
     const author = document.getElementById('board-author').value.trim();
     const pw = document.getElementById('board-pw').value.trim();
     const content = document.getElementById('board-content').value.trim();
-
     if (!author || !content) return alert('닉네임과 내용을 입력해주세요.');
 
     try {
@@ -177,14 +168,12 @@ async function addBoardContent() {
     } catch (e) { alert('저장에 실패했습니다.'); }
 }
 
-// 2. 관리자 답변 저장
 async function saveReply(key) {
     const replyText = document.getElementById(`reply-input-${key}`).value;
     await database.ref(`posts/${key}/reply`).set(replyText);
     alert('답변이 등록되었습니다.');
 }
 
-// 3. 게시글 삭제
 async function deletePost(key) {
     if(confirm('정말 이 글을 삭제하시겠습니까?')) {
         await database.ref(`posts/${key}`).remove();
@@ -192,7 +181,6 @@ async function deletePost(key) {
     }
 }
 
-// 4. 비밀번호 확인 (손님용)
 window.checkPw = (key, correctPw) => {
     const inputPw = document.getElementById(`pw-${key}`).value;
     if(inputPw === correctPw) {
@@ -203,7 +191,6 @@ window.checkPw = (key, correctPw) => {
     }
 };
 
-// 5. 게시판 렌더링 (핵심: 관리자 프리패스 로직)
 function renderBoard(posts) {
     const list = document.getElementById('board-list');
     if (!list) return;
@@ -226,7 +213,6 @@ function renderBoard(posts) {
         const item = document.createElement('div');
         item.className = 'board-item';
         
-        // 관리자(isAdmin)인 경우 처음부터 내용을 보여주고 답변창을 띄움
         const boardBody = isAdmin ? `
             <div class="admin-view-area">
                 <div style="color:var(--accent-color); margin-bottom:10px; font-size:0.9rem;">[비밀번호: ${p.pw}]</div>
@@ -258,9 +244,7 @@ function renderBoard(posts) {
                 <span>🔒 비밀글 (${p.author}) ${p.reply ? '<span style="color:var(--accent-color); font-size:0.8rem; margin-left:5px;">[답변완료]</span>' : ''}</span>
                 <span>${p.date}</span>
             </div>
-            <div class="board-item-content">
-                ${boardBody}
-            </div>
+            <div class="board-item-content">${boardBody}</div>
         `;
         list.appendChild(item);
     });
@@ -268,7 +252,6 @@ function renderBoard(posts) {
     renderPagination(totalPosts);
 }
 
-// 6. 페이징 번호
 function renderPagination(totalPosts) {
     const list = document.getElementById('board-list');
     const totalPages = Math.ceil(totalPosts / postsPerPage);
@@ -286,10 +269,6 @@ function renderPagination(totalPosts) {
     }
     list.appendChild(nav);
 }
-
-// 부가 기능 (체크/삭제/저장)
-window.checkPw = (k, p) => { if(document.getElementById(`pw-${k}`).value === p) document.getElementById(`tx-${k}`).style.display = 'block'; else alert('비밀번호 틀림'); };
-window.deletePost = (k) => { if(confirm('삭제하시겠습니까?')) database.ref(`posts/${k}`).remove(); };
 
 async function saveRoomGender(r) { 
     if(!isAdmin) return; 
