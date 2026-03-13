@@ -114,12 +114,17 @@ function refreshRoomStatus(data) {
         if(label) label.innerText = rd.gender === 'none' ? '미정' : (rd.gender === 'male' ? '남성' : '여성');
         
         if(capa) {
-            let capaText = `${rd.count} / ${max}`;
-            if(rd.count >= max) {
-                capaText += ` <span class="full-label" style="color:#ff453a; font-weight:bold; margin-left:5px;">Full</span>`;
-            }
-            capa.innerHTML = capaText;
-        }
+    let capaHTML = ""; // 초기화
+    
+    if(rd.count >= max) {
+        // 꽉 찼을 때는 숫자 없이 Full만 표시
+        capaHTML = `<span class="full-label">Full</span>`;
+    } else {
+        // 꽉 차지 않았을 때만 숫자 표시
+        capaHTML = `${rd.count} / ${max}`;
+    }
+    capa.innerHTML = capaHTML;
+}
 
         if(isAdmin) {
             const adminSel = document.getElementById(`admin-select-${r}`);
