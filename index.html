@@ -174,22 +174,30 @@
         </div>
         
         <div class="admin-editable" style="display:none; margin-top:30px; text-align: center; width: 100%; max-width: 1000px; margin-left: auto; margin-right: auto;">
-            <textarea id="admin-guide-textarea" rows="12" style="width:100%; background: #111; color: #fff; padding: 25px; border: 1px solid var(--accent-color); border-radius: 8px; line-height: 1.6; font-size: 1rem; outline: none;" placeholder="손님들에게 전달할 안내사항을 입력하세요."></textarea>
+            <textarea id="admin-guide-textarea" rows="12" style="width:100%; background: #111; color: #fff; padding: 25px; border: 1px solid var(--accent-color); border-radius: 8px; line-height: 1.6; font-size: 1rem; outline: none;" placeholder="안내사항을 입력하세요."></textarea>
             <br>
             <button class="btn-primary" style="margin-top: 20px; width: 200px;" onclick="saveGuideParams()">가이드 내용 저장</button>
         </div>
     </div>
 </section>
 
-        <section id="community" class="section-padding bg-light">
-            <div class="container">
-                <h2 class="section-title">Community</h2>
-                <div class="community-wrapper" style="background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
-                    <div class="write-form"><input type="text" id="board-author" placeholder="닉네임"><input type="password" id="board-pw" placeholder="비밀번호"><textarea id="board-content" placeholder="함께 나누고 싶은 이야기" rows="4"></textarea><button class="btn-primary" onclick="addBoardContent()">등록</button></div>
-                    <div id="board-list" class="board-list"></div>
+<section id="community" class="section-padding bg-light">
+    <div class="container">
+        <h2 class="section-title">Community</h2>
+        <div class="community-wrapper" style="background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 1000px; margin: 0 auto;">
+            <div class="write-form" style="margin-bottom: 30px; display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="board-author" placeholder="닉네임" style="flex: 1; background: #111; color: #fff; border: 1px solid #333; padding: 10px;">
+                    <input type="password" id="board-pw" placeholder="비밀번호" style="flex: 1; background: #111; color: #fff; border: 1px solid #333; padding: 10px;">
                 </div>
+                <textarea id="board-content" placeholder="함께 나누고 싶은 이야기" rows="4" style="background: #111; color: #fff; border: 1px solid #333; padding: 10px; width: 100%;"></textarea>
+                <button class="btn-primary" onclick="addBoardContent()">등록</button>
             </div>
-        </section>
+
+            <div id="board-list" class="board-list"></div>
+        </div>
+    </div>
+</section>
     </main>
 
     <footer style="padding: 60px 0; text-align: center; border-top: 1px solid #333; background-color: #121212;">
