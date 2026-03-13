@@ -36,7 +36,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo-img { height: 40px; border-radius: 4px; }
-.logo-text { font-size: 1.6rem; letter-spacing: 5px; color: var(--white); font-weight: 300; }
+.logo-text { font-size: 1.3rem; letter-spacing: 4px; color: var(--white); font-weight: 300; }
 .nav-menu { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
 
 /* [복구] 네비게이션 밑줄 애니메이션 */
@@ -60,7 +60,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .hero-section { height: 100vh; background: url('https://images.unsplash.com/photo-1542442828-287217bfb87f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,0.9)); z-index: 1; }
 .hero-content { position: relative; z-index: 2; }
-.hero-title { font-size: 5rem; letter-spacing: 8px; color: var(--white); margin-bottom: 30px; font-weight: 300; }
+.hero-title { font-size: 5rem; letter-spacing: 8px; color: var(--white); margin-bottom: 30px; font-weight: 450; }
 .hero-subtitle { font-size: 1.3rem; color: var(--text-light); margin-bottom: 75px; letter-spacing: 2px; }
 
 /* Buttons */
