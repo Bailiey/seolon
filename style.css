@@ -225,3 +225,12 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     border-color: var(--accent-color);
     color: var(--accent-color);
 }
+
+/* 방별 마감 표시 스타일 */
+.full-label {
+    color: #ff4d4d; /* 붉은색 */
+    font-weight: bold;
+    margin-left: 8px;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
