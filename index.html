@@ -95,12 +95,15 @@
 
         <section id="reservation" class="section-padding bg-light">
             <div class="container">
-                <h2 class="section-title">Reservation</h2>
-                <div class="reservation-wrapper" style="background: var(--primary-color);">
-                        <p style="text-align: center; color: var(--text-light); font-size: 0.9rem; margin: -30px auto 40px; letter-spacing: 0.5px; line-height: 1.6;">
-                        * 각 객실의 성별은 <span style="color: var(--accent-color);">첫 예약자의 성별</span>에 따라 결정됩니다.<br>
-                        <span style="font-size: 0.8rem; opacity: 0.8;">(성별이 '미정'인 날짜는 남/여 누구나 첫 예약이 가능합니다.)</span>
-                        </p>
+                <h2 class="section-title" style="margin-bottom: 25px;">Reservation</h2>
+        
+        <div style="text-align: center; margin-bottom: 45px;">
+            <p style="color: var(--text-light); font-size: 0.9rem; letter-spacing: 0.5px; display: inline-block; padding: 5px 15px; border-radius: 4px;">
+                * 각 객실의 성별은 <span style="color: var(--accent-color); font-weight: 500;">첫 예약자의 성별</span>에 따라 결정됩니다.
+            </p>
+        </div>
+
+        <div class="reservation-wrapper" style="background: var(--primary-color);">
                     <div class="calendar-section">
                         <div class="calendar-header">
                             <button id="prev-month" class="cal-nav">&lt;</button>
@@ -215,7 +218,7 @@
                             <input type="text" id="board-author" placeholder="닉네임" style="flex: 1; background: #111; color: #fff; border: 1px solid #333; padding: 10px;">
                             <input type="password" id="board-pw" placeholder="비밀번호" style="flex: 1; background: #111; color: #fff; border: 1px solid #333; padding: 10px;">
                         </div>
-                        <textarea id="board-content" placeholder=건의사항" rows="4" style="background: #111; color: #fff; border: 1px solid #333; padding: 10px; width: 100%;"></textarea>
+                        <textarea id="board-content" placeholder=건의사항 rows="4" style="background: #111; color: #fff; border: 1px solid #333; padding: 10px; width: 100%;"></textarea>
                         <button class="btn-primary" onclick="addBoardContent()">등록</button>
                     </div>
                     <div id="board-list" class="board-list"></div>
