@@ -151,13 +151,17 @@
                     <div class="event-vinyl"><div class="vinyl-record"></div></div>
                     <div class="event-details">
                         <h3>오늘의 LP</h3>
-                        <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">서론에서는 매일 밤 특별한 음악으로 공간을 채웁니다.<br>턴테이블과 함께 여유로운 제주의 감성을 느껴보세요.</p>
+                        <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.8;">
+                            서론에서는 매일 밤 특별한 음악으로 공간을 채웁니다.<br>턴테이블과 함께 여유로운 제주의 감성을 느껴보세요.<br>
+                            저녁 청음회: 20시 ~ 한 트랙이 끝날 때 까지<br>
+                            아침 청음회: 09시 ~ 한 트랙이 끝날 때 까지
+                        </p>
                         <div class="lp-schedule">
-                            <p>아침의 LP : <span id="lp-morning-text">-</span></p>
-                            <p>저녁의 LP : <span id="lp-evening-text">-</span></p>
+                            <p>저녁의 LP : <span id="lp-morning-text">-</span></p>
+                            <p>아침의 LP : <span id="lp-evening-text">-</span></p>
                             <div class="lp-admin-inputs" style="display:none; margin-top:15px; border-top:1px solid #333; padding-top:15px;">
-                                <input type="text" id="input-lp-morning" placeholder="아침 곡 입력" style="background:#111; color:#fff; border:1px solid #333; padding:5px; margin-bottom:5px; width:100%;">
-                                <input type="text" id="input-lp-evening" placeholder="저녁 곡 입력" style="background:#111; color:#fff; border:1px solid #333; padding:5px; margin-bottom:10px; width:100%;">
+                                <input type="text" id="input-lp-morning" placeholder="저녁 곡 입력" style="background:#111; color:#fff; border:1px solid #333; padding:5px; margin-bottom:5px; width:100%;">
+                                <input type="text" id="input-lp-evening" placeholder="아침 곡 입력" style="background:#111; color:#fff; border:1px solid #333; padding:5px; margin-bottom:10px; width:100%;">
                                 <button class="btn-secondary" onclick="saveLP()" style="width:100%;">LP 정보 저장</button>
                             </div>
                         </div>
@@ -167,21 +171,23 @@
         </section>
 
         <section id="potluck" class="section-padding bg-light">
-            <div class="container" style="display: flex; flex-direction: column; align-items: center;">
-                <h2 class="section-title">Potluck Time</h2>
-                <div class="potluck-container" style="background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
-                    <div style="flex: 0 0 300px; height: 220px; background: url('사진/포틀럭/포틀럭1.jpg') center/cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);"></div>
-                    <div style="flex: 1; min-width: 250px; text-align: left;">
-                        <h3 style="color: var(--accent-color); font-size: 1.6rem; margin-bottom: 15px; font-weight: 400;">도란도란 포틀럭타임</h3>
-                        <p style="color: var(--text-color); line-height: 1.8; font-size: 1rem; margin-bottom: 20px;">서론의 저녁은 함께 나누는 온기로 완성됩니다.<br>준비한 음식과 이야기들을 들고 자유롭게 모여주세요.</p>
-                        <div style="border-left: 2px solid var(--accent-color); padding-left: 15px; background: rgba(0,0,0,0.2); padding: 12px 15px;">
-                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 5px;">🕒 매일 저녁 6시 30분 / 공용 라운지</p>
-                            <p style="font-size: 0.95rem; color: var(--text-light);">🍷 준비물: 음식, 술, 그리고 당신의 이야기</p>
-                        </div>
-                    </div>
+    <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+        <h2 class="section-title">Potluck Time</h2>
+        <div class="potluck-container" style="background: var(--primary-color); padding: 40px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; max-width: 900px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
+            
+            <div style="flex: 0 0 300px; height: 220px; background: url('사진/포틀럭/포틀럭1.jpg') center/cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);"></div>
+            
+            <div style="flex: 1; min-width: 250px; text-align: left;">
+                <h3 style="color: var(--accent-color); font-size: 1.6rem; margin-bottom: 15px; font-weight: 400;">도란도란 포틀럭타임</h3>
+                <p style="color: var(--text-color); line-height: 1.8; font-size: 1rem; margin-bottom: 20px;">서론의 저녁은 함께 나누는 온기로 완성됩니다.<br>준비한 음식과 이야기들을 들고 자유롭게 모여주세요.</p>
+                <div style="border-left: 2px solid var(--accent-color); padding-left: 15px; background: rgba(0,0,0,0.2); padding: 12px 15px;">
+                    <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 5px;">🕒 매일 저녁 6시 30분 / 공용 라운지</p>
+                    <p style="font-size: 0.95rem; color: var(--text-light);">🍷 준비물: 음식, 술, 그리고 당신의 이야기</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
         <section id="guide" class="section-padding">
             <div class="container">
