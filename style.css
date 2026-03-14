@@ -1,4 +1,4 @@
-/* =========================================
+/* ========================================= 
     기본 테마 & 디자인 (제주 프리미엄 다크)
    ========================================= */
 :root {
@@ -139,8 +139,9 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     transition: transform 0.4s ease, border-color 0.4s ease;
     border: 1px solid var(--border-color);
     
-    width: 280px; 
-    flex: 0 0 280px; /* 유동적으로 변하지 않도록 설정 */
+    /* 너비를 280px로 절대 고정 */
+    width: 280px !important; 
+    flex: 0 0 280px !important; 
     margin: 0 auto;
 }
 
