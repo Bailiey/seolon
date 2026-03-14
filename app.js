@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initRealtimeListeners() {
-    // [보완] 에러 방지를 위해 데이터가 없을 경우 빈 객체 처리 강화
     database.ref('rooms').on('value', (snap) => updateCalendarWithData(snap.val() || {}));
     database.ref('lp_schedule').on('value', (snap) => {
         const val = snap.val() || { morning: '-', evening: '-' };
@@ -108,17 +107,14 @@ function refreshRoomStatus(data) {
         const box = document.getElementById(`box-${r}`);
         const label = document.getElementById(`label-${r}`);
         
-        // 6인실 ID 오타(capa-room36) 방어 로직
         let capa = document.getElementById(`capa-${r}`);
         if(r === 'room6' && !capa) {
             capa = document.getElementById('capa-room36');
         }
 
-        // 1. 성별 배경색 및 라벨 업데이트
         if(box) box.className = `status-box ${rd.gender}-room`;
         if(label) label.innerText = rd.gender === 'none' ? '미정' : (rd.gender === 'male' ? '남성' : '여성');
         
-        // 2. 인원수 텍스트 업데이트 (중복 오류 방지)
         if(capa) {
             let statusText = `인원: ${rd.count} / ${max}`;
             if(rd.count >= max) {
@@ -127,16 +123,14 @@ function refreshRoomStatus(data) {
             capa.innerHTML = statusText;
         }
 
-        // 3. 관리자 모드 동기화 (오류 발생 지점 수정완료)
         if(isAdmin) {
             const adminSel = document.getElementById(`admin-select-${r}`);
             const adminCap = document.getElementById(`admin-capa-${r}`);
             if(adminSel) adminSel.value = rd.gender;
             if(adminCap) adminCap.value = rd.count;
         }
-    }); // forEach 끝
-} // 함수 끝
-
+    });
+}
 
 async function attemptAdminLogin() {
     if (document.getElementById('admin-pw').value === ADMIN_PW) { 
@@ -156,9 +150,6 @@ async function attemptAdminLogin() {
     }
 }
 
-/* =========================================
-   게시판 운영 로직 (수정 없음)
-   ========================================= */
 let currentPage = 1;
 const postsPerPage = 5;
 
@@ -265,7 +256,6 @@ function renderPagination(totalPosts) {
     list.appendChild(nav);
 }
 
-// [공통 관리 기능]
 async function saveRoomGender(r) { 
     if(!isAdmin) return; 
     const count = parseInt(document.getElementById(`admin-capa-${r}`).value);
@@ -288,5 +278,38 @@ async function saveGuideParams() {
 }
 
 function closeAdminModal() { document.getElementById('admin-modal').classList.remove('active'); }
-document.getElementById('prev-month').onclick = () => { currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} renderCalendar(); };
-document.getElementById('next-month').onclick = () => { currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} renderCalendar(); };
+
+// [수정] 이전 달 이동 (오늘 이전으로는 이동 불가)
+document.getElementById('prev-month').onclick = () => {
+    const today = new Date();
+    const targetDate = new Date(currentYear, currentMonth - 1);
+    
+    if (targetDate < new Date(today.getFullYear(), today.getMonth())) {
+        return; 
+    }
+
+    currentMonth--;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+    renderCalendar();
+};
+
+// [수정] 다음 달 이동 (6개월 제한 적용)
+document.getElementById('next-month').onclick = () => {
+    const today = new Date();
+    const monthsDiff = (currentYear - today.getFullYear()) * 12 + (currentMonth - today.getMonth());
+
+    if (monthsDiff >= 6) {
+        alert("예약은 최대 6개월까지만 가능합니다.");
+        return;
+    }
+
+    currentMonth++;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    renderCalendar();
+};
