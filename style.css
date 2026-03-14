@@ -131,21 +131,28 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     max-width: 1000px;
     margin: 0 auto;
 }
-.room-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    justify-content: center;
-}
+
 .room-card {
     background: var(--primary-color);
     border-radius: 4px;
     overflow: hidden;
     transition: transform 0.4s ease, border-color 0.4s ease;
     border: 1px solid var(--border-color);
-    max-width: 320px;
+    
+    width: 280px; 
+    flex: 0 0 280px; /* 유동적으로 변하지 않도록 설정 */
     margin: 0 auto;
 }
+
+/* [추가] 카드들이 가운데 정렬되도록 그리드 보완 */
+.room-grid {
+    display: flex; /* grid 대신 flex를 쓰면 간격 조절이 더 쉽습니다 */
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center; /* 카드들을 중앙으로 모음 */
+    padding: 0 20px;
+}
+
 .room-card:hover {
     transform: translateY(-10px);
     border-color: var(--accent-color);
