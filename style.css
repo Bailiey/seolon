@@ -139,9 +139,9 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
     transition: transform 0.4s ease, border-color 0.4s ease;
     border: 1px solid var(--border-color);
     
-    /* 너비를 280px로 절대 고정 */
-    width: 280px !important; 
-    flex: 0 0 280px !important; 
+    /* 너비를 300px로 절대 고정 */
+    width: 300px !important; 
+    flex: 0 0 300px !important; 
     margin: 0 auto;
 }
 
@@ -149,7 +149,7 @@ body.admin-mode .admin-editable, body.admin-mode .lp-admin-inputs { display: blo
 .room-grid {
     display: flex; /* grid 대신 flex를 쓰면 간격 조절이 더 쉽습니다 */
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 15px;
     justify-content: center; /* 카드들을 중앙으로 모음 */
     padding: 0 20px;
 }
