@@ -211,7 +211,7 @@
                             <input type="text" id="board-author" placeholder="닉네임" style="flex: 1; background: #111; color: #fff; border: 1px solid #333; padding: 10px;">
                             <input type="password" id="board-pw" placeholder="비밀번호" style="flex: 1; background: #111; color: #fff; border: 1px solid #333; padding: 10px;">
                         </div>
-                        <textarea id="board-content" placeholder="함께 나누고 싶은 이야기" rows="4" style="background: #111; color: #fff; border: 1px solid #333; padding: 10px; width: 100%;"></textarea>
+                        <textarea id="board-content" placeholder=건의사항" rows="4" style="background: #111; color: #fff; border: 1px solid #333; padding: 10px; width: 100%;"></textarea>
                         <button class="btn-primary" onclick="addBoardContent()">등록</button>
                     </div>
                     <div id="board-list" class="board-list"></div>
@@ -220,9 +220,14 @@
         </section>
     </main>
 
-    <footer style="padding: 60px 0; text-align: center; border-top: 1px solid #333; background-color: #121212;">
-        <p style="color: var(--text-light);">&copy; 2026 SEOLON GUESTHOUSE. All rights reserved.</p>
-    </footer>
+<footer style="padding: 60px 0; text-align: center; border-top: 1px solid #333; background-color: #121212;">
+    <div style="margin-bottom: 15px; color: var(--text-light); font-size: 0.85rem; letter-spacing: 1px;">
+        <span>대표: 설정현</span>
+        <span style="margin: 0 15px; opacity: 0.3;">|</span>
+        <span>사업자등록번호: 000-00-000000</span>
+    </div>
+    <p style="color: var(--text-light); font-size: 0.8rem; opacity: 0.6;">&copy; 2026 SEOLON GUESTHOUSE. All rights reserved.</p>
+</footer>
 
     <div class="modal-overlay" id="admin-modal">
         <div class="login-modal">
